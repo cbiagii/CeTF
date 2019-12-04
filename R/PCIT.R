@@ -1,3 +1,19 @@
+#' @title Partial Correlation and Information Theory analysis
+#'
+#' @description teste.
+#'
+#' @param input teste.
+#'
+#' @return teste.
+#'
+#' @importFrom reshape2 melt
+#' @importFrom stats cor
+#' @importFrom crayon green
+#'
+#' @examples
+#' teste
+#'
+#' @export
 PCIT <- function(input){
   "/" <- function(x,y) ifelse(y==0,0,base:::"/"(x,y))
 
@@ -50,13 +66,11 @@ PCIT <- function(input){
   rm(gene_pcorr)
 
   gene_corr <- melt(gene_corr)
-  #gene_corr <- subset(gene_corr, gene_corr$value != 1)
   gene_corr <- gene_corr[duplicated(t(apply(gene_corr, 1, sort))), ]
   rownames(gene_corr) <- paste(gene_corr$Var1, gene_corr$Var2, sep = "_")
   gene_corr <- gene_corr[order(gene_corr$Var1), ]
 
   gene_pcorr2 <- melt(gene_pcorr2)
-  #gene_pcorr2 <- subset(gene_pcorr2, gene_pcorr2$value != 1)
   rownames(gene_pcorr2) <- paste(gene_pcorr2$Var1, gene_pcorr2$Var2, sep = "_")
   gene_pcorr2 <- gene_pcorr2[rownames(gene_corr), ]
 

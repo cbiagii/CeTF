@@ -1,3 +1,23 @@
+#' @title Regulatory Impactor Factors analysis
+#'
+#' @description teste.
+#'
+#' @param input teste.
+#' @param nta teste.
+#' @param ntf teste.
+#' @param ncond1 teste.
+#' @param ncond2 teste.
+#'
+#' @return teste.
+#'
+#' @importFrom utils txtProgressBar
+#' @importFrom stats cor
+#' @importFrom crayon green
+#'
+#' @examples
+#' teste
+#'
+#' @export
 RIF <- function(input, nta, ntf, ncond1, ncond2) {
   cat(green(
     "#################################################" %+% '\n' %+%
