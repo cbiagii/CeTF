@@ -37,28 +37,18 @@ PCIT <- function(input){
         rxz <- gene_pcorr[i,k]
         ryz <- gene_pcorr[j,k]
 
-        rxy_g_z = (rxy - rxz*ryz) / sqrt((1-rxz^2) * (1-ryz^2))
-        rxz_g_y = (rxz - rxy*ryz) / sqrt((1-rxy^2) * (1-ryz^2))
-        ryz_g_x = (ryz - rxy*rxz) / sqrt((1-rxy^2) * (1-rxz^2))
+        tol <- tolerance(rxy, rxz, ryz, type = "mean")
 
-        toler = abs(rxy_g_z/rxy)
-        toler = toler + abs(rxz_g_y/rxz)
-        toler = toler + abs(ryz_g_x/ryz)
-        toler = 0.33333 * toler
-
-        if (abs(rxy) < abs(rxz*toler) & abs(rxy) < abs(ryz*toler)) {
-          gene_pcorr2[i,j] <- 0
-          gene_pcorr2[j,i] <- 0
+        if (abs(rxy) < abs(rxz*tol) & abs(rxy) < abs(ryz*tol)) {
+          gene_pcorr2[i,j] <- gene_pcorr2[j,i] <- 0
         }
 
-        if (abs(rxz) < abs(rxy*toler) & abs(rxz) < abs(ryz*toler)) {
-          gene_pcorr2[i,k] <- 0
-          gene_pcorr2[k,i] <- 0
+        if (abs(rxz) < abs(rxy*tol) & abs(rxz) < abs(ryz*tol)) {
+          gene_pcorr2[i,k] <- gene_pcorr2[k,i] <- 0
         }
 
-        if (abs(ryz) < abs(rxy*toler) & abs(ryz) < abs(rxz*toler)) {
-          gene_pcorr2[j,k] <- 0
-          gene_pcorr2[k,j] <- 0
+        if (abs(ryz) < abs(rxy*tol) & abs(ryz) < abs(rxz*tol)) {
+          gene_pcorr2[j,k] <- gene_pcorr2[k,j] <- 0
         }
       }
     }
@@ -78,6 +68,7 @@ PCIT <- function(input){
                     gene2 = gene_corr$Var2,
                     corr1 = round(gene_corr$value, 5),
                     corr2 = round(gene_pcorr2$value, 5))
+  rm(gene_corr, gene_corr2)
 
   return(out)
 }

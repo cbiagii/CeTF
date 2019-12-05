@@ -6,7 +6,7 @@
 #'
 #' @return Report with statistics.
 #'
-#' @importFrom crayon green red blue
+#' @importFrom crayon green red blue %+%
 #' @importFrom stats lm sd cor
 #'
 #' @examples
@@ -41,4 +41,7 @@ bivar.awk <- function(x) {
       sprintf("Regression   =  %s", format(round(lm(x[,2] ~ x[,1], data = x)[[1]][[2]], 7), nsmall = 7)) %+% '\n' %+%
       "################################" %+% '\n'
   ))
+
+  return(list(mean1 = format(round(mean(x[,1]), 4), nsmall = 4),
+              mean2 = format(round(mean(x[,2]), 4), nsmall = 4)))
 }

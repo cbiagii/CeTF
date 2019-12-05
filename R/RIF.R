@@ -12,7 +12,7 @@
 #'
 #' @importFrom utils txtProgressBar
 #' @importFrom stats cor
-#' @importFrom crayon green
+#' @importFrom crayon green %+%
 #'
 #' @examples
 #' teste
