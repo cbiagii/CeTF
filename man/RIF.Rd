@@ -4,7 +4,7 @@
 \alias{RIF}
 \title{Regulatory Impactor Factors analysis}
 \usage{
-RIF(input, nta, ntf, ncond1, ncond2)
+RIF(input, nta = NULL, ntf = NULL, ncond1 = NULL, ncond2 = NULL)
 }
 \arguments{
 \item{input}{teste.}

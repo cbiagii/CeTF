@@ -16,10 +16,25 @@
 #' @export
 runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 = NULL, ncond2= NULL) {
 
+  if (!is.data.frame(counts) & !is.matrix(counts)) {
+    stop("counts must be a dataframe or a matrix")
+  }
+
+  if (length(conditions) != 2) {
+    stop("you must input two conditions")
+  }
+
+  if (length(TFs) == 0 | !is.character(TFs)) {
+    stop("the transcript factors must be a character")
+  }
+
+  if (!is.numeric(ncond1) | !is.numeric(ncond2)) {
+    stop("the number of conditions must be a numeric greater than zero")
+  }
+
+
   cat(green(
-    "##################################################" %+% '\n' %+%
-      "############### STEP 1: TPM filter ###############" %+% '\n' %+%
-      "##################################################" %+% '\n'
+      "##### STEP 1: TPM filter #####" %+% '\n'
   ))
 
   tpm.j <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
@@ -40,9 +55,7 @@ runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 
 
 
   cat(green(
-    "###################################################" %+% '\n' %+%
-      "######### STEP 2: Differential Expression #########" %+% '\n' %+%
-      "###################################################" %+% '\n'
+    "##### STEP 2: Differential Expression #####" %+% '\n'
   ))
 
   de.j <- data.frame(cond1 = apply(Clean_Dat[, grep(conditions[1], colnames(Clean_Dat))], 1, mean),
@@ -62,9 +75,7 @@ runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 
 
 
   cat(green(
-    "##################################################" %+% '\n' %+%
-      "### STEP 3: Regulatory Impact Factors analysis ###" %+% '\n' %+%
-      "##################################################" %+% '\n'
+    "##### STEP 3: Regulatory Impact Factors analysis #####" %+% '\n'
   ))
 
   RIF_input <- Clean_Dat[c(Target, TF_unique), c(grep(conditions[1], colnames(Clean_Dat)),
@@ -81,9 +92,7 @@ runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 
 
 
   cat(green(
-    "###############################################################" %+% '\n' %+%
-      "# STEP 4: Partial Correlation and Information Theory analysis #" %+% '\n' %+%
-      "###############################################################" %+% '\n'
+    "##### STEP 4: Partial Correlation and Information Theory analysis #####" %+% '\n'
   ))
 
   net.j <- sort(unique(c(as.character(KeyTF$gene), Target)))

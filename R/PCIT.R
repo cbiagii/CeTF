@@ -15,6 +15,10 @@
 #'
 #' @export
 PCIT <- function(input){
+  if (!is.data.frame(input) & !is.matrix(input)) {
+    stop("input must be a dataframe or a matrix")
+  }
+
   "/" <- function(x,y) ifelse(y==0,0,base:::"/"(x,y))
 
   cat(green(

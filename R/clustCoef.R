@@ -13,6 +13,10 @@
 #'
 #' @export
 clustCoef <- function(mat) {
+  if (!is.data.frame(mat) & !is.matrix(mat)) {
+    stop("mat must be a dataframe or a matrix")
+  }
+
   nGenes <- as.integer(nrow(mat))
 
   cc <- E <- k <- rep(0, length = nrow(mat))

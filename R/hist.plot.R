@@ -13,10 +13,16 @@
 #'
 #' @export
 hist.plot <- function(mat, type = c("number", "prop")) {
-  if (type == "number") {
-    cc <- clustCoef(mat)
-    df <- data.frame(clustcoef = cc*length(cc))
+  if (!is.data.frame(mat) & !is.matrix(mat)) {
+    stop("input must be a dataframe or a matrix")
+  }
 
+  type <- match.arg(type, choices=c("number", "prop"))
+
+  cc <- clustCoef(mat)
+
+  if (type == "number") {
+    df <- data.frame(clustcoef = cc*length(cc))
     pt <- ggplot(df, aes(clustcoef)) +
       geom_histogram(breaks=seq(0, 100, by = 10), col="black", fill="#1F3552") +
       ggtitle("Connectivity Distribution") +
@@ -31,7 +37,6 @@ hist.plot <- function(mat, type = c("number", "prop")) {
             axis.text.x=element_text(colour="black", size = 9),
             axis.text.y=element_text(colour="black", size = 9))
   } else if (type == "prop") {
-    cc <- clustCoef(mat)
     df <- data.frame(clustcoef = cc)
 
     pt <- ggplot(df, aes(clustcoef)) +
@@ -48,7 +53,5 @@ hist.plot <- function(mat, type = c("number", "prop")) {
             axis.text.x=element_text(colour="black", size = 9),
             axis.text.y=element_text(colour="black", size = 9))
   }
-
-
   return(pt)
 }

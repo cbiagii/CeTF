@@ -19,7 +19,20 @@
 #' teste
 #'
 #' @export
-RIF <- function(input, nta, ntf, ncond1, ncond2) {
+RIF <- function(input, nta=NULL, ntf=NULL, ncond1=NULL, ncond2=NULL) {
+  if (!is.data.frame(input) & !is.matrix(input)) {
+    stop("input must be a dataframe or a matrix")
+  }
+
+  if (!is.numeric(nta) | !is.numeric(ntf)) {
+    stop("nta and ntf variables must be a numeric greater than zero")
+  }
+
+  if (!is.numeric(ncond1) | !is.numeric(ncond2)) {
+    stop("the number of conditions must be a numeric greater than zero")
+  }
+
+
   cat(green(
     "#################################################" %+% '\n' %+%
       "## Starting Regulatory Impact Factors analysis ##" %+% '\n' %+%

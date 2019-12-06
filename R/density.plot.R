@@ -13,6 +13,10 @@
 #'
 #' @export
 density.plot <- function(mat){
+  if (!is.data.frame(mat) & !is.matrix(mat)) {
+    stop("mat must be a dataframe or a matrix")
+  }
+
   df <- data.frame(corr = mat[upper.tri(mat)])
   pt <- ggplot(df, aes(x = corr)) +
     geom_density(colour = "black", fill = "#a0b8d6", size = 1) +
