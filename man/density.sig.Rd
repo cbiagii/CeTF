@@ -4,7 +4,7 @@
 \alias{density.sig}
 \title{density plot}
 \usage{
-\method{density}{sig}(mat1, mat2, type = NULL)
+density.sig(mat1, mat2, type = NULL)
 }
 \arguments{
 \item{mat}{teste}

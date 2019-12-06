@@ -68,7 +68,7 @@ PCIT <- function(input){
                     gene2 = gene_corr$Var2,
                     corr1 = round(gene_corr$value, 5),
                     corr2 = round(gene_pcorr2$value, 5))
-  rm(gene_corr, gene_corr2)
+  rm(gene_corr, gene_pcorr2)
 
   return(out)
 }

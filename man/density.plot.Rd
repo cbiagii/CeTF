@@ -4,7 +4,7 @@
 \alias{density.plot}
 \title{density plot}
 \usage{
-\method{density}{plot}(mat)
+density.plot(mat)
 }
 \arguments{
 \item{mat}{teste}
