@@ -23,7 +23,3 @@ teste.
 \description{
 teste.
 }
-\examples{
-teste
-
-}

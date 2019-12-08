@@ -11,8 +11,7 @@
 #'
 #' @importFrom stats median
 #'
-#' @examples
-#' teste
+#'
 #'
 #' @export
 tolerance <- function(a, b, c, type = c("mean", "min", "max", "median")) {

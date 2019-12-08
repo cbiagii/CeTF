@@ -6,13 +6,14 @@ Authors@R: c(person("Carlos", "Biagi Jr", email = "biagi@usp.br",
         role = c("aut", "cre")), person("Wilson", "Silva Junior", email =
         "wilsonjr@usp.br", role = c("aut")))
 Description: teste
-Imports: crayon, stats, knitr, rmarkdown
+Imports: crayon, stats, ggplot2, pbapply, reshape2
+Suggests: knitr, rmarkdown
 Depends: R (>= 3.5)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
-VignetteBuilder: knitr, rmarkdown
+VignetteBuilder: knitr
 Author: Carlos Biagi Jr [aut, cre],
   Wilson Silva Junior [aut]
 Maintainer: Carlos Biagi Jr <biagi@usp.br>

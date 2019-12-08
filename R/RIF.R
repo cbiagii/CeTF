@@ -15,8 +15,7 @@
 #' @importFrom crayon green %+%
 #' @import pbapply pbapply
 #'
-#' @examples
-#' teste
+#'
 #'
 #' @export
 RIF <- function(input, nta=NULL, ntf=NULL, ncond1=NULL, ncond2=NULL) {

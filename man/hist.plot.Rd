@@ -8,14 +8,12 @@
 }
 \arguments{
 \item{mat}{teste}
+
+\item{type}{teste}
 }
 \value{
 teste.
 }
 \description{
 teste.
-}
-\examples{
-teste
-
 }

@@ -8,8 +8,7 @@
 #'
 #' @importFrom ggplot2 ggplot
 #'
-#' @examples
-#' teste
+#'
 #'
 #' @export
 density.plot <- function(mat){

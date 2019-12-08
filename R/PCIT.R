@@ -10,8 +10,7 @@
 #' @importFrom stats cor
 #' @importFrom crayon green
 #'
-#' @examples
-#' teste
+#'
 #'
 #' @export
 PCIT <- function(input){
@@ -19,7 +18,7 @@ PCIT <- function(input){
     stop("input must be a dataframe or a matrix")
   }
 
-  "/" <- function(x,y) ifelse(y==0,0,base:::"/"(x,y))
+  "/" <- function(x,y) ifelse(y==0,0,base::"/"(x,y))
 
   cat(green(
     "################################" %+% '\n' %+%

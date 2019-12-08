@@ -2,7 +2,12 @@
 #'
 #' @description teste.
 #'
-#' @param input teste.
+#' @param counts teste.
+#' @param conditions teste
+#' @param lfc teste
+#' @param TFs teste
+#' @param ncond1 teste
+#' @param ncond2 teste
 #'
 #' @return teste.
 #'
@@ -10,8 +15,7 @@
 #' @importFrom stats cor
 #' @importFrom crayon green
 #'
-#' @examples
-#' teste
+#'
 #'
 #' @export
 runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 = NULL, ncond2= NULL) {
@@ -97,35 +101,35 @@ runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 
 
   net.j <- sort(unique(c(as.character(KeyTF$gene), Target)))
 
-  PCIT_input_TT <- Clean_Dat[net.j, grep(conditions[1], colnames(Clean_Dat))]
-  PCIT_input_CC <- Clean_Dat[net.j, grep(conditions[2], colnames(Clean_Dat))]
+  PCIT_input_cond1 <- Clean_Dat[net.j, grep(conditions[1], colnames(Clean_Dat))]
+  PCIT_input_cond2 <- Clean_Dat[net.j, grep(conditions[2], colnames(Clean_Dat))]
 
   # RUN PCIT ...twice!
-  PCIT_out_TT <- PCIT(PCIT_input_TT)
-  PCIT_out_CC <- PCIT(PCIT_input_CC)
+  PCIT_out_cond1 <- PCIT(PCIT_input_cond1)
+  PCIT_out_cond2 <- PCIT(PCIT_input_cond2)
 
   # Collect Lineage-specific connections
-  PCIT_out <- cbind(PCIT_out_TT, PCIT_out_CC)
-  Network_TT <- subset(PCIT_out, PCIT_out[,4] != 0 & PCIT_out[,8] == 0)[, c(1,2)]
-  Network_CC <- subset(PCIT_out, PCIT_out[,4] == 0 & PCIT_out[,8] != 0)[, c(1,2)]
+  PCIT_out <- cbind(PCIT_out_cond1, PCIT_out_cond2)
+  Network_cond1 <- subset(PCIT_out, PCIT_out[,4] != 0 & PCIT_out[,8] == 0)[, c(1,2)]
+  Network_cond2 <- subset(PCIT_out, PCIT_out[,4] == 0 & PCIT_out[,8] != 0)[, c(1,2)]
 
-  # Count connections for each gene in TT and in CC, focussing on Key TFs
-  id.j <- c(as.character(subset(PCIT_out_TT, PCIT_out_TT$corr2 != 0)[,1]), as.character(subset(PCIT_out_TT, PCIT_out_TT$corr2 != 0)[,2]))
-  tt.j <- as.data.frame(table(id.j))
-  id.j <- c(as.character(subset(PCIT_out_CC, PCIT_out_CC$corr2 != 0)[,1]), as.character(subset(PCIT_out_CC, PCIT_out_CC$corr2 != 0)[,2]))
-  cc.j <- as.data.frame(table(id.j))
+  # Count connections for each gene in cond1 and in cond2, focussing on Key TFs
+  id.j <- c(as.character(subset(PCIT_out_cond1, PCIT_out_cond1$corr2 != 0)[,1]), as.character(subset(PCIT_out_cond1, PCIT_out_cond1$corr2 != 0)[,2]))
+  cond1.j <- as.data.frame(table(id.j))
+  id.j <- c(as.character(subset(PCIT_out_cond2, PCIT_out_cond2$corr2 != 0)[,1]), as.character(subset(PCIT_out_cond2, PCIT_out_cond2$corr2 != 0)[,2]))
+  cond2.j <- as.data.frame(table(id.j))
 
-  KeyTF_Conn_TT_CC <- merge(KeyTF, merge(tt.j, cc.j, by = "id.j"), by.x = "gene", by.y = "id.j")
-  KeyTF_Conn_TT_CC <- KeyTF_Conn_TT_CC[, c(1, 4, 5)]
-  KeyTF_Conn_TT_CC <- cbind(KeyTF_Conn_TT_CC, KeyTF_Conn_TT_CC$Freq.x - KeyTF_Conn_TT_CC$Freq.y)
-  colnames(KeyTF_Conn_TT_CC) <- c("TF", "freq.Malignant", "freq.Nonmalignant", "freq.diff")
+  KeyTF_Conn_cond1_cond2 <- merge(KeyTF, merge(cond1.j, cond2.j, by = "id.j"), by.x = "gene", by.y = "id.j")
+  KeyTF_Conn_cond1_cond2 <- KeyTF_Conn_cond1_cond2[, c(1, 4, 5)]
+  KeyTF_Conn_cond1_cond2 <- cbind(KeyTF_Conn_cond1_cond2, KeyTF_Conn_cond1_cond2$Freq.x - KeyTF_Conn_cond1_cond2$Freq.y)
+  colnames(KeyTF_Conn_cond1_cond2) <- c("TF", paste0("freq.", conditions[1]), paste0("freq.", conditions[2]), "freq.diff")
 
-  genes <- unique(c(as.character(Network_CC$gene1), as.character(Network_CC$gene2), as.character(Network_TT$gene1), as.character(Network_TT$gene2)))
+  genes <- unique(c(as.character(Network_cond2$gene1), as.character(Network_cond2$gene2), as.character(Network_cond1$gene1), as.character(Network_cond1$gene2)))
   anno <- data.frame(genes = genes,
                      class = ifelse(genes %in% KeyTF$gene, "TF", "gene"))
 
-  return(list(Network_cond1 = Network_TT,
-              Network_cond2 = Network_CC,
-              KeyTF_Conn = KeyTF_Conn_TT_CC,
+  return(list(Network_cond1 = Network_cond1,
+              Network_cond2 = Network_cond2,
+              KeyTF_Conn = KeyTF_Conn_cond1_cond2,
               anno = anno))
 }

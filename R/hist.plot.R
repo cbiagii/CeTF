@@ -3,13 +3,14 @@
 #' @description teste.
 #'
 #' @param mat teste
+#' @param type teste
 #'
 #' @return teste.
 #'
 #' @importFrom ggplot2 ggplot
+#' @importFrom graphics hist
 #'
-#' @examples
-#' teste
+#'
 #'
 #' @export
 hist.plot <- function(mat, type = c("number", "prop")) {

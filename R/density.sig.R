@@ -2,14 +2,15 @@
 #'
 #' @description teste.
 #'
-#' @param mat teste
+#' @param mat1 teste
+#' @param mat2 teste
+#' @param type teste
 #'
 #' @return teste.
 #'
 #' @importFrom ggplot2 ggplot
 #'
-#' @examples
-#' teste
+#'
 #'
 #' @export
 density.sig <- function(mat1, mat2, type = c(1,2,3)) {

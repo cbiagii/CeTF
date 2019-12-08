@@ -4,18 +4,18 @@
 \alias{density.sig}
 \title{density plot}
 \usage{
-density.sig(mat1, mat2, type = c(1, 2, 3))
+\method{density}{sig}(mat1, mat2, type = c(1, 2, 3))
 }
 \arguments{
-\item{mat}{teste}
+\item{mat1}{teste}
+
+\item{mat2}{teste}
+
+\item{type}{teste}
 }
 \value{
 teste.
 }
 \description{
 teste.
-}
-\examples{
-teste
-
 }

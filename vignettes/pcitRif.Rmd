@@ -1,0 +1,27 @@
+---
+title: "Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory"
+author: "Carlos Biagi Jr and Wilson Araújo da Silva Junior"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+output:
+  rmarkdown::html_document:
+    highlight: pygments
+    toc: true
+    fig_width: 5
+bibliography: library.bib
+vignette: >
+  %\VignetteIndexEntry{Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(tidy = FALSE,
+                      cache = FALSE,
+                      dev = "png",
+                      message = FALSE, error = FALSE, warning = TRUE)
+```	
+
+# Standard workflow
+![Figure RIF](fig1.jpg)
+

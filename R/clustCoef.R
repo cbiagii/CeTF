@@ -8,8 +8,7 @@
 #'
 #' @importFrom stats median
 #'
-#' @examples
-#' teste
+#'
 #'
 #' @export
 clustCoef <- function(mat) {
