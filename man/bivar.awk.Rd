@@ -4,10 +4,10 @@
 \alias{bivar.awk}
 \title{Statistics from a data frame}
 \usage{
-bivar.awk(mat)
+bivar.awk(x)
 }
 \arguments{
-\item{mat}{Dataframe of two columns.}
+\item{x}{Dataframe of two columns.}
 }
 \value{
 Report with statistics.

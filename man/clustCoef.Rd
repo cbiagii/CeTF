@@ -2,16 +2,22 @@
 % Please edit documentation in R/clustCoef.R
 \name{clustCoef}
 \alias{clustCoef}
-\title{ClustCoef}
+\title{Calculate the clustering coefficient}
 \usage{
 clustCoef(mat)
 }
 \arguments{
-\item{mat}{teste}
+\item{mat}{An adjacency matrix. Calculating the clustering coefficient only makes sense if some connections are zero i.e. no connection.}
 }
 \value{
-teste.
+The clustering coefficient(s) for the adjacency matrix.
 }
 \description{
-teste.
+Calculate the clustering coefficient for an adjacency matrix.
+}
+\examples{
+data("simNorm")
+results <- PCIT(simNorm)
+clustCoef(results[[3]])
+
 }

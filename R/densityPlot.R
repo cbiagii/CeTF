@@ -1,17 +1,20 @@
-#' @title density plot
+#' @title Density Plot of Raw Correlation Coefficients
 #'
-#' @description teste.
+#' @description Generate the density plot for an adjacency matrix.
 #'
-#' @param mat teste
+#' @param mat An adjacency matrix.
 #'
-#' @return teste.
+#' @return The density plot of raw correlation coefficients.
 #'
-#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 ggplot aes geom_density scale_x_continuous scale_y_continuous ggtitle theme_bw theme geom_vline element_text element_line element_blank
 #'
-#'
+#' @examples
+#' data("simNorm")
+#' results <- PCIT(simNorm)
+#' densityPlot(results[[2]])
 #'
 #' @export
-density.plot <- function(mat){
+densityPlot <- function(mat){
   if (!is.data.frame(mat) & !is.matrix(mat)) {
     stop("mat must be a dataframe or a matrix")
   }

@@ -2,16 +2,21 @@
 % Please edit documentation in R/clustCoefPercentage.R
 \name{clustCoefPercentage}
 \alias{clustCoefPercentage}
-\title{clustCoefPercentage}
+\title{Calculate the clustering coefficient as a percentage}
 \usage{
 clustCoefPercentage(mat)
 }
 \arguments{
-\item{mat}{teste}
+\item{mat}{An adjacency matrix. Calculating the clustering coefficient percentage only makes sense if some connections are zero i.e. no connection.}
 }
 \value{
-teste.
+A numerical between 0 and 100.
 }
 \description{
-teste.
+Given an adjacency matrix, calculate the clustering coefficient as a percentage of non-zero adjacencies.
+}
+\examples{
+data(simNorm)
+clustCoefPercentage(simNorm)
+
 }

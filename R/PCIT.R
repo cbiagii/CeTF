@@ -1,19 +1,23 @@
-#' @title Partial Correlation and Information Theory analysis
+#' @title Partial Correlation and Information Theory (PCIT) analysis
 #'
-#' @description teste.
+#' @description The PCIT algorithm (Reverter and Chan, 2008) identify the significant correlation of a given matrix of expression.
 #'
-#' @param input teste.
+#' @param input A correlation matrix.
+#' @param tolType Type of tolerance given the 3 pairwise correlations (mean, min, max, median).
 #'
-#' @return teste.
+#' @return A list with the significant correlations, raw adjacency matrix and significant adjacency matrix.
+#'
+#' @examples
+#' data("simNorm")
+#' results <- PCIT(simNorm)
+#' head(results[[1]], 15)
 #'
 #' @importFrom reshape2 melt
 #' @importFrom stats cor
 #' @importFrom crayon green
 #'
-#'
-#'
 #' @export
-PCIT <- function(input){
+PCIT <- function(input, tolType = "mean"){
   if (!is.data.frame(input) & !is.matrix(input)) {
     stop("input must be a dataframe or a matrix")
   }
@@ -40,7 +44,7 @@ PCIT <- function(input){
         rxz <- gene_pcorr[i,k]
         ryz <- gene_pcorr[j,k]
 
-        tol <- tolerance(rxy, rxz, ryz, type = "mean")
+        tol <- tolerance(rxy, rxz, ryz, tolType = tolType)
 
         if (abs(rxy) < abs(rxz*tol) & abs(rxy) < abs(ryz*tol)) {
           gene_pcorr2[i,j] <- gene_pcorr2[j,i] <- 0
@@ -56,22 +60,22 @@ PCIT <- function(input){
       }
     }
   }
-  rm(gene_pcorr)
+  #rm(gene_pcorr)
 
   gene_corr <- melt(gene_corr)
   gene_corr <- gene_corr[duplicated(t(apply(gene_corr, 1, sort))), ]
   rownames(gene_corr) <- paste(gene_corr$Var1, gene_corr$Var2, sep = "_")
   gene_corr <- gene_corr[order(gene_corr$Var1), ]
 
-  gene_pcorr2 <- melt(gene_pcorr2)
-  rownames(gene_pcorr2) <- paste(gene_pcorr2$Var1, gene_pcorr2$Var2, sep = "_")
-  gene_pcorr2 <- gene_pcorr2[rownames(gene_corr), ]
+  tmp1 <- melt(gene_pcorr2)
+  rownames(tmp1) <- paste(tmp1$Var1, tmp1$Var2, sep = "_")
+  tmp1 <- tmp1[rownames(gene_corr), ]
 
   out <- data.frame(gene1 = gene_corr$Var1,
                     gene2 = gene_corr$Var2,
                     corr1 = round(gene_corr$value, 5),
-                    corr2 = round(gene_pcorr2$value, 5))
-  rm(gene_corr, gene_pcorr2)
+                    corr2 = round(tmp1$value, 5))
+  #rm(gene_corr, gene_pcorr2)
 
-  return(out)
+  return(list(out, gene_pcorr, gene_pcorr2))
 }

@@ -1,14 +1,16 @@
-#' @title clustCoefPercentage
+#' @title Calculate the clustering coefficient as a percentage
 #'
-#' @description teste.
+#' @description Given an adjacency matrix, calculate the clustering coefficient as a percentage of non-zero adjacencies.
 #'
-#' @param mat teste
+#' @param mat An adjacency matrix. Calculating the clustering coefficient percentage only makes sense if some connections are zero i.e. no connection.
 #'
-#' @return teste.
+#' @return A numerical between 0 and 100.
 #'
 #' @importFrom stats median
 #'
-#'
+#' @examples
+#' data(simNorm)
+#' clustCoefPercentage(simNorm)
 #'
 #' @export
 clustCoefPercentage <- function(mat) {
