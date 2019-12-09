@@ -2,16 +2,24 @@
 % Please edit documentation in R/PCIT.R
 \name{PCIT}
 \alias{PCIT}
-\title{Partial Correlation and Information Theory analysis}
+\title{Partial Correlation and Information Theory (PCIT) analysis}
 \usage{
-PCIT(input)
+PCIT(input, tolType = "mean")
 }
 \arguments{
-\item{input}{teste.}
+\item{input}{A correlation matrix.}
+
+\item{tolType}{Type of tolerance given the 3 pairwise correlations (mean, min, max, median).}
 }
 \value{
-teste.
+A list with the significant correlations, raw adjacency matrix and significant adjacency matrix.
 }
 \description{
-teste.
+The PCIT algorithm (Reverter and Chan, 2008) identify the significant correlation of a given matrix of expression.
+}
+\examples{
+data("simNorm")
+results <- PCIT(simNorm)
+head(results[[1]], 15)
+
 }

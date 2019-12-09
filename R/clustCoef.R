@@ -1,14 +1,17 @@
-#' @title ClustCoef
+#' @title Calculate the clustering coefficient
 #'
-#' @description teste.
+#' @description Calculate the clustering coefficient for an adjacency matrix.
 #'
-#' @param mat teste
+#' @param mat An adjacency matrix. Calculating the clustering coefficient only makes sense if some connections are zero i.e. no connection.
 #'
-#' @return teste.
+#' @return The clustering coefficient(s) for the adjacency matrix.
 #'
 #' @importFrom stats median
 #'
-#'
+#' @examples
+#' data("simNorm")
+#' results <- PCIT(simNorm)
+#' clustCoef(results[[3]])
 #'
 #' @export
 clustCoef <- function(mat) {

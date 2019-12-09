@@ -4,24 +4,14 @@
 \name{simCounts}
 \alias{simCounts}
 \title{Simulated counts data}
-\format{An object of class \code{"cross"}; see \code{\link[qtl]{read.cross}}.}
-\source{
-\href{https://phenome.jax.org/projects/Moore1b}{QTL Archive}
-}
+\format{An dataframe.}
 \usage{
 data(simCounts)
 }
 \description{
-Data from a QTL experiment on gravitropism in
-Arabidopsis, with data on 162 recombinant inbred lines (Ler x
-Cvi). The outcome is the root tip angle (in degrees) at two-minute
-increments over eight hours.
+Simulated counts data created using PROPER package. This data contains 21,000 genes, 1,000 transcript factors and 20 samples (divided in two conditions).
 }
 \examples{
 data(simCounts)
-}
-\references{
-Moore et al. (2013) Genetics 195:1077-1086
-(\href{https://www.ncbi.nlm.nih.gov/pubmed/23979570}{PubMed})
 }
 \keyword{datasets}

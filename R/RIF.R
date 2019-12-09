@@ -1,21 +1,27 @@
-#' @title Regulatory Impactor Factors analysis
+#' @title Regulatory Impact Factors (RIF) analysis
 #'
-#' @description teste.
+#' @description The RIF algorithm (Reverter and Chan, 2010) identify critical transcript factors (TF) from gene expression data.
 #'
-#' @param input teste.
-#' @param nta teste.
-#' @param ntf teste.
-#' @param ncond1 teste.
-#' @param ncond2 teste.
+#' @param input A matrix of expression with differential expressed genes and transcript factors in rows, and the two conditions in columns.
+#' @param nta Number of differential expressed genes.
+#' @param ntf Number of transcript factors.
+#' @param ncond1 Number of condition 1.
+#' @param ncond2 Number of condition 2.
 #'
-#' @return teste.
+#' @return A dataframe with the regulatory impact factors metric for each transcript factor.
+#'
+#' @examples
+#' data("RIF_input")
+#' RIF_out <- RIF(input = RIF_input,
+#'nta = 104,
+#'ntf = 50,
+#'ncond1 = 10,
+#'ncond2 = 10)
 #'
 #' @importFrom utils txtProgressBar
 #' @importFrom stats cor
 #' @importFrom crayon green %+%
 #' @import pbapply pbapply
-#'
-#'
 #'
 #' @export
 RIF <- function(input, nta=NULL, ntf=NULL, ncond1=NULL, ncond2=NULL) {
@@ -66,12 +72,11 @@ RIF <- function(input, nta=NULL, ntf=NULL, ncond1=NULL, ncond2=NULL) {
   })
 
   df <- data.frame(matrix(unlist(tmp), nrow=length(tmp), byrow=T))
-  rif1 <- (df$X1 - mean(df[,1]))/sd(df[,1])
-  rif2 <- (df$X2 - mean(df[,2]))/sd(df[,2])
 
-  out <- data.frame(gene = rownames(tf),
-                     RIF1 = rif1,
-                     RIF2 = rif2)
+  out <- data.frame(TF = rownames(tf),
+                    avgexpr = rowMeans(tf),
+                    RIF1 = (df$X1 - mean(df[,1]))/sd(df[,1]),
+                    RIF2 = (df$X2 - mean(df[,2]))/sd(df[,2]))
 
   return(out)
 }

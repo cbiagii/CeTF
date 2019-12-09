@@ -6,9 +6,9 @@ Authors@R: c(person("Carlos", "Biagi Jr", email = "biagi@usp.br",
         role = c("aut", "cre")), person("Wilson", "Silva Junior", email =
         "wilsonjr@usp.br", role = c("aut")))
 Description: teste
-Imports: crayon, stats, ggplot2, pbapply, reshape2
+Imports: crayon, stats, pbapply, reshape2
 Suggests: knitr, rmarkdown
-Depends: R (>= 3.5)
+Depends: R (>= 3.5), ggplot2, gridExtra
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

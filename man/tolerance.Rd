@@ -2,22 +2,30 @@
 % Please edit documentation in R/tolerance.R
 \name{tolerance}
 \alias{tolerance}
-\title{Tolerance}
+\title{Tolerance between 3 pairwise correlations}
 \usage{
-tolerance(a, b, c, type = c("mean", "min", "max", "median"))
+tolerance(a, b, c, tolType = "mean")
 }
 \arguments{
-\item{a}{teste}
+\item{a}{Interactor 1.}
 
-\item{b}{teste}
+\item{b}{Interactor 2.}
 
-\item{c}{teste}
+\item{c}{Interactor 3.}
 
-\item{type}{teste}
+\item{tolType}{Type of tolerance given the 3 pairwise correlations (mean, min, max, median).}
 }
 \value{
-teste.
+Value of tolerance.
 }
 \description{
-teste.
+Function for calculating the local tolerance given the 3 pairwise correlations between a, b and c.
+}
+\examples{
+data("simNorm")
+tolerance(0.5, -0.65, 0.23, tolType = "mean")
+tolerance(0.5, -0.65, 0.23, tolType = "max")
+tolerance(0.5, -0.65, 0.23, tolType = "min")
+tolerance(0.5, -0.65, 0.23, tolType = "median")
+
 }

@@ -2,24 +2,33 @@
 % Please edit documentation in R/RIF.R
 \name{RIF}
 \alias{RIF}
-\title{Regulatory Impactor Factors analysis}
+\title{Regulatory Impact Factors (RIF) analysis}
 \usage{
 RIF(input, nta = NULL, ntf = NULL, ncond1 = NULL, ncond2 = NULL)
 }
 \arguments{
-\item{input}{teste.}
+\item{input}{A matrix of expression with differential expressed genes and transcript factors in rows, and the two conditions in columns.}
 
-\item{nta}{teste.}
+\item{nta}{Number of differential expressed genes.}
 
-\item{ntf}{teste.}
+\item{ntf}{Number of transcript factors.}
 
-\item{ncond1}{teste.}
+\item{ncond1}{Number of condition 1.}
 
-\item{ncond2}{teste.}
+\item{ncond2}{Number of condition 2.}
 }
 \value{
-teste.
+A dataframe with the regulatory impact factors metric for each transcript factor.
 }
 \description{
-teste.
+The RIF algorithm (Reverter and Chan, 2010) identify critical transcript factors (TF) from gene expression data.
+}
+\examples{
+data("RIF_input")
+RIF_out <- RIF(input = RIF_input,
+nta = 104,
+ntf = 50,
+ncond1 = 10,
+ncond2 = 10)
+
 }

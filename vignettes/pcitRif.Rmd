@@ -22,6 +22,51 @@ knitr::opts_chunk$set(tidy = FALSE,
                       message = FALSE, error = FALSE, warning = TRUE)
 ```	
 
-# Standard workflow
-![Figure RIF](fig1.jpg)
+# Introduction
+This vignette provides the necessary instructions for performing the Partial Correlation coefficient with Information Theory (PCIT) [@reverter2008combining] and Regulatory Impact Factors (RIF) [@reverter2010regulatory] algorithm.
 
+The PCIT algorithm identifies meaningful correlations to define edges in a weighted network. The algorithm can be applied to any correlation-based network including but not limited to gene co-expression networks. While the RIF algorithm identify critical transcript factors (TF) from gene expression data. 
+
+These two algorithms when combined provide a very relevant layer of information for gene expression studies (Microarray, RNA-seq and single-cell RNA-seq data).
+
+
+## Regulatory Information Factors (RIF)
+A gene expression data from microarray, RNA-seq or single-cell RNA-seq spanning two biological conditions of interest (e.g. normal/tumor, healthy/disease, malignant/nonmalignant) is subjected to standard normalization techniques and significance analysis to identify the target genes whose expression is differentially expressed (DE) between the two conditions. Then, the regulators (e.g. Transcript Factors genes) are identified in the data. The TF genes can be obtained from the literature [@wang2015regulator][@vaquerizas2009census].
+Next, the co-expression correlation between each TF and the DE genes is computed for each of the two conditions. This allows for the computation of the differential wiring (DW) from the difference in co-expression correlation existing between a TF and a DE genes in the two conditions. As a result, RIF analysis assigns an extreme score to those TF that are consistently most differentially co-expressed with the highly abundant and highly DE genes (case of RIF1 score), and to those TF with the most altered ability to act as predictors of the abundance of DE genes (case of RIF2 score). A given TF may not show a change in expression profile between the two conditions to score highly by RIF as long as it shows a big change in co-expression with the DE genes. To this particular, the profile of the TF gene (triangle, solid line) is identical in both conditions (slightly downwards). Instead, the DE gene (circle, dashed line) is clearly over-expressed in condition B. Importantly, the expression of the TF and the DE gene shows a strong positive correlation in condition A, and a strong negative correlation in condition B.
+
+![A schematic diagram of the RIF analysis. (A) Gene expression data is normalized and statistically assessed to identify differentially expressed (DE) genes and differentially PIF genes (represented by circles) which together are deemed as the Target genes; Simultaneously, (B) transcription factors (TF, represented by triangles) included in the microarray are collected and (C) their co-expression correlation with the target genes computed for each of the two conditions of interest; Finally, (D) the way in which TF and target genes are differentially co-expressed between the two conditions is used to compute the relevance of each TF according to RIF1 and RIF2.](fig1.jpg){width=50%}
+
+## Partial Correlation with Information Theory (PCIT)
+The proposed PCIT algorithm contains two distinct steps as follows:
+
+#### **Step 1 - Partial correlations**
+For every trio of genes in x, y and z, the three first-order partial correlation coefficients are computed by:
+
+$$r_{xy.z} = \frac{r_{xy} - r_{xz} r_{yz}}{\sqrt{(1-r^{2}_{xz})(1-r^{2}_{yz})}}$$, 
+and similarly for $r_{xz.y}$ and $r_{yz.x}$.
+
+The partial correlation coefficient between *x* and *y* given *z* (here denoted by $r_{xy.z}$) indicates the strength of the linear relationship between *x* and *y* that is independent of (uncorrelated with) *z*. Calculating the ordinary (or unconditional or zero-order) correlation coefficient and comparing it with the partial correlation, we might see that the association between the two variables has been sharply reduced after eliminating the effect of the third variable.
+
+#### **Step 2 - Information theory**
+We invoke the Data Processing Inequality (DPI) theorem of Information Theory which states that 'no clever manipulation of the data can improve the inference that can be made from the data' [@cover2012elements]. For every trio of genes, and in order to obtain the tolerance level ($\varepsilon$) to be used as the local threshold for capturing significant associations, the average ratio of partial to direct correlation is computed as follows:
+
+$$\varepsilon = (\frac{r_{xy.z}}{r_{xy}} + \frac{r_{xz.y}}{r_{xz}} + \frac{r_{yz.x}}{r_{yz}})$$
+In the context of our network reconstruction, a connection between genes *x* and *y* is discarded if:
+
+$$|r_{xy}| \le |\varepsilon r_{xz}| and |r_{xy}| \le |\varepsilon r_{yz}|$$
+Otherwise, the association is defined as significant, and a connection between the pair of genes is established in the reconstruction of the GCN. To ascertain the significance of the association between genes *x* and *y*, the above mentioned Steps 1 and 2 are repeated for each of the remaining *n−2* genes (denoted here by *z*).
+
+
+
+# Workflow
+
+
+
+# Session info
+
+```{r sessionInfo}
+sessionInfo()
+```
+
+
+# References

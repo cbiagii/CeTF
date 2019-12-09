@@ -2,7 +2,7 @@
 % Please edit documentation in R/runAnalysis.R
 \name{runAnalysis}
 \alias{runAnalysis}
-\title{Partial Correlation and Information Theory analysis}
+\title{Whole analysis of Regulatory Impact Factors (RIF) and Partial Correlation and Information Theory analysis (PCIT)}
 \usage{
 runAnalysis(
   counts,
@@ -10,25 +10,40 @@ runAnalysis(
   lfc = 2.57,
   TFs = NULL,
   ncond1 = NULL,
-  ncond2 = NULL
+  ncond2 = NULL,
+  tolType = "mean"
 )
 }
 \arguments{
-\item{counts}{teste.}
+\item{counts}{Count data where the rows are genes and coluns the samples (conditions).}
 
-\item{conditions}{teste}
+\item{conditions}{A vector of character identifying the names of conditions (i.e. c("normal", "tumoral"))}
 
-\item{lfc}{teste}
+\item{lfc}{logFoldChange module threshold to define a gene as differentially expressed.}
 
-\item{TFs}{teste}
+\item{TFs}{A vector of character with all transcripts factors of specific organism.}
 
-\item{ncond1}{teste}
+\item{ncond1}{Number of samples that correspond to first condition.}
 
-\item{ncond2}{teste}
+\item{ncond2}{Number of samples that correspond to second condition.}
+
+\item{tolType}{Type of tolerance given the 3 pairwise correlations (mean, min, max, median).}
 }
 \value{
-teste.
+A list with two dataframes with the output network of genes/TFs for the first and second conditions, a dataframe with the ket TFs and a dataframe with correspondent separation of genes and TFs. This outputs can be used to generate the networks in Cytoscape.
 }
 \description{
-teste.
+This function uses RIF (Reverter and Chan, 2010) and PCIT (Reverter and Chan, 2008) to run the whole pipeline analysis.
+}
+\examples{
+data("simCounts")
+
+out <- runAnalysis(counts = simCounts,
+conditions=c("cond1", "cond2"),
+lfc = 2.57,
+TFs = paste0("TF_", 1:1000),
+ncond1 = 10,
+ncond2= 10,
+tolType = "mean")
+
 }

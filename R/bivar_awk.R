@@ -1,8 +1,8 @@
 #' @title Statistics from a data frame
 #'
-#' @description  Provides a report of number of elements, mean, standard deviation, minimum and maximum for each of two columns and calculate the correlation and regression for the columns.
+#' @description Provides a report of number of elements, mean, standard deviation, minimum and maximum for each of two columns and calculate the correlation and regression for the columns.
 #'
-#' @param mat Dataframe of two columns.
+#' @param x Dataframe of two columns.
 #'
 #' @return Report with statistics.
 #'
@@ -14,9 +14,9 @@
 #' bivar.awk(df)
 #'
 #' @export
-bivar.awk <- function(mat) {
-  if (!is.data.frame(mat) & !is.matrix(mat)) {
-    stop("mat must be a dataframe or a matrix")
+bivar.awk <- function(x) {
+  if (!is.data.frame(x) & !is.matrix(x)) {
+    stop("x must be a dataframe or a matrix")
   }
 
   cat(green(
