@@ -5,51 +5,33 @@
 #' @param counts Count data where the rows are genes and coluns the samples (conditions).
 #' @param conditions A vector of character identifying the names of conditions (i.e. c("normal", "tumoral"))
 #' @param lfc logFoldChange module threshold to define a gene as differentially expressed.
-<<<<<<< HEAD
 #' @param padj Sifnificance value to define a gene as differentially expressed.
-=======
->>>>>>> c93ff7c0c607f2965b377790cc255e7a62430b72
 #' @param TFs A vector of character with all transcripts factors of specific organism.
 #' @param ncond1 Number of samples that correspond to first condition.
 #' @param ncond2 Number of samples that correspond to second condition.
 #' @param tolType Type of tolerance given the 3 pairwise correlations (mean, min, max, median).
-<<<<<<< HEAD
 #' @param diffMethod Method to calculate Differential Expressed (DE) genes (e.g. Reverter and DESEq2)
-=======
->>>>>>> c93ff7c0c607f2965b377790cc255e7a62430b72
 #'
 #' @return A list with two dataframes with the output network of genes/TFs for the first and second conditions, a dataframe with the ket TFs and a dataframe with correspondent separation of genes and TFs. This outputs can be used to generate the networks in Cytoscape.
 #'
 #' @examples
 #' data("simCounts")
-#'
 #' out <- runAnalysis(counts = simCounts,
 #' conditions=c("cond1", "cond2"),
 #' lfc = 2.57,
-<<<<<<< HEAD
 #' padj = 0.05,
 #' TFs = paste0("TF_", 1:1000),
 #' ncond1 = 10,
 #' ncond2= 10,
 #' tolType = "mean",
 #' diffMethod = "Reverter")
-=======
-#' TFs = paste0("TF_", 1:1000),
-#' ncond1 = 10,
-#' ncond2= 10)
->>>>>>> c93ff7c0c607f2965b377790cc255e7a62430b72
 #'
 #' @importFrom reshape2 melt
 #' @importFrom stats cor
 #' @importFrom crayon green
 #'
 #' @export
-<<<<<<< HEAD
 runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, padj = 0.05, TFs = NULL, ncond1 = NULL, ncond2= NULL, tolType = "mean", diffMethod = "Reverter") {
-=======
-runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 = NULL, ncond2= NULL, tolType = "mean") {
->>>>>>> c93ff7c0c607f2965b377790cc255e7a62430b72
-
   if (!is.data.frame(counts) & !is.matrix(counts)) {
     stop("counts must be a dataframe or a matrix")
   }
@@ -70,6 +52,9 @@ runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 
   cat(green(
     "##### STEP 1: TPM filter #####" %+% '\n'
   ))
+
+  colnames(counts)[1:ncond1] <- paste0(colnames(counts)[1:ncond1], "_", conditions[1])
+  colnames(counts)[(ncond1+1):(ncond1+ncond2)] <- paste0(colnames(counts)[(ncond1+1):(ncond1+ncond2)], "_", conditions[2])
 
   tpm.j <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
   tmp1 <- apply(tpm.j != 0, 1, sum)
@@ -101,7 +86,7 @@ runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 
     de.j <- cbind(de.j, diff = (tmp1-(sum(tmp1)/length(tmp1)))/sqrt(var))
     DE_unique <- subset(de.j, abs(de.j$diff) > lfc)
     Target <- rownames(DE_unique)
-  } else if (diffMethod = "DESeq2") {
+  } else if (diffMethod == "DESeq2") {
     tmp1 <- counts[rownames(Clean_Dat), ]
     anno <- data.frame(cond = c(rep(conditions[1], ncond1), rep(conditions[2], ncond2)),
                        row.names = colnames(counts))
@@ -122,8 +107,8 @@ runAnalysis <- function(counts, conditions=NULL, lfc = 2.57, TFs = NULL, ncond1 
     "##### STEP 3: Regulatory Impact Factors analysis #####" %+% '\n'
   ))
 
-  RIF_input <- Clean_Dat[c(Target, TF_unique), c(grep(conditions[1], colnames(Clean_Dat)),
-                                                 grep(conditions[2], colnames(Clean_Dat)))]
+  RIF_input <- Clean_Dat[c(Target, TF_unique), c(grep(paste0("_", conditions[1]), colnames(Clean_Dat), fixed = T),
+                                                 grep(paste0("_", conditions[2]), colnames(Clean_Dat)))]
 
   #Run RIF
   RIF_out <- RIF(input = RIF_input,

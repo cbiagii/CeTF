@@ -8,10 +8,12 @@ runAnalysis(
   counts,
   conditions = NULL,
   lfc = 2.57,
+  padj = 0.05,
   TFs = NULL,
   ncond1 = NULL,
   ncond2 = NULL,
-  tolType = "mean"
+  tolType = "mean",
+  diffMethod = "Reverter"
 )
 }
 \arguments{
@@ -21,6 +23,8 @@ runAnalysis(
 
 \item{lfc}{logFoldChange module threshold to define a gene as differentially expressed.}
 
+\item{padj}{Sifnificance value to define a gene as differentially expressed.}
+
 \item{TFs}{A vector of character with all transcripts factors of specific organism.}
 
 \item{ncond1}{Number of samples that correspond to first condition.}
@@ -28,6 +32,8 @@ runAnalysis(
 \item{ncond2}{Number of samples that correspond to second condition.}
 
 \item{tolType}{Type of tolerance given the 3 pairwise correlations (mean, min, max, median).}
+
+\item{diffMethod}{Method to calculate Differential Expressed (DE) genes (e.g. Reverter and DESEq2)}
 }
 \value{
 A list with two dataframes with the output network of genes/TFs for the first and second conditions, a dataframe with the ket TFs and a dataframe with correspondent separation of genes and TFs. This outputs can be used to generate the networks in Cytoscape.
@@ -37,17 +43,14 @@ This function uses RIF (Reverter and Chan, 2010) and PCIT (Reverter and Chan, 20
 }
 \examples{
 data("simCounts")
-
 out <- runAnalysis(counts = simCounts,
 conditions=c("cond1", "cond2"),
 lfc = 2.57,
+padj = 0.05,
 TFs = paste0("TF_", 1:1000),
 ncond1 = 10,
-<<<<<<< HEAD
 ncond2= 10,
-tolType = "mean")
-=======
-ncond2= 10)
->>>>>>> c93ff7c0c607f2965b377790cc255e7a62430b72
+tolType = "mean",
+diffMethod = "Reverter")
 
 }

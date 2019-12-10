@@ -8,7 +8,7 @@ Authors@R: c(person("Carlos", "Biagi Jr", email = "biagi@usp.br",
 Description: teste
 Imports: crayon, stats, pbapply, reshape2
 Suggests: knitr, rmarkdown
-Depends: R (>= 3.5), ggplot2, gridExtra
+Depends: R (>= 3.5), ggplot2, gridExtra, DESeq2
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

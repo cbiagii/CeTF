@@ -59,7 +59,154 @@ Otherwise, the association is defined as significant, and a connection between t
 
 
 # Workflow
+There are many ways to perform the analysis. Next sections will be splited by steps, and finishing with the complete analysis. We will use the **airway** [@himes2014rna] dataset in the following sections. This dataset provides a RNA-seq count data from four human ASM cell lines that were treated with dexamenthasone - a potent synthetic glucocorticoid. So, this dataset has 4 samples untreated and other 4 samples with the treatment.
 
+## PCIT
+```{r PCIT, eval=FALSE}
+library(airway)
+data("airway")
+anno <- as.data.frame(colData(airway))
+counts <- assay(airway)
+counts <- counts[, order(anno$dex, decreasing = T)]
+
+tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
+Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
+
+PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
+
+PCIT_out <- PCIT(PCIT_input, tolType = "mean")
+```
+
+## Histogram of connectivity distribution
+```{r hist, eval=FALSE}
+library(airway)
+data("airway")
+anno <- as.data.frame(colData(airway))
+counts <- assay(airway)
+counts <- counts[, order(anno$dex, decreasing = T)]
+
+tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
+Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
+
+PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
+
+PCIT_out <- PCIT(PCIT_input, tolType = "mean")
+
+histPlot(PCIT_out[[3]])
+```
+
+## Density Plot of Raw Correlation Coefficients
+```{r densityRaw, eval=FALSE}
+library(airway)
+data("airway")
+anno <- as.data.frame(colData(airway))
+counts <- assay(airway)
+counts <- counts[, order(anno$dex, decreasing = T)]
+
+tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
+Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
+
+PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
+
+PCIT_out <- PCIT(PCIT_input, tolType = "mean")
+
+densityPlot(PCIT_out[[2]])
+```
+
+## Density Plot of raw correlation and significant PCIT
+```{r densitySig, eval=FALSE}
+library(airway)
+data("airway")
+anno <- as.data.frame(colData(airway))
+counts <- assay(airway)
+counts <- counts[, order(anno$dex, decreasing = T)]
+
+tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
+Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
+
+PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
+
+PCIT_out <- PCIT(PCIT_input, tolType = "mean")
+
+densitySig(mat1 = PCIT_out[[2]], 
+           mat2 = PCIT_out[[3]], 
+           threshold = 0.5)
+```
+
+## Differential Expresison analysis
+```{r DE, eval=FALSE}
+library(airway)
+data("airway")
+anno <- as.data.frame(colData(airway))
+counts <- assay(airway)
+counts <- counts[, order(anno$dex, decreasing = T)]
+
+anno <- data.frame(cond = c(rep("untrt", 4), rep("trt", 4)), 
+                   row.names = colnames(counts))
+
+out <- expDiff(counts = counts,
+           anno = anno,
+           conditions = c("untrt", "trt"),
+           lfc = 2,
+           padj = 0.05)
+```
+
+## RIF
+```{r RIF, eval=FALSE}
+library(airway)
+data("airway")
+anno <- as.data.frame(colData(airway))
+counts <- assay(airway)
+counts <- counts[, order(anno$dex, decreasing = T)]
+
+tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
+Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
+Clean_Dat <- Clean_Dat[rowSums(Clean_Dat)>60, ]
+
+data("TFs")
+TFs <- rownames(Clean_Dat)[rownames(Clean_Dat) %in% TFs]
+Target <- setdiff(rownames(Clean_Dat), TFs)
+                    
+RIF_input <- Clean_Dat[c(Target, TFs), ]
+
+RIF_out <- RIF(input = RIF_input,
+               nta = length(Target),
+               ntf = length(TFs),
+               ncond1 = 4,
+               ncond2 = 4)
+```
+
+## Complete Analysis
+```{r all, eval=FALSE}
+library(airway)
+data("airway")
+anno <- as.data.frame(colData(airway))
+counts <- assay(airway)
+counts <- counts[, order(anno$dex, decreasing = T)]
+
+data("TFs")
+
+out <- runAnalysis(counts = counts, 
+                   conditions=c("untrt", "trt"),
+                   lfc = 3.5,
+                   padj = 0.05,
+                   TFs = TFs,
+                   ncond1 = 4,
+                   ncond2= 4,
+                   tolType = "mean",
+                   diffMethod = "Reverter")
+
+
+out <- runAnalysis(counts = counts, 
+                   conditions=c("untrt", "trt"),
+                   lfc = 2,
+                   padj = 0.05,
+                   TFs = convert$ENSEMBL,
+                   ncond1 = 4,
+                   ncond2= 4,
+                   tolType = "mean",
+                   diffMethod = "DESeq2")
+```
 
 
 # Session info

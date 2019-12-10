@@ -51,4 +51,15 @@
   author    = {Cover, Thomas M and Thomas, Joy A},
 }
 
+@Article{himes2014rna,
+  author    = {Himes, Blanca E and Jiang, Xiaofeng and Wagner, Peter and Hu, Ruoxi and Wang, Qiyu and Klanderman, Barbara and Whitaker, Reid M and Duan, Qingling and Lasky-Su, Jessica and Nikolos, Christina and others},
+  title     = {RNA-Seq transcriptome profiling identifies CRISPLD2 as a glucocorticoid responsive gene that modulates cytokine function in airway smooth muscle cells},
+  journal   = {PloS one},
+  year      = {2014},
+  volume    = {9},
+  number    = {6},
+  pages     = {e99625},
+  publisher = {Public Library of Science},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}

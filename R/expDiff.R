@@ -23,7 +23,7 @@
 #'             lfc = 2,
 #'             padj = 0.05)
 #'
-#' @importFrom DESeq2 DESeqDataSetFromMatrix DESeq results
+#' @importFrom DESeq2 DESeqDataSetFromMatrix DESeq results colData
 #' @importFrom stats relevel
 #'
 #' @export
