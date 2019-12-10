@@ -20,7 +20,7 @@ The density plot of raw correlation with significant PCIT values.
 Generate the density plot for adjacency matrices.
 }
 \examples{
-data("simNorm")
+data('simNorm')
 results <- PCIT(simNorm)
 
 densitySig(mat1 = results[[2]],

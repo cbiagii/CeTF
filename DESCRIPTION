@@ -2,18 +2,30 @@ Package: pcitRif
 Type: Package
 Title: Regulatory Impact Factors and Partial Correlation and Information Theory
 Version: 0.1.0
-Authors@R: c(person("Carlos", "Biagi Jr", email = "biagi@usp.br",
-        role = c("aut", "cre")), person("Wilson", "Silva Junior", email =
-        "wilsonjr@usp.br", role = c("aut")))
+Authors@R: c(person("Carlos", "Biagi Jr", email = "cbiagijr@gmail.com", role = c("aut", "cre")),
+        person("Ricardo", "Perecin Nociti", email = "rnociti@gmail.com", role = c("aut")),
+        person("Patrícia", "Ruy", email = "patiruy@gmail.com", role = c("aut")),
+        person("Marcelo", "Gomes", email = "marcelogomesrp@gmail.com", role = c("aut")),
+        person("João Paulo", "Bianchi Ximenez", email = "joaopaulo.ximenez@me.com", role = c("aut")),
+        person("Rafael", "dos Santos Bezerra", email = "rafaelbezerra50@yahoo.com", role = c("aut")),
+        person("Wilson", "Silva Junior", email = "wilsonjr@usp.br", role = c("aut")))
 Description: teste
-Imports: crayon, stats, pbapply, reshape2
-Suggests: knitr, rmarkdown
-Depends: R (>= 3.5), ggplot2, gridExtra, DESeq2
+Imports: crayon, stats, pbapply, reshape2, kableExtra, graphics, utils
+Suggests: knitr, rmarkdown, airway
+Depends: R (>= 3.6), ggplot2, gridExtra, DESeq2, SummarizedExperiment, methods, BiocManager
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
+biocViews: Sequencing, RNASeq, Microarray, GeneExpression, Transcription,
+        Normalization, DifferentialExpression, SingleCell, Network, 
+        Regression, ChIPSeq, ImmunoOncology, Coverage
 VignetteBuilder: knitr
-Author: Carlos Biagi Jr [aut, cre],
+Author: Carlos Biagi Jr [aut, cre]
+  Ricardo Perecin Nociti [aut]
+  Patrícia Ruy [aut]
+  Marcelo Gomes [aut]
+  João Paulo Bianchi Ximenez [aut]
+  Rafael dos Santos Bezerra [aut]
   Wilson Silva Junior [aut]
-Maintainer: Carlos Biagi Jr <biagi@usp.br>
+Maintainer: Carlos Biagi Jr <cbiagijr@gmail.com>

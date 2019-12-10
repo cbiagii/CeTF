@@ -16,7 +16,7 @@ The clustering coefficient(s) for the adjacency matrix.
 Calculate the clustering coefficient for an adjacency matrix.
 }
 \examples{
-data("simNorm")
+data('simNorm')
 results <- PCIT(simNorm)
 clustCoef(results[[3]])
 

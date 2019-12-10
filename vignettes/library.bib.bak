@@ -62,4 +62,15 @@
   publisher = {Public Library of Science},
 }
 
+@Article{shannon2003cytoscape,
+  author    = {Shannon, Paul and Markiel, Andrew and Ozier, Owen and Baliga, Nitin S and Wang, Jonathan T and Ramage, Daniel and Amin, Nada and Schwikowski, Benno and Ideker, Trey},
+  title     = {Cytoscape: a software environment for integrated models of biomolecular interaction networks},
+  journal   = {Genome research},
+  year      = {2003},
+  volume    = {13},
+  number    = {11},
+  pages     = {2498--2504},
+  publisher = {Cold Spring Harbor Lab},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}

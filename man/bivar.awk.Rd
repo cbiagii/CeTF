@@ -13,10 +13,14 @@ bivar.awk(x)
 Report with statistics.
 }
 \description{
-Provides a report of number of elements, mean, standard deviation, minimum and maximum for each of two columns and calculate the correlation and regression for the columns.
+Provides a report of number of elements, mean,
+standard deviation, minimum and maximum for each of two
+columns and calculate the correlation and regression for
+the columns.
 }
 \examples{
-df <- data.frame(a = sample(1:1000, 100, replace=TRUE), b = sample(1:1000, 100, replace=TRUE))
+df <- data.frame(a = sample(1:1000, 100, replace=TRUE),
+b = sample(1:1000, 100, replace=TRUE))
 bivar.awk(df)
 
 }

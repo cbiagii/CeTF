@@ -9,7 +9,7 @@ expDiff(counts, anno = NULL, conditions = NULL, lfc = 1.5, padj = 0.05)
 \arguments{
 \item{counts}{Count data where the rows are genes and coluns the samples (conditions).}
 
-\item{anno}{A dataframe of only one column. The columns must contain the conditions and be named as "cond", and the rownames must be the names of samples.}
+\item{anno}{A dataframe of only one column. The columns must contain the conditions and be named as 'cond', and the rownames must be the names of samples.}
 
 \item{conditions}{A character vector containing the name of the two conditions. The first name will be selected as reference.}
 
@@ -24,13 +24,14 @@ A character with the names of differentially expressed genes.
 This function calculate the differential expressed genes for two conditions.
 }
 \examples{
-data("simCounts")
-colnames(simCounts) <- paste0("Sample", 1:20)
-anno <- data.frame(cond = c(rep("cond1", 10), rep("cond2", 10)),
-                 row.names = colnames(simCounts))
+data('simCounts')
+colnames(simCounts) <- paste0('Sample', 1:20)
+anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)),
+row.names = colnames(simCounts))
+
 out <- expDiff(counts = simCounts,
             anno = anno,
-            conditions = c("cond1", "cond2"),
+            conditions = c('cond1', 'cond2'),
             lfc = 2,
             padj = 0.05)
 

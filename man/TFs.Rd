@@ -14,4 +14,7 @@ Transcripit Factors data from Kai Wang and Hiroki Nishida, 2015 for Homo sapiens
 \examples{
 data(TFs)
 }
+\references{
+\url{https://doi.org/10.1186/s12859-015-0552-x}
+}
 \keyword{datasets}

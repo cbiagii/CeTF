@@ -16,7 +16,7 @@ The histogram of connectivity distribution.
 Generate the histogram for adjacency matrix to show the clustering coefficient distribution.
 }
 \examples{
-data("simNorm")
+data('simNorm')
 results <- PCIT(simNorm)
 histPlot(results[[3]])
 

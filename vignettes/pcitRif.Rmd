@@ -1,6 +1,6 @@
 ---
 title: "Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory"
-author: "Carlos Biagi Jr and Wilson Araújo da Silva Junior"
+author: "Carlos Biagi Jr, Ricardo Perecin Nociti, Patrícia Ruy, Marcelo Gomes, João Paulo Bianchi Ximenez, Rafael dos Santos Bezerra, Wilson Araújo da Silva Junior"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 output:
   rmarkdown::html_document:
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(tidy = FALSE,
                       cache = FALSE,
                       dev = "png",
                       message = FALSE, error = FALSE, warning = TRUE)
-```	
+```
 
 # Introduction
 This vignette provides the necessary instructions for performing the Partial Correlation coefficient with Information Theory (PCIT) [@reverter2008combining] and Regulatory Impact Factors (RIF) [@reverter2010regulatory] algorithm.
@@ -57,135 +57,161 @@ $$|r_{xy}| \le |\varepsilon r_{xz}| and |r_{xy}| \le |\varepsilon r_{yz}|$$
 Otherwise, the association is defined as significant, and a connection between the pair of genes is established in the reconstruction of the GCN. To ascertain the significance of the association between genes *x* and *y*, the above mentioned Steps 1 and 2 are repeated for each of the remaining *n−2* genes (denoted here by *z*).
 
 
+# Installation
+To properly run **pcitRif** package is necessary to install some dependencies: for Linux users is necessary to install **libcurl4-openssl-dev**, **libxml2-dev** and **libssl-dev** dependencies.
+
+To install R packages dependencies, run:
+```{r install1, eval=FALSE}
+#CRAN dependencies
+packagesCRAN <- c("crayon", "pbapply", "reshape2", "kableExtra", "knitr", "rmarkdown", "ggplot2", "gridExtra", "BiocManager")
+install.packages(packagesCRAN[!packagesCRAN %in% installed.packages()[,1]])
+
+#Bioconductor dependencies
+packagesBioc <- c("airway", "SummarizedExperiment", "DESeq2")
+BiocManager::install(packagesBioc[!packagesBioc %in% installed.packages()[,1]])
+```
+
+Finally, to install pcitRif package:
+```{r install2, eval=FALSE}
+install.packages("/path/to/package/pcitRif_0.1.0.tar.gz")
+```
+
 
 # Workflow
-There are many ways to perform the analysis. Next sections will be splited by steps, and finishing with the complete analysis. We will use the **airway** [@himes2014rna] dataset in the following sections. This dataset provides a RNA-seq count data from four human ASM cell lines that were treated with dexamenthasone - a potent synthetic glucocorticoid. So, this dataset has 4 samples untreated and other 4 samples with the treatment.
+There are many ways to perform the analysis. Following sections will be splited by steps, and finishing with the complete analysis. We will use the **airway** [@himes2014rna] dataset in the following sections. This dataset provides a RNA-seq count data from four human ASM cell lines that were treated with dexamenthasone - a potent synthetic glucocorticoid. Briefly, this dataset has 4 samples untreated and other 4 samples with the treatment.
 
 ## PCIT
-```{r PCIT, eval=FALSE}
+The first option is to perform only the PCIT analysis. The output will be a list with 3 elements. The first one contains a dataframe with the pairwise correlation between genes (corr1) and the significant pairwise correlation (corr2 $neq$ 0). The second element of the list stores the adjacency matrix with all correlation. And the last element contains the adjacency matrix with only the significant values.
+```{r PCIT, eval=TRUE}
+# Loading packages
+library(pcitRif)
 library(airway)
-data("airway")
-anno <- as.data.frame(colData(airway))
-counts <- assay(airway)
-counts <- counts[, order(anno$dex, decreasing = T)]
+library(kableExtra)
+library(knitr)
 
+# Loading airway data
+data("airway")
+
+# Creating a variable with annotation data
+anno <- as.data.frame(colData(airway))
+
+# Creating a variable with count data
+counts <- assay(airway)
+
+# Sorting count data samples by conditions (untrt and trt)
+counts <- counts[, order(anno$dex, decreasing = TRUE)]
+
+# Converting count data to TPM
 tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
+
+# Count normalization
 Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
 
+# Subsetting the data by selecting the genes that have the highest expression values. Is recommended to perform PCIT analysis for each group of conditions.
 PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
 
+# Performing PCIT analysis
 PCIT_out <- PCIT(PCIT_input, tolType = "mean")
+kable(PCIT_out[[1]][1:10, ]) %>% kable_styling(bootstrap_options = "striped", full_width = FALSE)
+
+# Adjacency matrix: View(PCIT_out[[2]])
+# Adjacency matrix with only the significant values: View(PCIT_out[[3]])
 ```
 
 ## Histogram of connectivity distribution
-```{r hist, eval=FALSE}
-library(airway)
-data("airway")
-anno <- as.data.frame(colData(airway))
-counts <- assay(airway)
-counts <- counts[, order(anno$dex, decreasing = T)]
-
-tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
-Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
-
-PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
-
-PCIT_out <- PCIT(PCIT_input, tolType = "mean")
-
+After performing the PCIT analysis, it is possible to verify the histogram distribution of the clustering coefficient of the adjacency matrix with the significant values.
+```{r hist, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
 histPlot(PCIT_out[[3]])
 ```
 
 ## Density Plot of Raw Correlation Coefficients
-```{r densityRaw, eval=FALSE}
-library(airway)
-data("airway")
-anno <- as.data.frame(colData(airway))
-counts <- assay(airway)
-counts <- counts[, order(anno$dex, decreasing = T)]
-
-tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
-Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
-
-PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
-
-PCIT_out <- PCIT(PCIT_input, tolType = "mean")
-
+We can also, from the PCIT analysis result, generate a density plot for the raw adjacency matrix.
+```{r densityRaw, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
 densityPlot(PCIT_out[[2]])
 ```
 
 ## Density Plot of raw correlation and significant PCIT
-```{r densitySig, eval=FALSE}
-library(airway)
-data("airway")
-anno <- as.data.frame(colData(airway))
-counts <- assay(airway)
-counts <- counts[, order(anno$dex, decreasing = T)]
-
-tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
-Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
-
-PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
-
-PCIT_out <- PCIT(PCIT_input, tolType = "mean")
-
+As a last graph, we can generate the density plot only now with the significance values. We'll use the raw adjacency matrix and the adjacency matrix with significant values. It is necessary to define a cutoff of the correlation module (values between -1 and 1) that will be considered significant.
+```{r densitySig, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
 densitySig(mat1 = PCIT_out[[2]], 
            mat2 = PCIT_out[[3]], 
            threshold = 0.5)
 ```
 
-## Differential Expresison analysis
-```{r DE, eval=FALSE}
-library(airway)
-data("airway")
-anno <- as.data.frame(colData(airway))
-counts <- assay(airway)
-counts <- counts[, order(anno$dex, decreasing = T)]
-
-anno <- data.frame(cond = c(rep("untrt", 4), rep("trt", 4)), 
-                   row.names = colnames(counts))
-
-out <- expDiff(counts = counts,
-           anno = anno,
-           conditions = c("untrt", "trt"),
-           lfc = 2,
-           padj = 0.05)
-```
-
 ## RIF
-```{r RIF, eval=FALSE}
+To perform only the RIF analysis we will need the count data, an annotation table and a list with the Transcript Factors of specific organismo (Homo sapiens in this case). The output will be a dataframe with the average expression, RIF1 and RIF2 metrics for each Transcript Factor (TF).
+```{r RIF, eval=TRUE}
+# Loading packages
+library(pcitRif)
 library(airway)
-data("airway")
-anno <- as.data.frame(colData(airway))
-counts <- assay(airway)
-counts <- counts[, order(anno$dex, decreasing = T)]
+library(kableExtra)
+library(knitr)
 
+# Loading airway data
+data("airway")
+
+# Creating a variable with annotation data
+anno <- as.data.frame(colData(airway))
+
+# Creating a variable with count data
+counts <- assay(airway)
+
+# Sorting count data samples by conditions (untrt and trt)
+counts <- counts[, order(anno$dex, decreasing = TRUE)]
+
+# Converting count data to TPM
 tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
+
+# Count normalization
 Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
+
+# Subsetting the data by selecting the genes that have the highest expression values.
 Clean_Dat <- Clean_Dat[rowSums(Clean_Dat)>60, ]
 
+# Loading the Transcript Factors (TFs) character
 data("TFs")
+
+# Verifying which TFs are in the subsetted normalized data
 TFs <- rownames(Clean_Dat)[rownames(Clean_Dat) %in% TFs]
+
+# Selecting the Target genes
 Target <- setdiff(rownames(Clean_Dat), TFs)
-                    
+
+# Ordering rows of normalized count data
 RIF_input <- Clean_Dat[c(Target, TFs), ]
 
+# Performing RIF analysis
 RIF_out <- RIF(input = RIF_input,
                nta = length(Target),
                ntf = length(TFs),
                ncond1 = 4,
                ncond2 = 4)
+kable(RIF_out[1:10, ]) %>% kable_styling(bootstrap_options = "striped", full_width = FALSE)
 ```
 
 ## Complete Analysis
-```{r all, eval=FALSE}
+Finally, it is possible to run the entire analysis all at once. The output will be pcitRif object with all results generated between the different steps.
+```{r all, eval=TRUE}
+# Loading packages
 library(airway)
-data("airway")
-anno <- as.data.frame(colData(airway))
-counts <- assay(airway)
-counts <- counts[, order(anno$dex, decreasing = T)]
+library(pcitRif)
 
+# Loading airway data
+data("airway")
+
+# Creating a variable with annotation data
+anno <- as.data.frame(colData(airway))
+
+# Creating a variable with count data
+counts <- assay(airway)
+
+# Sorting count data samples by conditions (untrt and trt)
+counts <- counts[, order(anno$dex, decreasing = TRUE)]
+
+# Loading the Transcript Factors (TFs) character
 data("TFs")
 
+# Performing the complete analysis
 out <- runAnalysis(counts = counts, 
                    conditions=c("untrt", "trt"),
                    lfc = 3.5,
@@ -195,19 +221,9 @@ out <- runAnalysis(counts = counts,
                    ncond2= 4,
                    tolType = "mean",
                    diffMethod = "Reverter")
-
-
-out <- runAnalysis(counts = counts, 
-                   conditions=c("untrt", "trt"),
-                   lfc = 2,
-                   padj = 0.05,
-                   TFs = convert$ENSEMBL,
-                   ncond1 = 4,
-                   ncond2= 4,
-                   tolType = "mean",
-                   diffMethod = "DESeq2")
 ```
 
+To access the pcitRif object is needed to use the $\textbf{@}$ in the object to explore the different slots. The dataframes located at **out@step4$network_cond1**,**out@step4$network_cond2** and **out@step4$anno** can be used as input in Cytoscape software [@shannon2003cytoscape] to visualize the networks for each condition.
 
 # Session info
 

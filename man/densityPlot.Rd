@@ -16,7 +16,7 @@ The density plot of raw correlation coefficients.
 Generate the density plot for an adjacency matrix.
 }
 \examples{
-data("simNorm")
+data('simNorm')
 results <- PCIT(simNorm)
 densityPlot(results[[2]])
 

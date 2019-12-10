@@ -19,7 +19,7 @@ runAnalysis(
 \arguments{
 \item{counts}{Count data where the rows are genes and coluns the samples (conditions).}
 
-\item{conditions}{A vector of character identifying the names of conditions (i.e. c("normal", "tumoral"))}
+\item{conditions}{A vector of character identifying the names of conditions (i.e. c('normal', 'tumoral'))}
 
 \item{lfc}{logFoldChange module threshold to define a gene as differentially expressed.}
 
@@ -36,21 +36,21 @@ runAnalysis(
 \item{diffMethod}{Method to calculate Differential Expressed (DE) genes (e.g. Reverter and DESEq2)}
 }
 \value{
-A list with two dataframes with the output network of genes/TFs for the first and second conditions, a dataframe with the ket TFs and a dataframe with correspondent separation of genes and TFs. This outputs can be used to generate the networks in Cytoscape.
+Returns a pcitRif object with output variables of each step of analysis. The outputs can be used to generate the networks in Cytoscape.
 }
 \description{
 This function uses RIF (Reverter and Chan, 2010) and PCIT (Reverter and Chan, 2008) to run the whole pipeline analysis.
 }
 \examples{
-data("simCounts")
+data('simCounts')
 out <- runAnalysis(counts = simCounts,
-conditions=c("cond1", "cond2"),
+conditions=c('cond1', 'cond2'),
 lfc = 2.57,
 padj = 0.05,
-TFs = paste0("TF_", 1:1000),
+TFs = paste0('TF_', 1:1000),
 ncond1 = 10,
 ncond2= 10,
-tolType = "mean",
-diffMethod = "Reverter")
+tolType = 'mean',
+diffMethod = 'Reverter')
 
 }

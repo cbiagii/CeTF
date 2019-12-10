@@ -24,7 +24,7 @@ A dataframe with the regulatory impact factors metric for each transcript factor
 The RIF algorithm (Reverter and Chan, 2010) identify critical transcript factors (TF) from gene expression data.
 }
 \examples{
-data("RIF_input")
+data('RIF_input')
 RIF_out <- RIF(input = RIF_input,
 nta = 104,
 ntf = 50,

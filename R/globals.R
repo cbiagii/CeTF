@@ -1,1 +1,2 @@
-utils::globalVariables(c("corr", "sig", "clustcoef"))
+utils::globalVariables(c("corr", "sig", "clustcoef", "expDiff", "pcitRif", "runAnalysis", "colData<-"))
+
