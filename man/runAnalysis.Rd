@@ -43,7 +43,11 @@ conditions=c("cond1", "cond2"),
 lfc = 2.57,
 TFs = paste0("TF_", 1:1000),
 ncond1 = 10,
+<<<<<<< HEAD
 ncond2= 10,
 tolType = "mean")
+=======
+ncond2= 10)
+>>>>>>> c93ff7c0c607f2965b377790cc255e7a62430b72
 
 }
