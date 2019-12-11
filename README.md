@@ -3,7 +3,11 @@
 ## Installation
 
 <p>To properly run <b>pcitRif</b> package is necessary to install some dependencies:</p>
-<p>for Linux users is necessary to install libcurl4-openssl-dev, libxml2-dev and libssl-dev dependencies.</p>
+<p>for Linux users is necessary to install the dependencies:</p>
+
+* libcurl4-openssl-dev
+* libxml2-dev 
+* libssl-dev
 
 <p>To install R packages dependencies, run:</p>
 
