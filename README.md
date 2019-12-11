@@ -12,6 +12,10 @@ for Linux users is necessary to install the dependencies:
 * libcurl4-openssl-dev
 * libxml2-dev 
 * libssl-dev
+* gfortran
+* build-essential
+* libz-dev 
+* zlib1g-dev
 
 To install R packages dependencies, run:
 
