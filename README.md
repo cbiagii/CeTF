@@ -24,3 +24,15 @@ install.packages(packagesCRAN[!packagesCRAN %in% installed.packages()[,1]])
 packagesBioc <- c("airway", "SummarizedExperiment", "DESeq2")
 BiocManager::install(packagesBioc[!packagesBioc %in% installed.packages()[,1]])
 ```
+
+Finally, to install pcitRif package:
+
+```R
+install.packages("/path/to/package/pcitRif_0.1.0.tar.gz")
+```
+or
+
+
+```R
+devtools::install_github("biagii/pcitRif")
+```
