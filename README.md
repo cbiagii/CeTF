@@ -34,5 +34,5 @@ or
 
 
 ```R
-devtools::install_github("biagii/pcitRif")
+devtools::install_github("cbiagii/pcitRif")
 ```
