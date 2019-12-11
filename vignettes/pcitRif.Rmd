@@ -1,6 +1,6 @@
 ---
 title: "Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory"
-author: "Carlos Biagi Jr, Ricardo Perecin Nociti, Patrícia Ruy, Marcelo Gomes, João Paulo Bianchi Ximenez, Rafael dos Santos Bezerra, Wilson Araújo da Silva Junior"
+author: "Carlos Biagi Jr, Ricardo Perecin Nociti, Patrícia Ruy, Marcelo Gomes, João Paulo Bianchi Ximenez, Rafael dos Santos Bezerra, Breno Osvaldo and Wilson Araújo da Silva Junior"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 output:
   rmarkdown::html_document:
@@ -132,7 +132,7 @@ densityPlot(PCIT_out[[2]])
 
 ## Density Plot of raw correlation and significant PCIT
 As a last graph, we can generate the density plot only now with the significance values. We'll use the raw adjacency matrix and the adjacency matrix with significant values. It is necessary to define a cutoff of the correlation module (values between -1 and 1) that will be considered significant.
-```{r densitySig, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
+```{r densitySig, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
 densitySig(mat1 = PCIT_out[[2]], 
            mat2 = PCIT_out[[3]], 
            threshold = 0.5)

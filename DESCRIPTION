@@ -8,8 +8,18 @@ Authors@R: c(person("Carlos", "Biagi Jr", email = "cbiagijr@gmail.com", role = c
         person("Marcelo", "Gomes", email = "marcelogomesrp@gmail.com", role = c("aut")),
         person("João Paulo", "Bianchi Ximenez", email = "joaopaulo.ximenez@me.com", role = c("aut")),
         person("Rafael", "dos Santos Bezerra", email = "rafaelbezerra50@yahoo.com", role = c("aut")),
+        person("Breno", "Osvaldo", email = "osvaldobreno99@gmail.com ", role = c("aut")),
         person("Wilson", "Silva Junior", email = "wilsonjr@usp.br", role = c("aut")))
-Description: teste
+Description: This package provides the necessary functions for performing the 
+  Partial Correlation coefficient with Information Theory (PCIT) from Reverter 
+  and Chan 2008 and Regulatory Impact Factors (RIF) from Reverter et al. 2010 
+  algorithm. The PCIT algorithm identifies meaningful correlations to define 
+  edges in a weighted network. The algorithm can be applied to any 
+  correlation-based network including but not limited to gene co-expression 
+  networks. While the RIF algorithm identify critical transcript factors (TF) 
+  from gene expression data. These two algorithms when combined provide a 
+  very relevant layer of information for gene expression studies 
+  (Microarray, RNA-seq and single-cell RNA-seq data).
 Imports: crayon, stats, pbapply, reshape2, kableExtra, graphics, utils
 Suggests: knitr, rmarkdown, airway
 Depends: R (>= 3.6), ggplot2, gridExtra, DESeq2, SummarizedExperiment, methods, BiocManager
@@ -21,11 +31,12 @@ biocViews: Sequencing, RNASeq, Microarray, GeneExpression, Transcription,
         Normalization, DifferentialExpression, SingleCell, Network, 
         Regression, ChIPSeq, ImmunoOncology, Coverage
 VignetteBuilder: knitr
-Author: Carlos Biagi Jr [aut, cre]
-  Ricardo Perecin Nociti [aut]
-  Patrícia Ruy [aut]
-  Marcelo Gomes [aut]
-  João Paulo Bianchi Ximenez [aut]
-  Rafael dos Santos Bezerra [aut]
+Author: Carlos Biagi Jr [aut, cre],
+  Ricardo Perecin Nociti [aut],
+  Patrícia Ruy [aut],
+  Marcelo Gomes [aut],
+  João Paulo Bianchi Ximenez [aut],
+  Rafael dos Santos Bezerra [aut],
+  Breno Osvaldo [aut],
   Wilson Silva Junior [aut]
 Maintainer: Carlos Biagi Jr <cbiagijr@gmail.com>
