@@ -20,6 +20,6 @@ The PCIT algorithm (Reverter and Chan, 2008) identify the significant correlatio
 \examples{
 data('simNorm')
 results <- PCIT(simNorm)
-head(results[[1]], 15)
+head(results$out, 15)
 
 }

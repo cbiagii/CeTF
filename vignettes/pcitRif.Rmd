@@ -112,34 +112,36 @@ PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
 
 # Performing PCIT analysis
 PCIT_out <- PCIT(PCIT_input, tolType = "mean")
-kable(PCIT_out[[1]][1:10, ]) %>% kable_styling(bootstrap_options = "striped", full_width = FALSE)
 
-# Adjacency matrix: View(PCIT_out[[2]])
-# Adjacency matrix with only the significant values: View(PCIT_out[[3]])
+# Printing first 10 rows
+kable(PCIT_out$out[1:10, ]) %>% kable_styling(bootstrap_options = "striped", full_width = FALSE)
+
+# Adjacency matrix: View(PCIT_out$adj_raw)
+# Adjacency matrix with only the significant values: View(PCIT_out$adj_sig)
 ```
 
 ## Histogram of connectivity distribution
 After performing the PCIT analysis, it is possible to verify the histogram distribution of the clustering coefficient of the adjacency matrix with the significant values.
 ```{r hist, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
-histPlot(PCIT_out[[3]])
+histPlot(PCIT_out$adj_sig)
 ```
 
 ## Density Plot of Raw Correlation Coefficients
 We can also, from the PCIT analysis result, generate a density plot for the raw adjacency matrix.
 ```{r densityRaw, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
-densityPlot(PCIT_out[[2]])
+densityPlot(PCIT_out$adj_raw)
 ```
 
 ## Density Plot of raw correlation and significant PCIT
 As a last graph, we can generate the density plot only now with the significance values. We'll use the raw adjacency matrix and the adjacency matrix with significant values. It is necessary to define a cutoff of the correlation module (values between -1 and 1) that will be considered significant.
 ```{r densitySig, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
-densitySig(mat1 = PCIT_out[[2]], 
-           mat2 = PCIT_out[[3]], 
+densitySig(mat1 = PCIT_out$adj_raw, 
+           mat2 = PCIT_out$adj_sig, 
            threshold = 0.5)
 ```
 
 ## RIF
-To perform only the RIF analysis we will need the count data, an annotation table and a list with the Transcript Factors of specific organismo (Homo sapiens in this case). The output will be a dataframe with the average expression, RIF1 and RIF2 metrics for each Transcript Factor (TF).
+To perform only the RIF analysis we will need the count data, an annotation table and a list with the Transcript Factors of specific organism (Homo sapiens in this case). The output will be a dataframe with the average expression, RIF1 and RIF2 metrics for each Transcript Factor (TF).
 ```{r RIF, eval=TRUE}
 # Loading packages
 library(pcitRif)
@@ -186,6 +188,8 @@ RIF_out <- RIF(input = RIF_input,
                ntf = length(TFs),
                ncond1 = 4,
                ncond2 = 4)
+
+# Printing first 10 rows
 kable(RIF_out[1:10, ]) %>% kable_styling(bootstrap_options = "striped", full_width = FALSE)
 ```
 

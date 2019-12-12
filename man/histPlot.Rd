@@ -18,7 +18,7 @@ Generate the histogram for adjacency matrix to show the clustering coefficient d
 \examples{
 data('simNorm')
 results <- PCIT(simNorm)
-histPlot(results[[3]])
+histPlot(results$adj_sig)
 
 
 

@@ -23,8 +23,8 @@ Generate the density plot for adjacency matrices.
 data('simNorm')
 results <- PCIT(simNorm)
 
-densitySig(mat1 = results[[2]],
-mat2 = results[[3]],
+densitySig(mat1 = resultsadj_raw,
+mat2 = results$adj_sig,
 threshold = 0.5)
 
 }

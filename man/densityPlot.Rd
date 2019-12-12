@@ -18,6 +18,6 @@ Generate the density plot for an adjacency matrix.
 \examples{
 data('simNorm')
 results <- PCIT(simNorm)
-densityPlot(results[[2]])
+densityPlot(results$adj_raw)
 
 }
