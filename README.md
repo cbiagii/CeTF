@@ -1,4 +1,4 @@
-# pcitRif
+# pcitRif <img src="vignettes/logo.png" align="right" width="300" />
 An implementation of PCIT and RIF analysis in R
 
 ## Overview
@@ -12,6 +12,10 @@ for Linux users is necessary to install the dependencies:
 * libcurl4-openssl-dev
 * libxml2-dev 
 * libssl-dev
+* gfortran
+* build-essential
+* libz-dev 
+* zlib1g-dev
 
 To install R packages dependencies, run:
 

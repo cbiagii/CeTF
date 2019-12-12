@@ -82,7 +82,7 @@ There are many ways to perform the analysis. Following sections will be splited 
 
 ## PCIT
 The first option is to perform only the PCIT analysis. The output will be a list with 3 elements. The first one contains a dataframe with the pairwise correlation between genes (corr1) and the significant pairwise correlation (corr2 $neq$ 0). The second element of the list stores the adjacency matrix with all correlation. And the last element contains the adjacency matrix with only the significant values.
-```{r PCIT, eval=TRUE}
+```{r PCIT, eval=TRUE, warning=F, message=F}
 # Loading packages
 library(pcitRif)
 library(airway)
@@ -94,27 +94,38 @@ data("airway")
 
 # Creating a variable with annotation data
 anno <- as.data.frame(colData(airway))
+anno <- anno[order(anno$dex, decreasing = TRUE), ]
+anno <- data.frame(cond = anno$dex, 
+                   row.names = rownames(anno))
 
 # Creating a variable with count data
 counts <- assay(airway)
 
 # Sorting count data samples by conditions (untrt and trt)
-counts <- counts[, order(anno$dex, decreasing = TRUE)]
+counts <- counts[, rownames(anno)]
+
+# Differential Expression analysis to use only informative genes
+DEGenes <- expDiff(counts = counts,
+                   anno = anno,
+                   conditions = c('untrt', 'trt'),
+                   lfc = 2.5,
+                   padj = 0.05)
+
+# Selecting only DE genes from counts data
+counts <- counts[DEGenes, ]
 
 # Converting count data to TPM
-tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
+tpm <- countsToTPM(counts)
 
 # Count normalization
-Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
-
-# Subsetting the data by selecting the genes that have the highest expression values. Is recommended to perform PCIT analysis for each group of conditions.
-PCIT_input <- Clean_Dat[rowSums(Clean_Dat)>77, 1:4]
+PCIT_input <- normExp(tpm)
 
 # Performing PCIT analysis
 PCIT_out <- PCIT(PCIT_input, tolType = "mean")
 
 # Printing first 10 rows
-kable(PCIT_out$out[1:10, ]) %>% kable_styling(bootstrap_options = "striped", full_width = FALSE)
+kable(PCIT_out$tab[1:10, ]) %>% 
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
 
 # Adjacency matrix: View(PCIT_out$adj_raw)
 # Adjacency matrix with only the significant values: View(PCIT_out$adj_sig)
@@ -142,7 +153,7 @@ densitySig(mat1 = PCIT_out$adj_raw,
 
 ## RIF
 To perform only the RIF analysis we will need the count data, an annotation table and a list with the Transcript Factors of specific organism (Homo sapiens in this case). The output will be a dataframe with the average expression, RIF1 and RIF2 metrics for each Transcript Factor (TF).
-```{r RIF, eval=TRUE}
+```{r RIF, eval=TRUE, warning=F, message=F}
 # Loading packages
 library(pcitRif)
 library(airway)
@@ -154,21 +165,31 @@ data("airway")
 
 # Creating a variable with annotation data
 anno <- as.data.frame(colData(airway))
+anno <- anno[order(anno$dex, decreasing = TRUE), ]
+anno <- data.frame(cond = anno$dex, 
+                   row.names = rownames(anno))
 
 # Creating a variable with count data
 counts <- assay(airway)
 
 # Sorting count data samples by conditions (untrt and trt)
-counts <- counts[, order(anno$dex, decreasing = TRUE)]
+counts <- counts[, rownames(anno)]
+
+# Differential Expression analysis to use only informative genes
+DEGenes <- expDiff(counts = counts,
+                   anno = anno,
+                   conditions = c('untrt', 'trt'),
+                   lfc = 1.5,
+                   padj = 0.05)
+
+# Selecting only DE genes from counts data
+counts <- counts[DEGenes, ]
 
 # Converting count data to TPM
-tpm <- apply(counts, 2, function(x) {(1000000*x)/sum(x)})
+tpm <- countsToTPM(counts)
 
 # Count normalization
-Clean_Dat <- apply(tpm, 2, function(x) {log(x+1)/log(2)})
-
-# Subsetting the data by selecting the genes that have the highest expression values.
-Clean_Dat <- Clean_Dat[rowSums(Clean_Dat)>60, ]
+Clean_Dat <- normExp(tpm)
 
 # Loading the Transcript Factors (TFs) character
 data("TFs")
@@ -190,7 +211,8 @@ RIF_out <- RIF(input = RIF_input,
                ncond2 = 4)
 
 # Printing first 10 rows
-kable(RIF_out[1:10, ]) %>% kable_styling(bootstrap_options = "striped", full_width = FALSE)
+kable(RIF_out[1:10, ]) %>% 
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
 ```
 
 ## Complete Analysis

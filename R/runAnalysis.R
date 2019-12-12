@@ -52,9 +52,7 @@ runAnalysis <- function(counts, conditions = NULL, lfc = 2.57, padj = 0.05, TFs 
     colnames(counts)[(ncond1 + 1):(ncond1 + ncond2)] <- paste0(colnames(counts)[(ncond1 + 1):(ncond1 +
         ncond2)], "_", conditions[2])
 
-    tpm.j <- apply(counts, 2, function(x) {
-        (1e+06 * x)/sum(x)
-    })
+    tpm.j <- countsToTPM(counts)
     tmp1 <- apply(tpm.j != 0, 1, sum)
     tmp2 <- apply(tpm.j, 1, sum)
 
@@ -69,9 +67,7 @@ runAnalysis <- function(counts, conditions = NULL, lfc = 2.57, padj = 0.05, TFs 
 
     # Normalization
     tmp1 <- tpm.j[sort(genesok.j[genesok.j %in% rownames(tpm.j)]), ]
-    Clean_Dat <- apply(tmp1, 2, function(x) {
-        log(x + 1)/log(2)
-    })
+    Clean_Dat <- normExp(tmp1)
 
     # storing the results of step1 in a list
     list1 <- list(raw = counts, tpm = tpm.j, selected_genes = genesok.j, norm = Clean_Dat)
