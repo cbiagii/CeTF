@@ -4,10 +4,17 @@
 \alias{expDiff}
 \title{Differential expression analysis}
 \usage{
-expDiff(counts, anno = NULL, conditions = NULL, lfc = 1.5, padj = 0.05)
+expDiff(
+  exp,
+  anno = NULL,
+  conditions = NULL,
+  lfc = 1.5,
+  padj = 0.05,
+  diffMethod = "Reverter"
+)
 }
 \arguments{
-\item{counts}{Count data where the rows are genes and coluns the samples (conditions).}
+\item{exp}{Count data where the rows are genes and coluns the samples (conditions).}
 
 \item{anno}{A dataframe of only one column. The columns must contain the conditions and be named as 'cond', and the rownames must be the names of samples.}
 
@@ -29,7 +36,7 @@ colnames(simCounts) <- paste0('Sample', 1:20)
 anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)),
 row.names = colnames(simCounts))
 
-out <- expDiff(counts = simCounts,
+out <- expDiff(exp = simCounts,
             anno = anno,
             conditions = c('cond1', 'cond2'),
             lfc = 2,

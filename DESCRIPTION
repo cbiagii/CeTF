@@ -22,7 +22,7 @@ Description: This package provides the necessary functions for performing the
   (Microarray, RNA-seq and single-cell RNA-seq data).
 Imports: crayon, stats, pbapply, reshape2, kableExtra, graphics, utils
 Suggests: knitr, rmarkdown, airway
-Depends: R (>= 3.6), ggplot2, gridExtra, DESeq2, SummarizedExperiment, methods, BiocManager
+Depends: R (>= 3.6), ggplot2, gridExtra, DESeq2, SummarizedExperiment, methods, BiocManager, network
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

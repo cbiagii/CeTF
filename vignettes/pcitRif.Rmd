@@ -103,13 +103,15 @@ counts <- assay(airway)
 
 # Sorting count data samples by conditions (untrt and trt)
 counts <- counts[, rownames(anno)]
+colnames(counts) <- paste0(colnames(counts), c(rep("_untrt", 4), rep("_trt", 4)))
 
 # Differential Expression analysis to use only informative genes
-DEGenes <- expDiff(counts = counts,
+DEGenes <- expDiff(exp = counts,
                    anno = anno,
                    conditions = c('untrt', 'trt'),
-                   lfc = 2.5,
-                   padj = 0.05)
+                   lfc = 4,
+                   padj = 0.05, 
+                   diffMethod = "Reverter")
 
 # Selecting only DE genes from counts data
 counts <- counts[DEGenes, ]
@@ -120,34 +122,48 @@ tpm <- countsToTPM(counts)
 # Count normalization
 PCIT_input <- normExp(tpm)
 
-# Performing PCIT analysis
-PCIT_out <- PCIT(PCIT_input, tolType = "mean")
+# PCIT input for untrt
+PCIT_input_untrt <- PCIT_input[,grep("_untrt", colnames(PCIT_input))]
 
-# Printing first 10 rows
-kable(PCIT_out$tab[1:10, ]) %>% 
+# PCIT input for trt
+PCIT_input_trt <- PCIT_input[,grep("_trt", colnames(PCIT_input))]
+
+# Performing PCIT analysis for untrt and trt conditions
+PCIT_out_untrt <- PCIT(PCIT_input_untrt, tolType = "mean")
+PCIT_out_trt <- PCIT(PCIT_input_trt, tolType = "mean")
+
+
+# Printing first 10 rows for untrt and trt conditions
+kable(PCIT_out_untrt$tab[1:10, ]) %>% 
   kable_styling(bootstrap_options = "striped", full_width = FALSE)
 
-# Adjacency matrix: View(PCIT_out$adj_raw)
-# Adjacency matrix with only the significant values: View(PCIT_out$adj_sig)
+kable(PCIT_out_trt$tab[1:10, ]) %>% 
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+
+# Adjacency matrix: View(PCIT_out_{condition}$adj_raw)
+# Adjacency matrix with only the significant values: View(PCIT_out_{condition}$adj_sig)
 ```
 
 ## Histogram of connectivity distribution
 After performing the PCIT analysis, it is possible to verify the histogram distribution of the clustering coefficient of the adjacency matrix with the significant values.
 ```{r hist, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
-histPlot(PCIT_out$adj_sig)
+# Example for trt condition
+histPlot(PCIT_out_trt$adj_sig)
 ```
 
 ## Density Plot of Raw Correlation Coefficients
 We can also, from the PCIT analysis result, generate a density plot for the raw adjacency matrix.
 ```{r densityRaw, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
-densityPlot(PCIT_out$adj_raw)
+# Example for trt condition
+densityPlot(PCIT_out_trt$adj_raw)
 ```
 
 ## Density Plot of raw correlation and significant PCIT
 As a last graph, we can generate the density plot only now with the significance values. We'll use the raw adjacency matrix and the adjacency matrix with significant values. It is necessary to define a cutoff of the correlation module (values between -1 and 1) that will be considered significant.
 ```{r densitySig, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
-densitySig(mat1 = PCIT_out$adj_raw, 
-           mat2 = PCIT_out$adj_sig, 
+# Example for trt condition
+densitySig(mat1 = PCIT_out_trt$adj_raw, 
+           mat2 = PCIT_out_trt$adj_sig, 
            threshold = 0.5)
 ```
 
@@ -174,13 +190,15 @@ counts <- assay(airway)
 
 # Sorting count data samples by conditions (untrt and trt)
 counts <- counts[, rownames(anno)]
+colnames(counts) <- paste0(colnames(counts), c(rep("_untrt", 4), rep("_trt", 4)))
 
 # Differential Expression analysis to use only informative genes
-DEGenes <- expDiff(counts = counts,
+DEGenes <- expDiff(exp = counts,
                    anno = anno,
                    conditions = c('untrt', 'trt'),
                    lfc = 1.5,
-                   padj = 0.05)
+                   padj = 0.05, 
+                   diffMethod = "Reverter")
 
 # Selecting only DE genes from counts data
 counts <- counts[DEGenes, ]
@@ -238,7 +256,7 @@ counts <- counts[, order(anno$dex, decreasing = TRUE)]
 data("TFs")
 
 # Performing the complete analysis
-out <- runAnalysis(counts = counts, 
+out <- runAnalysis(mat = counts, 
                    conditions=c("untrt", "trt"),
                    lfc = 3.5,
                    padj = 0.05,
@@ -250,6 +268,50 @@ out <- runAnalysis(counts = counts,
 ```
 
 To access the pcitRif object is needed to use the $\textbf{@}$ in the object to explore the different slots. The dataframes located at **out@step4$network_cond1**,**out@step4$network_cond2** and **out@step4$anno** can be used as input in Cytoscape software [@shannon2003cytoscape] to visualize the networks for each condition.
+
+
+## Plotting networks output
+The first output is the network of both conditions:
+```{r singleNetworkPlot, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
+singleNetworkPlot(out)
+```
+
+Then we will associate the genes in both conditions with Gene Ontology (GO). In this example we will perform only for first condition:
+```{r getGroupGO, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
+# Loading Homo sapiens annotation package
+library(org.Hs.eg.db)
+
+# Accessing the network for condition 1
+genes <- unique(c(as.character(out@step4$network_cond1$gene1), as.character(out@step4$network_cond1$gene2)))
+
+cond1 <- getGroupGO(genes = genes, 
+                    ont = "BP", 
+                    keyType = "ENSEMBL", 
+                    annoPkg = org.Hs.eg.db)
+```
+
+Afther this we are able to plot the network of Ontologies related with the genes.
+```{r netGOplot, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
+# Subsetting only the first 12 Ontologies with more counts
+t1 <- head(cond1$results, 12)
+
+# Subsetting the network for the conditions to make available only the 12 nodes subsetted
+t2 <- subset(cond1$netGO, cond1$netGO$gene1 %in% as.character(t1[,1]))
+
+netGOplot(netCond = out@step4$network_cond1, 
+          resultsGO = t1, 
+          netGO = t2, 
+          anno = out@step4$anno, 
+          label = T)
+```
+
+Finally, we will merge the results from the network of condition 1 (Gene-Gene and TF-Gene interaction) with groupGO results (GO-Gene or GO-TF interaction). The final results has the objective to integrate the results in order to have a complete view of the data.
+```{r networkPlot, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
+networkPlot(netCond = out@step4$network_cond1, 
+            netGO = t2, 
+            keyTFs = out@step4$keytf)
+```
+
 
 # Session info
 

@@ -5,7 +5,7 @@
 \title{Whole analysis of Regulatory Impact Factors (RIF) and Partial Correlation and Information Theory analysis (PCIT)}
 \usage{
 runAnalysis(
-  counts,
+  mat,
   conditions = NULL,
   lfc = 2.57,
   padj = 0.05,
@@ -13,13 +13,14 @@ runAnalysis(
   ncond1 = NULL,
   ncond2 = NULL,
   tolType = "mean",
-  diffMethod = "Reverter"
+  diffMethod = "Reverter",
+  data.type = "expression"
 )
 }
 \arguments{
-\item{counts}{Count data where the rows are genes and coluns the samples (conditions).}
+\item{mat}{Count data where the rows are genes and coluns the samples (conditions).}
 
-\item{conditions}{A vector of character identifying the names of conditions (i.e. c('normal', 'tumoral'))}
+\item{conditions}{A vector of character identifying the names of conditions (i.e. c('normal', 'tumoral')).}
 
 \item{lfc}{logFoldChange module threshold to define a gene as differentially expressed.}
 
@@ -33,7 +34,9 @@ runAnalysis(
 
 \item{tolType}{Type of tolerance given the 3 pairwise correlations (mean, min, max, median).}
 
-\item{diffMethod}{Method to calculate Differential Expressed (DE) genes (e.g. Reverter and DESEq2)}
+\item{diffMethod}{Method to calculate Differential Expressed (DE) genes (e.g. Reverter or DESEq2).}
+
+\item{data.type}{Type of input data. If is expression (FPKM, TPM, etc) or counts.}
 }
 \value{
 Returns a pcitRif object with output variables of each step of analysis. The outputs can be used to generate the networks in Cytoscape.
@@ -43,7 +46,7 @@ This function uses RIF (Reverter and Chan, 2010) and PCIT (Reverter and Chan, 20
 }
 \examples{
 data('simCounts')
-out <- runAnalysis(counts = simCounts,
+out <- runAnalysis(mat = simCounts,
 conditions=c('cond1', 'cond2'),
 lfc = 2.57,
 padj = 0.05,

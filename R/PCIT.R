@@ -67,7 +67,7 @@ PCIT <- function(input, tolType = "mean") {
     tmp1 <- tmp1[rownames(gene_corr), ]
 
     out <- data.frame(gene1 = gene_corr$Var1, gene2 = gene_corr$Var2, corr1 = round(gene_corr$value,
-        5), corr2 = round(tmp1$value, 5))
+        5), corr2 = round(tmp1$value, 5), stringsAsFactors = F)
 
     return(list(tab = out, adj_raw = gene_pcorr, adj_sig = gene_pcorr2))
 }
