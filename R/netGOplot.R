@@ -27,16 +27,13 @@
 #'
 #' @export
 netGOplot <- function(netCond, resultsGO, netGO, anno, label = F) {
-  tmp <- NULL
-  for (i in 1:nrow(resultsGO)) {
-    genes <- as.character(subset(netGO, netGO$gene1 == as.character(resultsGO$ID[i]))[,2])
+  tmp <- apply(resultsGO, 1, function(x) {
+    genes <- as.character(subset(netGO, netGO$gene1 == as.character(x[['ID']]))[,2])
     tmp1 <- netCond[which(netCond$gene1 %in% genes & netCond$gene2 %in% genes), ]
-
-    if (nrow(tmp1) != 0) {
-      tmp1$pathway <- as.character(resultsGO$ID[i])
-      tmp <- rbind(tmp, tmp1)
-    } else { next }
-  }
+    tmp1$pathway <- as.character(x[['ID']])
+    return(tmp1)
+  })
+  tmp <- do.call(rbind, tmp)
 
   data <- fortify(as.edgedf(tmp), anno, group = "pathway")
   pt <- ggplot(data, aes(from_id = from, to_id = to_id)) +
