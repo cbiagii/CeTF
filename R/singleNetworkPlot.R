@@ -7,8 +7,10 @@
 #' @return The network for both conditions.
 #'
 #' @importFrom ggpubr ggarrange
-#' @importFrom network network network.vertex.names %v%
+#' @importFrom network network network.vertex.names '%v%'
 #' @importFrom GGally ggnet2
+#' @importFrom utils head tail
+#' @importFrom ggplot2 coord_equal guides element_rect
 #'
 #' @examples
 #' data('simCounts')

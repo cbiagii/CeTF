@@ -7,6 +7,7 @@
 #' @param conditions A character vector containing the name of the two conditions. The first name will be selected as reference.
 #' @param lfc logFoldChange module threshold to define a gene as differentially expressed.
 #' @param padj Sifnificance value to define a gene as differentially expressed.
+#' @param diffMethod Choose between Reverter or DESeq2 method. The DESeq2 method is only for counts data.
 #'
 #' @return A character with the names of differentially expressed genes.
 #'

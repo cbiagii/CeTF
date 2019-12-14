@@ -20,9 +20,9 @@ Description: This package provides the necessary functions for performing the
   from gene expression data. These two algorithms when combined provide a 
   very relevant layer of information for gene expression studies 
   (Microarray, RNA-seq and single-cell RNA-seq data).
-Imports: crayon, stats, pbapply, reshape2, kableExtra, graphics, utils
+Imports: crayon, stats, pbapply, reshape2, kableExtra, graphics, utils, GGally, clusterProfiler, geomnet, ggpubr
 Suggests: knitr, rmarkdown, airway
-Depends: R (>= 3.6), ggplot2, gridExtra, DESeq2, SummarizedExperiment, methods, BiocManager, network
+Depends: R (>= 3.6), ggplot2, gridExtra, DESeq2, SummarizedExperiment, methods, network
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

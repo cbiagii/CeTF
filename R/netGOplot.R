@@ -11,7 +11,7 @@
 #' @return The network for groupGO for a determined condition.
 #'
 #' @importFrom geomnet geom_net theme_net as.edgedf
-#' @importFrom ggplot2 fortify ggplot facet_wrap
+#' @importFrom ggplot2 fortify ggplot facet_wrap element_rect
 #'
 #' @examples
 #' \dontrun{
@@ -35,8 +35,8 @@ netGOplot <- function(netCond, resultsGO, netGO, anno, label = F) {
   })
   tmp <- do.call(rbind, tmp)
 
-  data <- fortify(as.edgedf(tmp), anno, group = "pathway")
-  pt <- ggplot(data, aes(from_id = from, to_id = to_id)) +
+  tab <- fortify(as.edgedf(tmp), anno, group = "pathway")
+  pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) +
     geom_net(aes(colour = class, group = class, linewidth = 3 * (...samegroup.. / 8 + .125)),
              layout.alg = "fruchtermanreingold",
              ealpha = 0.5, size = 3, curvature = 0.05,

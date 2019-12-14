@@ -14,7 +14,7 @@
 #' data('simNorm')
 #' results <- PCIT(simNorm)
 #'
-#' densitySig(mat1 = resultsadj_raw,
+#' densitySig(mat1 = results$adj_raw,
 #' mat2 = results$adj_sig,
 #' threshold = 0.5)
 #'

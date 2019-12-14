@@ -17,7 +17,7 @@
 #' results <- getGroupGO(genes,
 #' ont = "BP",
 #' keyType = "ENSEMBL",
-#' annoPkg = org.Hs.eg.db::org.Hs.eg.db)
+#' annoPkg = org.Hs.eg.db)
 #' }
 #'
 #'

@@ -6,9 +6,10 @@
 #'
 #' @return The histogram of connectivity distribution.
 #'
-#' @importFrom ggplot2 ggplot geom_histogram xlab ylab element_line element_blank
+#' @importFrom ggplot2 ggplot geom_histogram xlab ylab element_line element_blank geom_step
 #' @importFrom graphics hist
 #' @importFrom gridExtra grid.arrange
+#' @importFrom scales percent
 #'
 #' @examples
 #' data('simNorm')
@@ -32,7 +33,7 @@ histPlot <- function(mat) {
         xlab("Proportion of Connections") +
         ylab("Number of Genes") +
         scale_y_continuous(expand = c(0, 0)) +
-        scale_x_continuous(labels = scales::percent) +
+        scale_x_continuous(labels = percent) +
         theme_bw() +
         theme(axis.line = element_line(size = 1, colour = "black"),
               panel.grid.major = element_line(colour = "#d3d3d3"),
@@ -47,7 +48,7 @@ histPlot <- function(mat) {
     df2 <- data.frame(clustcoef = cc * length(cc))
     pt2 <- ggplot(df2, aes(x=clustcoef)) +
         geom_step(stat="ecdf", col = "red", size = 1) +
-        scale_y_continuous(labels = scales::percent) +
+        scale_y_continuous(labels = percent) +
         ggtitle("Connectivity Distribution") +
         xlab("Number of Genes") +
         ylab("Cumulative Proportion") +

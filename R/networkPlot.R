@@ -8,8 +8,10 @@
 #'
 #' @return A network.
 #'
-#' @importFrom network network %v% network.vertex.names
+#' @importFrom network network network.vertex.names '%v%'
 #' @importFrom GGally ggnet2
+#' @importFrom utils head tail
+#' @importFrom ggplot2 coord_equal guides
 #'
 #' @examples
 #' \dontrun{
