@@ -37,10 +37,10 @@ bivar.awk <- function(x) {
         format(round(max(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% "################################" %+% 
         "\n"))
     
-    cat(blue(sprintf("################################" %+% "\n" %+% "Correlation  =  %s", format(round(cor(x[, 
-        1], x[, 2]), 7), nsmall = 7)) %+% "\n" %+% sprintf("Regression   =  %s", format(round(lm(x[, 
-        2] ~ x[, 1], data = x)[[1]][[2]], 7), nsmall = 7)) %+% "\n" %+% "################################" %+% 
-        "\n"))
+    cat(blue(sprintf("################################" %+% "\n" %+% "Correlation  =  %s", 
+        format(round(cor(x[, 1], x[, 2]), 7), nsmall = 7)) %+% "\n" %+% sprintf("Regression   =  %s", 
+        format(round(lm(x[, 2] ~ x[, 1], data = x)[[1]][[2]], 7), nsmall = 7)) %+% "\n" %+% 
+        "################################" %+% "\n"))
     
     return(list(mean1 = format(round(mean(x[, 1]), 4), nsmall = 4), mean2 = format(round(mean(x[, 
         2]), 4), nsmall = 4)))

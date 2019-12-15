@@ -9,7 +9,7 @@ getGroupGO(genes, ont = "BP", keyType = NULL, annoPkg = NULL)
 \arguments{
 \item{genes}{Character vector with the genes to perform the functional profile.}
 
-\item{ont}{One of "MF", "BP", and "CC" subontologies.}
+\item{ont}{One of 'MF', 'BP', and 'CC' subontologies.}
 
 \item{keyType}{key type of input gene.}
 
@@ -24,9 +24,9 @@ Functional Profile of a gene set at specific GO level. Given a vector of genes, 
 \examples{
 \dontrun{
 results <- getGroupGO(genes,
-ont = "BP",
-keyType = "ENSEMBL",
-annoPkg = org.Hs.eg.db::org.Hs.eg.db)
+ont = 'BP',
+keyType = 'ENSEMBL',
+annoPkg = org.Hs.eg.db)
 }
 
 

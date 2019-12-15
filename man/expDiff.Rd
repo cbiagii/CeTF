@@ -23,6 +23,8 @@ expDiff(
 \item{lfc}{logFoldChange module threshold to define a gene as differentially expressed.}
 
 \item{padj}{Sifnificance value to define a gene as differentially expressed.}
+
+\item{diffMethod}{Choose between Reverter or DESeq2 method. The DESeq2 method is only for counts data.}
 }
 \value{
 A character with the names of differentially expressed genes.

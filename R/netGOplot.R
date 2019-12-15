@@ -20,31 +20,27 @@
 #' resultsGO,
 #' netGO,
 #' anno,
-#' label = F)
+#' label = FALSE)
 #' }
 #'
 #'
 #'
 #' @export
-netGOplot <- function(netCond, resultsGO, netGO, anno, label = F) {
-  tmp <- apply(resultsGO, 1, function(x) {
-    genes <- as.character(subset(netGO, netGO$gene1 == as.character(x[['ID']]))[,2])
-    tmp1 <- netCond[which(netCond$gene1 %in% genes & netCond$gene2 %in% genes), ]
-    tmp1$pathway <- as.character(x[['ID']])
-    return(tmp1)
-  })
-  tmp <- do.call(rbind, tmp)
-
-  tab <- fortify(as.edgedf(tmp), anno, group = "pathway")
-  pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) +
-    geom_net(aes(colour = class, group = class, linewidth = 3 * (...samegroup.. / 8 + .125)),
-             layout.alg = "fruchtermanreingold",
-             ealpha = 0.5, size = 3, curvature = 0.05,
-             directed = F, arrowsize = 0.5, show.legend = T,
-             fiteach = T, labelon = label, fontsize=0.5, alpha = 0.25,
-             labelcolour = "black", singletons = FALSE) +
-    facet_wrap(~pathway) +
-    theme_net() + theme(panel.background = element_rect(colour = 'black'))
-
-  return(pt)
+netGOplot <- function(netCond, resultsGO, netGO, anno, label = FALSE) {
+    tmp <- apply(resultsGO, 1, function(x) {
+        genes <- as.character(subset(netGO, netGO$gene1 == as.character(x[["ID"]]))[, 2])
+        tmp1 <- netCond[which(netCond$gene1 %in% genes & netCond$gene2 %in% genes), ]
+        tmp1$pathway <- as.character(x[["ID"]])
+        return(tmp1)
+    })
+    tmp <- do.call(rbind, tmp)
+    
+    tab <- fortify(as.edgedf(tmp), anno, group = "pathway")
+    pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) + geom_net(aes(colour = class, group = class, 
+        linewidth = 0.5), layout.alg = "fruchtermanreingold", ealpha = 0.5, size = 3, curvature = 0.05, 
+        directed = FALSE, arrowsize = 0.5, show.legend = TRUE, fiteach = TRUE, labelon = label, 
+        fontsize = 0.5, alpha = 0.25, labelcolour = "black", singletons = FALSE) + facet_wrap(~pathway) + 
+        theme_net() + theme(panel.background = element_rect(colour = "black"))
+    
+    return(pt)
 }

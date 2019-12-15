@@ -31,15 +31,16 @@
 #' @export
 expDiff <- function(exp, anno = NULL, conditions = NULL, lfc = 1.5, padj = 0.05, diffMethod = "Reverter") {
     if (diffMethod == "Reverter") {
-        de.j <- data.frame(cond1 = apply(exp[, grep(paste0("_", conditions[1]), colnames(exp))], 1, mean),
-                           cond2 = apply(exp[, grep(paste0("_", conditions[2]), colnames(exp))], 1, mean))
+        de.j <- data.frame(cond1 = apply(exp[, grep(paste0("_", conditions[1]), colnames(exp))], 
+            1, mean), cond2 = apply(exp[, grep(paste0("_", conditions[2]), colnames(exp))], 
+            1, mean))
         tmp1 <- de.j[, 1] - de.j[, 2]
         var = (sum(tmp1^2) - (sum(tmp1) * sum(tmp1))/(length(tmp1)))/(length(tmp1) - 1)
         de.j <- cbind(de.j, diff = (tmp1 - (sum(tmp1)/length(tmp1)))/sqrt(var))
         DE_unique <- rownames(subset(de.j, abs(de.j$diff) > lfc))
     } else if (diffMethod == "DESeq2") {
         ddsHTSeq <- DESeqDataSetFromMatrix(countData = exp, colData = anno, design = ~cond)
-
+        
         colData(ddsHTSeq)[, 1] <- relevel(colData(ddsHTSeq)[, 1], ref = conditions[1])
         dds <- DESeq(ddsHTSeq)
         res <- results(dds, contrast = c("cond", conditions[1], conditions[2]))

@@ -302,7 +302,7 @@ netGOplot(netCond = out@step4$network_cond1,
           resultsGO = t1, 
           netGO = t2, 
           anno = out@step4$anno, 
-          label = T)
+          label = TRUE)
 ```
 
 Finally, we will merge the results from the network of condition 1 (Gene-Gene and TF-Gene interaction) with groupGO results (GO-Gene or GO-TF interaction). The final results has the objective to integrate the results in order to have a complete view of the data.

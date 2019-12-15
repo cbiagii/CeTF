@@ -4,7 +4,7 @@
 \alias{netGOplot}
 \title{getGroupGO network plot}
 \usage{
-netGOplot(netCond, resultsGO, netGO, anno, label = F)
+netGOplot(netCond, resultsGO, netGO, anno, label = FALSE)
 }
 \arguments{
 \item{netCond}{Network of a specific condition. Can be found in result of \link[pcitRif]{runAnalysis} (step4 -> network_cond1 or network_cond2)}
@@ -30,7 +30,7 @@ netGOplot(netCond,
 resultsGO,
 netGO,
 anno,
-label = F)
+label = FALSE)
 }
 
 

@@ -34,12 +34,12 @@ RIF <- function(input, nta = NULL, ntf = NULL, ncond1 = NULL, ncond2 = NULL) {
     if (!is.numeric(ncond1) | !is.numeric(ncond2)) {
         stop("the number of conditions must be a numeric greater than zero")
     }
-
+    
     cat(green("##### Starting Regulatory Impact Factors analysis #####" %+% "\n"))
-
+    
     ta <- input[seq_len(nta), ]
     tf <- input[(nta + 1):nrow(input), ]
-
+    
     tmp <- pbapply(tf, 1, function(i) {
         rif1 <- 0
         rif2 <- 0
@@ -48,7 +48,8 @@ RIF <- function(input, nta = NULL, ntf = NULL, ncond1 = NULL, ncond2 = NULL) {
             if (is.na(gene_ccorr)) {
                 gene_ccorr <- 0
             }
-            gene_ncorr <- cor(i[(ncond1 + 1):(ncond1 + ncond2)], j[(ncond1 + 1):(ncond1 + ncond2)])  #cond2
+            gene_ncorr <- cor(i[(ncond1 + 1):(ncond1 + ncond2)], j[(ncond1 + 1):(ncond1 + 
+                ncond2)])  #cond2
             if (is.na(gene_ncorr)) {
                 gene_ncorr <- 0
             }
@@ -61,17 +62,17 @@ RIF <- function(input, nta = NULL, ntf = NULL, ncond1 = NULL, ncond2 = NULL) {
             rif2 = rif2 + er1^2 - er2^2
             list((c(rif1 = rif1, rif2 = rif2)))
         })
-
+        
         rif1 <- sum(vapply(lapply(lapply(tmp1, `[[`, 1), `[[`, 1), sum, FUN.VALUE = 0))/nta
         rif2 <- sum(vapply(lapply(lapply(tmp1, `[[`, 1), `[[`, 2), sum, FUN.VALUE = 0))/nta
-
+        
         list((c(rif1 = rif1, rif2 = rif2)))
     })
-
+    
     df <- data.frame(matrix(unlist(tmp), nrow = length(tmp), byrow = TRUE))
-
-    out <- data.frame(TF = rownames(tf), avgexpr = rowMeans(tf), RIF1 = (df$X1 - mean(df[, 1]))/sd(df[,
-        1]), RIF2 = (df$X2 - mean(df[, 2]))/sd(df[, 2]), row.names = NULL, stringsAsFactors = F)
-
+    
+    out <- data.frame(TF = rownames(tf), avgexpr = rowMeans(tf), RIF1 = (df$X1 - mean(df[, 
+        1]))/sd(df[, 1]), RIF2 = (df$X2 - mean(df[, 2]))/sd(df[, 2]), row.names = NULL, stringsAsFactors = FALSE)
+    
     return(out)
 }
