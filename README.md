@@ -2,9 +2,9 @@
 An implementation of PCIT and RIF analysis in R
 
 [![Travis Build
-Status](https://travis-ci.org/tidyverse/ggplot2.svg?branch=master)](https://travis-ci.org/tidyverse/ggplot2)
+Status]
 (https://ci.appveyor.com/project/tidyverse/ggplot2)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ggplot2)](https://cran.r-project.org/package=ggplot2)
+[![CRAN\_Status\_Badge]
 
 
 ## Overview
