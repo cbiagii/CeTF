@@ -50,8 +50,6 @@ devtools::install_github("cbiagii/pcitRif")
 
 ### Docker
 
-#### Docker Installation
-
 To install docker follow the instructions in the links below depending on your operating system
 
 * CentOS: https://docs.docker.com/install/linux/docker-ce/centos/
@@ -66,7 +64,7 @@ To install docker follow the instructions in the links below depending on your o
 Once docker is installed, the next step is pull the target-prediction image from dockerhub using the following command:
 
 ```docker
-docker pull biagii/pcitRIF
+docker pull biagii/pcitRif
 ```
 
 #### Running image
@@ -74,5 +72,8 @@ docker pull biagii/pcitRIF
 There are several differents parameters to run the downloaded image. The most commom way is executing the following command:
 
 ```docker
-docker run --rm --name [ANY_NAME] -v /server/path/:/docker/path/ biagii/target-prediction bash
+docker run --rm --name [ANY_NAME] -v /server/path/:/docker/path/ biagii/pcitRif
 ```
+## Help
+
+<p>Any questions contact the developer by email: <a href="#">biagi@usp.br</a></p>
