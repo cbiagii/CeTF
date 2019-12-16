@@ -34,14 +34,16 @@ This function calculate the differential expressed genes for two conditions.
 }
 \examples{
 data('simCounts')
-colnames(simCounts) <- paste0('Sample', 1:20)
+
 anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)),
 row.names = colnames(simCounts))
+colnames(simCounts) <- paste(colnames(simCounts), anno$cond, sep = '_')
 
 out <- expDiff(exp = simCounts,
             anno = anno,
             conditions = c('cond1', 'cond2'),
             lfc = 2,
-            padj = 0.05)
+            padj = 0.05,
+            diffMethod = 'Reverter')
 
 }

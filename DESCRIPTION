@@ -23,7 +23,13 @@ Description: This package provides the necessary functions for performing the
 Imports: crayon, clusterProfiler, DESeq2, geomnet, GGally, ggplot2, ggpubr, 
   graphics, network, pbapply, reshape2, scales, stats, SummarizedExperiment, 
   utils
-Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown
+Suggests: 
+    airway,
+    kableExtra,
+    knitr,
+    org.Hs.eg.db,
+    rmarkdown,
+    testthat
 Depends: R (>= 3.6), methods
 License: GPL-3
 Encoding: UTF-8

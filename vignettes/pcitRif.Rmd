@@ -282,9 +282,7 @@ Then we will associate the genes in both conditions with Gene Ontology (GO). In 
 library(org.Hs.eg.db)
 
 # Accessing the network for condition 1
-  genes <- unique(c(as.character(getNetworkCond1(out)[,1]), as.character(getNetworkCond1(out)[,2])))
-
-
+  genes <- unique(c(as.character(getNet1(out)[,1]), as.character(getNet1(out)[,2])))
 
 cond1 <- getGroupGO(genes = genes, 
                     ont = "BP", 
@@ -300,7 +298,7 @@ t1 <- head(cond1$results, 12)
 # Subsetting the network for the conditions to make available only the 12 nodes subsetted
 t2 <- subset(cond1$netGO, cond1$netGO$gene1 %in% as.character(t1[,1]))
 
-netGOplot(netCond = getNetworkCond1(out), 
+netGOplot(netCond = getNet1(out), 
           resultsGO = t1, 
           netGO = t2, 
           anno = getAnno(out), 
@@ -309,9 +307,9 @@ netGOplot(netCond = getNetworkCond1(out),
 
 Finally, we will merge the results from the network of condition 1 (Gene-Gene and TF-Gene interaction) with groupGO results (GO-Gene or GO-TF interaction). The final results has the objective to integrate the results in order to have a complete view of the data.
 ```{r networkPlot, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
-networkPlot(netCond = getNetworkCond1(out), 
+networkPlot(netCond = getNet1(out), 
             netGO = t2, 
-            keyTFs = getRIFkeyTF(out))
+            keyTFs = getKeyTF(out))
 ```
 
 

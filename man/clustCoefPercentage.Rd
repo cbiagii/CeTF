@@ -16,7 +16,8 @@ A numerical between 0 and 100.
 Given an adjacency matrix, calculate the clustering coefficient as a percentage of non-zero adjacencies.
 }
 \examples{
-data(simNorm)
-clustCoefPercentage(simNorm)
+data('simNorm')
+results <- PCIT(simNorm)
+clustCoefPercentage(results$adj_sig)
 
 }

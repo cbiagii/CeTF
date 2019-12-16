@@ -2,17 +2,17 @@
 #'
 #' The pcitrif class is data storage class that stores all the results of complete RIF and PCIT analysis.
 #'
-#' @slot step1 List of objects related to step 1 (TPM Filter) of analysis.
+#' @slot step1 List of objects related to step 1 (Data Adjustment) of analysis.
 #' @slot step2 List of objects related to step 2 (Differential Expression) of analysis.
-#' @slot step3 List of objects related to step 3 (Regulatory Impact Factors analysis) of analysis.
-#' @slot step4 List of objects related to step 4 (Partial Correlation and Information Theory analysis) of analysis.
+#' @slot step3 List of objects related to step 3 (Regulatory Impact Factors) of analysis.
+#' @slot step4 List of objects related to step 4 (Partial Correlation and Information Theory) of analysis.
 #'
 #' @importFrom methods new
 #' @name pcitrif-class
 #' @exportClass pcitrif
 #'
-pcitrif <- setClass(Class = "pcitrif", slots = list(step1 = "list", step2 = "list", step3 = "list",
-    step4 = "list"))
+pcitrif <- setClass(Class = "pcitrif", slots = list(step1 = "list", 
+    step2 = "list", step3 = "list", step4 = "list"))
 
 
 
@@ -29,11 +29,11 @@ setGeneric("rawData", function(x) standardGeneric("rawData"))
 #' @exportMethod tpmData
 setGeneric("tpmData", function(x) standardGeneric("tpmData"))
 
-#' Method getSelectedGenes.
+#' Method getGenes.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getSelectedGenes
-setGeneric("getSelectedGenes", function(x) standardGeneric("getSelectedGenes"))
+#' @exportMethod getGenes
+setGeneric("getGenes", function(x) standardGeneric("getGenes"))
 
 #' Method normData.
 #' @name pcitrif-class
@@ -53,59 +53,59 @@ setGeneric("getDE", function(x) standardGeneric("getDE"))
 #' @exportMethod getTF
 setGeneric("getTF", function(x) standardGeneric("getTF"))
 
-#' Method getRIFinput.
+#' Method RIFinput.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getRIFinput
-setGeneric("getRIFinput", function(x) standardGeneric("getRIFinput"))
+#' @exportMethod RIFinput
+setGeneric("RIFinput", function(x) standardGeneric("RIFinput"))
 
-#' Method getRIFoutput.
+#' Method RIFout.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getRIFoutput
-setGeneric("getRIFoutput", function(x) standardGeneric("getRIFoutput"))
+#' @exportMethod RIFout
+setGeneric("RIFout", function(x) standardGeneric("RIFout"))
 
-#' Method getPCITinput_cond1.
+#' Method PCITinput1.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getPCITinput_cond1
-setGeneric("getPCITinput_cond1", function(x) standardGeneric("getPCITinput_cond1"))
+#' @exportMethod PCITinput1
+setGeneric("PCITinput1", function(x) standardGeneric("PCITinput1"))
 
-#' Method getPCITinput_cond2.
+#' Method PCITinput2.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getPCITinput_cond2
-setGeneric("getPCITinput_cond2", function(x) standardGeneric("getPCITinput_cond2"))
+#' @exportMethod PCITinput2
+setGeneric("PCITinput2", function(x) standardGeneric("PCITinput2"))
 
-#' Method getPCIToutput_cond1.
+#' Method PCITout1.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getPCIToutput_cond1
-setGeneric("getPCIToutput_cond1", function(x) standardGeneric("getPCIToutput_cond1"))
+#' @exportMethod PCITout1
+setGeneric("PCITout1", function(x) standardGeneric("PCITout1"))
 
-#' Method getPCIToutput_cond2.
+#' Method PCITout2.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getPCIToutput_cond2
-setGeneric("getPCIToutput_cond2", function(x) standardGeneric("getPCIToutput_cond2"))
+#' @exportMethod PCITout2
+setGeneric("PCITout2", function(x) standardGeneric("PCITout2"))
 
-#' Method getNetworkCond1.
+#' Method getNet1.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getNetworkCond1
-setGeneric("getNetworkCond1", function(x) standardGeneric("getNetworkCond1"))
+#' @exportMethod getNet1
+setGeneric("getNet1", function(x) standardGeneric("getNet1"))
 
-#' Method getNetworkCond2.
+#' Method getNet2.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getNetworkCond2
-setGeneric("getNetworkCond2", function(x) standardGeneric("getNetworkCond2"))
+#' @exportMethod getNet2
+setGeneric("getNet2", function(x) standardGeneric("getNet2"))
 
-#' Method getRIFkeyTF.
+#' Method getKeyTF.
 #' @name pcitrif-class
 #' @rdname pcitrif-class
-#' @exportMethod getRIFkeyTF
-setGeneric("getRIFkeyTF", function(x) standardGeneric("getRIFkeyTF"))
+#' @exportMethod getKeyTF
+setGeneric("getKeyTF", function(x) standardGeneric("getKeyTF"))
 
 #' Method getAnno.
 #' @name pcitrif-class
@@ -117,65 +117,81 @@ setGeneric("getAnno", function(x) standardGeneric("getAnno"))
 
 # setMethods
 #' @rdname pcitrif-class
+#' @return Return the raw data inputed
 #' @aliases rawData,pcitrif-method
 setMethod("rawData", "pcitrif", function(x) x@step1$raw)
 
 #' @rdname pcitrif-class
+#' @return Return the TPM data
 #' @aliases tpmDat,pcitrif-method
 setMethod("tpmData", "pcitrif", function(x) x@step1$tpm)
 
 #' @rdname pcitrif-class
-#' @aliases getSelectedGenes,pcitrif-method
-setMethod("getSelectedGenes", "pcitrif", function(x) x@step1$selected_genes)
+#' @return Return the filtered genes
+#' @aliases getGenes,pcitrif-method
+setMethod("getGenes", "pcitrif", function(x) x@step1$selected_genes)
 
 #' @rdname pcitrif-class
+#' @return Return the normalized data
 #' @aliases normData,pcitrif-method
 setMethod("normData", "pcitrif", function(x) x@step1$norm)
 
 #' @rdname pcitrif-class
+#' @return Return Differentially Expressed genes
 #' @aliases getDE,pcitrif-method
 setMethod("getDE", "pcitrif", function(x) x@step2$de_genes)
 
 #' @rdname pcitrif-class
+#' @return Return the TFs
 #' @aliases getTF,pcitrif-method
 setMethod("getTF", "pcitrif", function(x) x@step2$tf)
 
 #' @rdname pcitrif-class
-#' @aliases getRIFinput,pcitrif-method
-setMethod("getRIFinput", "pcitrif", function(x) x@step3$input)
+#' @return Return the RIF input
+#' @aliases RIFinput,pcitrif-method
+setMethod("RIFinput", "pcitrif", function(x) x@step3$input)
 
 #' @rdname pcitrif-class
-#' @aliases getRIFoutput,pcitrif-method
-setMethod("getRIFoutput", "pcitrif", function(x) x@step3$out)
+#' @return Return the RIF output
+#' @aliases RIFout,pcitrif-method
+setMethod("RIFout", "pcitrif", function(x) x@step3$out)
 
 #' @rdname pcitrif-class
-#' @aliases getPCITinput_cond1,pcitrif-method
-setMethod("getPCITinput_cond1", "pcitrif", function(x) x@step4$input_cond1)
+#' @return Return the PCIT input for condition1
+#' @aliases PCITinput1,pcitrif-method
+setMethod("PCITinput1", "pcitrif", function(x) x@step4$input_cond1)
 
 #' @rdname pcitrif-class
-#' @aliases getPCITinput_cond2,pcitrif-method
-setMethod("getPCITinput_cond2", "pcitrif", function(x) x@step4$input_cond2)
+#' @return Return the PCIT input for condition2
+#' @aliases PCITinput2,pcitrif-method
+setMethod("PCITinput2", "pcitrif", function(x) x@step4$input_cond2)
 
 #' @rdname pcitrif-class
-#' @aliases getPCIToutput_cond1,pcitrif-method
-setMethod("getPCIToutput_cond1", "pcitrif", function(x) x@step4$out_cond1)
+#' @return Return the PCIT output for condition1
+#' @aliases PCITout1,pcitrif-method
+setMethod("PCITout1", "pcitrif", function(x) x@step4$out_cond1)
 
 #' @rdname pcitrif-class
-#' @aliases getPCIToutput_cond2,pcitrif-method
-setMethod("getPCIToutput_cond2", "pcitrif", function(x) x@step4$out_cond2)
+#' @return Return the PCIT output for condition2
+#' @aliases PCITout2,pcitrif-method
+setMethod("PCITout2", "pcitrif", function(x) x@step4$out_cond2)
 
 #' @rdname pcitrif-class
-#' @aliases getNetworkCond1,pcitrif-method
-setMethod("getNetworkCond1", "pcitrif", function(x) x@step4$network_cond1)
+#' @return Return the network of interactions between gene-TFs for condition1
+#' @aliases getNet1,pcitrif-method
+setMethod("getNet1", "pcitrif", function(x) x@step4$network_cond1)
 
 #' @rdname pcitrif-class
-#' @aliases getNetworkCond2,pcitrif-method
-setMethod("getNetworkCond2", "pcitrif", function(x) x@step4$network_cond2)
+#' @return Return the network of interactions between gene-TFs for condition2
+#' @aliases getNet2,pcitrif-method
+setMethod("getNet2", "pcitrif", function(x) x@step4$network_cond2)
 
 #' @rdname pcitrif-class
-#' @aliases getRIFkeyTF,pcitrif-method
-setMethod("getRIFkeyTF", "pcitrif", function(x) x@step4$keytf)
+#' @return Return the main TFs after PCIT and RIF analysis
+#' @aliases getKeyTF,pcitrif-method
+setMethod("getKeyTF", "pcitrif", function(x) x@step4$keytf)
 
 #' @rdname pcitrif-class
+#' @return Return the annotation for each gene and TFs
 #' @aliases getAnno,pcitrif-method
 setMethod("getAnno", "pcitrif", function(x) x@step4$anno)

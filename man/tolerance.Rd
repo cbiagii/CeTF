@@ -22,7 +22,6 @@ Value of tolerance.
 Function for calculating the local tolerance given the 3 pairwise correlations between a, b and c.
 }
 \examples{
-data('simNorm')
 tolerance(0.5, -0.65, 0.23, tolType = 'mean')
 tolerance(0.5, -0.65, 0.23, tolType = 'max')
 tolerance(0.5, -0.65, 0.23, tolType = 'min')

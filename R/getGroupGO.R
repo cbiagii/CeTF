@@ -13,24 +13,32 @@
 #' @importFrom pbapply pbapply
 #'
 #' @examples
-#' \dontrun{
-#' results <- getGroupGO(genes,
-#' ont = 'BP',
-#' keyType = 'ENSEMBL',
-#' annoPkg = org.Hs.eg.db)
-#' }
+#' library(org.Hs.eg.db)
+#'
+#' data("pcitrifExample")
+#'
+#' genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
+#'                  as.character(getNet1(pcitrifExample)[,2])))
+#'
+#' cond1 <- getGroupGO(genes = genes,
+#'                     ont = "BP",
+#'                     keyType = "ENSEMBL",
+#'                     annoPkg = org.Hs.eg.db)
 #'
 #'
 #'
 #' @export
-getGroupGO <- function(genes, ont = "BP", keyType = NULL, annoPkg = NULL) {
-    ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg, ont = ont, readable = FALSE, 
-        keyType = keyType, level = 3)
-    
+getGroupGO <- function(genes, ont = "BP", keyType = NULL,
+    annoPkg = NULL) {
+    ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg,
+        ont = ont, readable = FALSE, keyType = keyType,
+        level = 3)
+
     results <- ggo@result
-    results <- results[order(results$Count, decreasing = TRUE), ]
+    results <- results[order(results$Count, decreasing = TRUE),
+        ]
     results <- results[results$Count > 0, ]
-    
+
     tmp <- pbapply(results, 1, function(x) {
         temp <- NULL
         pathways1 <- NULL
@@ -41,6 +49,6 @@ getGroupGO <- function(genes, ont = "BP", keyType = NULL, annoPkg = NULL) {
     })
     tmp <- do.call(rbind, tmp)
     tmp <- data.frame(gene1 = tmp$pathways, gene2 = tmp$gc)
-    
+
     return(list(results = results, netGO = tmp))
 }

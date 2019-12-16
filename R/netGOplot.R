@@ -14,33 +14,52 @@
 #' @importFrom ggplot2 fortify ggplot facet_wrap element_rect
 #'
 #' @examples
-#' \dontrun{
-#' #See vignette for more details
-#' netGOplot(netCond,
-#' resultsGO,
-#' netGO,
-#' anno,
-#' label = FALSE)
-#' }
+#' library(org.Hs.eg.db)
+#'
+#' data("pcitrifExample")
+#'
+#' genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
+#'                  as.character(getNet1(pcitrifExample)[,2])))
+#'
+#' cond1 <- getGroupGO(genes = genes,
+#'                     ont = "BP",
+#'                     keyType = "ENSEMBL",
+#'                     annoPkg = org.Hs.eg.db)
+#'
+#' t1 <- head(cond1$results, 12)
+#' t2 <- subset(cond1$netGO, cond1$netGO$gene1 %in% as.character(t1[,1]))
+#'
+#' netGOplot(netCond = getNet1(pcitrifExample),
+#'           resultsGO = t1,
+#'           netGO = t2,
+#'           anno = getAnno(pcitrifExample),
+#'           label = TRUE)
+#'
 #'
 #'
 #'
 #' @export
-netGOplot <- function(netCond, resultsGO, netGO, anno, label = FALSE) {
+netGOplot <- function(netCond, resultsGO, netGO, anno,
+    label = FALSE) {
     tmp <- apply(resultsGO, 1, function(x) {
-        genes <- as.character(subset(netGO, netGO$gene1 == as.character(x[["ID"]]))[, 2])
-        tmp1 <- netCond[which(netCond$gene1 %in% genes & netCond$gene2 %in% genes), ]
+        genes <- as.character(subset(netGO, netGO$gene1 ==
+            as.character(x[["ID"]]))[, 2])
+        tmp1 <- netCond[which(netCond$gene1 %in% genes &
+            netCond$gene2 %in% genes), ]
         tmp1$pathway <- as.character(x[["ID"]])
         return(tmp1)
     })
     tmp <- do.call(rbind, tmp)
-    
+
     tab <- fortify(as.edgedf(tmp), anno, group = "pathway")
-    pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) + geom_net(aes(colour = class, group = class, 
-        linewidth = 0.5), layout.alg = "fruchtermanreingold", ealpha = 0.5, size = 3, curvature = 0.05, 
-        directed = FALSE, arrowsize = 0.5, show.legend = TRUE, fiteach = TRUE, labelon = label, 
-        fontsize = 0.5, alpha = 0.25, labelcolour = "black", singletons = FALSE) + facet_wrap(~pathway) + 
-        theme_net() + theme(panel.background = element_rect(colour = "black"))
-    
+    pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) +
+        geom_net(aes(colour = class, group = class,
+            linewidth = 0.5), layout.alg = "fruchtermanreingold",
+            ealpha = 0.5, size = 3, curvature = 0.05,
+            directed = FALSE, arrowsize = 0.5, show.legend = TRUE,
+            fiteach = TRUE, labelon = label, fontsize = 0.5,
+            alpha = 0.25, labelcolour = "black", singletons = FALSE) +
+        facet_wrap(~pathway) + theme_net() + theme(panel.background = element_rect(colour = "black"))
+
     return(pt)
 }

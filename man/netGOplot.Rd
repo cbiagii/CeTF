@@ -24,14 +24,27 @@ The network for groupGO for a determined condition.
 Generate the plot of groupGO network result.
 }
 \examples{
-\dontrun{
-#See vignette for more details
-netGOplot(netCond,
-resultsGO,
-netGO,
-anno,
-label = FALSE)
-}
+library(org.Hs.eg.db)
+
+data("pcitrifExample")
+
+genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
+                 as.character(getNet1(pcitrifExample)[,2])))
+
+cond1 <- getGroupGO(genes = genes,
+                    ont = "BP",
+                    keyType = "ENSEMBL",
+                    annoPkg = org.Hs.eg.db)
+
+t1 <- head(cond1$results, 12)
+t2 <- subset(cond1$netGO, cond1$netGO$gene1 \%in\% as.character(t1[,1]))
+
+netGOplot(netCond = getNet1(pcitrifExample),
+          resultsGO = t1,
+          netGO = t2,
+          anno = getAnno(pcitrifExample),
+          label = TRUE)
+
 
 
 

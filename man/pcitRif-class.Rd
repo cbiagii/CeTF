@@ -7,19 +7,19 @@
 \alias{rawData,pcitrif-method}
 \alias{tpmData,pcitrif-method}
 \alias{tpmDat,pcitrif-method}
-\alias{getSelectedGenes,pcitrif-method}
+\alias{getGenes,pcitrif-method}
 \alias{normData,pcitrif-method}
 \alias{getDE,pcitrif-method}
 \alias{getTF,pcitrif-method}
-\alias{getRIFinput,pcitrif-method}
-\alias{getRIFoutput,pcitrif-method}
-\alias{getPCITinput_cond1,pcitrif-method}
-\alias{getPCITinput_cond2,pcitrif-method}
-\alias{getPCIToutput_cond1,pcitrif-method}
-\alias{getPCIToutput_cond2,pcitrif-method}
-\alias{getNetworkCond1,pcitrif-method}
-\alias{getNetworkCond2,pcitrif-method}
-\alias{getRIFkeyTF,pcitrif-method}
+\alias{RIFinput,pcitrif-method}
+\alias{RIFout,pcitrif-method}
+\alias{PCITinput1,pcitrif-method}
+\alias{PCITinput2,pcitrif-method}
+\alias{PCITout1,pcitrif-method}
+\alias{PCITout2,pcitrif-method}
+\alias{getNet1,pcitrif-method}
+\alias{getNet2,pcitrif-method}
+\alias{getKeyTF,pcitrif-method}
 \alias{getAnno,pcitrif-method}
 \title{The pcitrif Class}
 \usage{
@@ -27,7 +27,7 @@ rawData(x)
 
 tpmData(x)
 
-getSelectedGenes(x)
+getGenes(x)
 
 normData(x)
 
@@ -35,23 +35,23 @@ getDE(x)
 
 getTF(x)
 
-getRIFinput(x)
+RIFinput(x)
 
-getRIFoutput(x)
+RIFout(x)
 
-getPCITinput_cond1(x)
+PCITinput1(x)
 
-getPCITinput_cond2(x)
+PCITinput2(x)
 
-getPCIToutput_cond1(x)
+PCITout1(x)
 
-getPCIToutput_cond2(x)
+PCITout2(x)
 
-getNetworkCond1(x)
+getNet1(x)
 
-getNetworkCond2(x)
+getNet2(x)
 
-getRIFkeyTF(x)
+getKeyTF(x)
 
 getAnno(x)
 
@@ -59,7 +59,7 @@ getAnno(x)
 
 \S4method{tpmData}{pcitrif}(x)
 
-\S4method{getSelectedGenes}{pcitrif}(x)
+\S4method{getGenes}{pcitrif}(x)
 
 \S4method{normData}{pcitrif}(x)
 
@@ -67,25 +67,58 @@ getAnno(x)
 
 \S4method{getTF}{pcitrif}(x)
 
-\S4method{getRIFinput}{pcitrif}(x)
+\S4method{RIFinput}{pcitrif}(x)
 
-\S4method{getRIFoutput}{pcitrif}(x)
+\S4method{RIFout}{pcitrif}(x)
 
-\S4method{getPCITinput_cond1}{pcitrif}(x)
+\S4method{PCITinput1}{pcitrif}(x)
 
-\S4method{getPCITinput_cond2}{pcitrif}(x)
+\S4method{PCITinput2}{pcitrif}(x)
 
-\S4method{getPCIToutput_cond1}{pcitrif}(x)
+\S4method{PCITout1}{pcitrif}(x)
 
-\S4method{getPCIToutput_cond2}{pcitrif}(x)
+\S4method{PCITout2}{pcitrif}(x)
 
-\S4method{getNetworkCond1}{pcitrif}(x)
+\S4method{getNet1}{pcitrif}(x)
 
-\S4method{getNetworkCond2}{pcitrif}(x)
+\S4method{getNet2}{pcitrif}(x)
 
-\S4method{getRIFkeyTF}{pcitrif}(x)
+\S4method{getKeyTF}{pcitrif}(x)
 
 \S4method{getAnno}{pcitrif}(x)
+}
+\value{
+Return the raw data inputed
+
+Return the TPM data
+
+Return the filtered genes
+
+Return the normalized data
+
+Return Differentially Expressed genes
+
+Return the TFs
+
+Return the RIF input
+
+Return the RIF output
+
+Return the PCIT input for condition1
+
+Return the PCIT input for condition2
+
+Return the PCIT output for condition1
+
+Return the PCIT output for condition2
+
+Return the network of interactions between gene-TFs for condition1
+
+Return the network of interactions between gene-TFs for condition2
+
+Return the main TFs after PCIT and RIF analysis
+
+Return the annotation for each gene and TFs
 }
 \description{
 The pcitrif class is data storage class that stores all the results of complete RIF and PCIT analysis.
@@ -93,12 +126,12 @@ The pcitrif class is data storage class that stores all the results of complete 
 \section{Slots}{
 
 \describe{
-\item{\code{step1}}{List of objects related to step 1 (TPM Filter) of analysis.}
+\item{\code{step1}}{List of objects related to step 1 (Data Adjustment) of analysis.}
 
 \item{\code{step2}}{List of objects related to step 2 (Differential Expression) of analysis.}
 
-\item{\code{step3}}{List of objects related to step 3 (Regulatory Impact Factors analysis) of analysis.}
+\item{\code{step3}}{List of objects related to step 3 (Regulatory Impact Factors) of analysis.}
 
-\item{\code{step4}}{List of objects related to step 4 (Partial Correlation and Information Theory analysis) of analysis.}
+\item{\code{step4}}{List of objects related to step 4 (Partial Correlation and Information Theory) of analysis.}
 }}
 

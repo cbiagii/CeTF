@@ -22,12 +22,17 @@ A list with results of functional profile of genes and a network with the ontolo
 Functional Profile of a gene set at specific GO level. Given a vector of genes, this function will return the GO profile at a specific level.
 }
 \examples{
-\dontrun{
-results <- getGroupGO(genes,
-ont = 'BP',
-keyType = 'ENSEMBL',
-annoPkg = org.Hs.eg.db)
-}
+library(org.Hs.eg.db)
+
+data("pcitrifExample")
+
+genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
+                 as.character(getNet1(pcitrifExample)[,2])))
+
+cond1 <- getGroupGO(genes = genes,
+                    ont = "BP",
+                    keyType = "ENSEMBL",
+                    annoPkg = org.Hs.eg.db)
 
 
 

@@ -10,7 +10,6 @@
 #' @return Value of tolerance.
 #'
 #' @examples
-#' data('simNorm')
 #' tolerance(0.5, -0.65, 0.23, tolType = 'mean')
 #' tolerance(0.5, -0.65, 0.23, tolType = 'max')
 #' tolerance(0.5, -0.65, 0.23, tolType = 'min')
@@ -20,7 +19,6 @@
 #'
 #' @export
 tolerance <- function(a, b, c, tolType = "mean") {
-    
     a_z = (a - b * c)/sqrt((1 - b^2) * (1 - c^2))
     b_y = (b - a * c)/sqrt((1 - a^2) * (1 - c^2))
     c_x = (c - a * b)/sqrt((1 - a^2) * (1 - b^2))

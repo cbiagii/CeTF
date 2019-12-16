@@ -13,38 +13,60 @@
 #'
 #' @examples
 #' data('simCounts')
-#' colnames(simCounts) <- paste0('Sample', 1:20)
-
+#'
 #' anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)),
 #' row.names = colnames(simCounts))
+#' colnames(simCounts) <- paste(colnames(simCounts), anno$cond, sep = '_')
 #'
 #' out <- expDiff(exp = simCounts,
 #'             anno = anno,
 #'             conditions = c('cond1', 'cond2'),
 #'             lfc = 2,
-#'             padj = 0.05)
+#'             padj = 0.05,
+#'             diffMethod = 'Reverter')
 #'
 #' @importFrom DESeq2 DESeqDataSetFromMatrix DESeq results
 #' @importFrom stats relevel
 #' @importFrom SummarizedExperiment colData
 #'
 #' @export
-expDiff <- function(exp, anno = NULL, conditions = NULL, lfc = 1.5, padj = 0.05, diffMethod = "Reverter") {
+expDiff <- function(exp, anno = NULL, conditions = NULL, 
+    lfc = 1.5, padj = 0.05, diffMethod = "Reverter") {
+    if (!is.data.frame(exp) & !is.matrix(exp)) {
+        stop("exp must be a dataframe or a matrix")
+    }
+    
+    if (nrow(anno) == 0) {
+        stop("anno must have some conditions to compare")
+    }
+    
+    if (!is.character(conditions) & length(conditions) != 
+        2) {
+        stop("you must input 2 conditions")
+    }
+    
     if (diffMethod == "Reverter") {
-        de.j <- data.frame(cond1 = apply(exp[, grep(paste0("_", conditions[1]), colnames(exp))], 
-            1, mean), cond2 = apply(exp[, grep(paste0("_", conditions[2]), colnames(exp))], 
-            1, mean))
+        de.j <- data.frame(cond1 = apply(exp[, grep(paste0("_", 
+            conditions[1]), colnames(exp))], 1, mean), 
+            cond2 = apply(exp[, grep(paste0("_", conditions[2]), 
+                colnames(exp))], 1, mean))
         tmp1 <- de.j[, 1] - de.j[, 2]
-        var = (sum(tmp1^2) - (sum(tmp1) * sum(tmp1))/(length(tmp1)))/(length(tmp1) - 1)
+        var = (sum(tmp1^2) - (sum(tmp1) * sum(tmp1))/(length(tmp1)))/(length(tmp1) - 
+            1)
         de.j <- cbind(de.j, diff = (tmp1 - (sum(tmp1)/length(tmp1)))/sqrt(var))
-        DE_unique <- rownames(subset(de.j, abs(de.j$diff) > lfc))
+        DE_unique <- rownames(subset(de.j, abs(de.j$diff) > 
+            lfc))
     } else if (diffMethod == "DESeq2") {
-        ddsHTSeq <- DESeqDataSetFromMatrix(countData = exp, colData = anno, design = ~cond)
+        ddsHTSeq <- DESeqDataSetFromMatrix(countData = exp, 
+            colData = anno, design = ~cond)
         
-        colData(ddsHTSeq)[, 1] <- relevel(colData(ddsHTSeq)[, 1], ref = conditions[1])
+        colData(ddsHTSeq)[, 1] <- relevel(colData(ddsHTSeq)[, 
+            1], ref = conditions[1])
         dds <- DESeq(ddsHTSeq)
-        res <- results(dds, contrast = c("cond", conditions[1], conditions[2]))
-        DE_unique <- rownames(res)[which(abs(res$log2FoldChange) > lfc & res$padj < padj)]
+        res <- results(dds, contrast = c("cond", conditions[1], 
+            conditions[2]))
+        DE_unique <- rownames(res)[which(abs(res$log2FoldChange) > 
+            lfc & res$padj < padj)]
     }
     return(DE_unique)
 }

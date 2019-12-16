@@ -20,12 +20,25 @@ A network.
 Generate the network that integrates the network of a condition with groupGO results.
 }
 \examples{
-\dontrun{
-#See vignette for more details
-networkPlot(netCond,
-netGO,
-keyTFs)
-}
+library(org.Hs.eg.db)
+
+data("pcitrifExample")
+
+genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
+                 as.character(getNet1(pcitrifExample)[,2])))
+
+cond1 <- getGroupGO(genes = genes,
+                    ont = "BP",
+                    keyType = "ENSEMBL",
+                    annoPkg = org.Hs.eg.db)
+
+t1 <- head(cond1$results, 12)
+#Subsetting the network for the conditions to make available only the 12 nodes subsetted
+t2 <- subset(cond1$netGO, cond1$netGO$gene1 \%in\% as.character(t1[,1]))
+
+networkPlot(netCond = getNet1(pcitrifExample),
+            netGO = t2,
+            keyTFs = getKeyTF(pcitrifExample))
 
 
 
