@@ -1,10 +1,6 @@
 # pcitRif <img src="vignettes/logo.png" align="right" width="300" />
 An implementation of PCIT and RIF analysis in R
 
-[![Travis Build
-Status]
-(https://ci.appveyor.com/project/tidyverse/ggplot2)
-[![CRAN\_Status\_Badge]
 
 
 ## Overview
