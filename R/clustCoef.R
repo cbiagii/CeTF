@@ -11,19 +11,19 @@
 #' @examples
 #' data('simNorm')
 #' results <- PCIT(simNorm)
-#' clustCoef(results[[3]])
+#' clustCoef(results$adj_sig)
 #'
 #' @export
 clustCoef <- function(mat) {
     if (!is.data.frame(mat) & !is.matrix(mat)) {
         stop("mat must be a dataframe or a matrix")
     }
-    
+
     nGenes <- as.integer(nrow(mat))
-    
+
     cc <- E <- k <- rep(0, length = nrow(mat))
     idx <- seq_len(nrow(mat))
-    
+
     for (i in seq_len(nGenes)) {
         neighbours <- (mat[i, seq_len(nGenes)] != 0 | mat[seq_len(nGenes), i] != 0)
         k[i] = sum(neighbours)

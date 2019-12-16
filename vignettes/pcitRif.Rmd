@@ -267,7 +267,7 @@ out <- runAnalysis(mat = counts,
                    diffMethod = "Reverter")
 ```
 
-To access the pcitRif object is needed to use the $\textbf{@}$ in the object to explore the different slots. The dataframes located at **out@step4$network_cond1**,**out@step4$network_cond2** and **out@step4$anno** can be used as input in Cytoscape software [@shannon2003cytoscape] to visualize the networks for each condition.
+To access the pcitRif object is needed to use the Accessors from **pcitrif** class.
 
 
 ## Plotting networks output
@@ -282,7 +282,9 @@ Then we will associate the genes in both conditions with Gene Ontology (GO). In 
 library(org.Hs.eg.db)
 
 # Accessing the network for condition 1
-genes <- unique(c(as.character(out@step4$network_cond1$gene1), as.character(out@step4$network_cond1$gene2)))
+  genes <- unique(c(as.character(getNetworkCond1(out)[,1]), as.character(getNetworkCond1(out)[,2])))
+
+
 
 cond1 <- getGroupGO(genes = genes, 
                     ont = "BP", 
@@ -298,18 +300,18 @@ t1 <- head(cond1$results, 12)
 # Subsetting the network for the conditions to make available only the 12 nodes subsetted
 t2 <- subset(cond1$netGO, cond1$netGO$gene1 %in% as.character(t1[,1]))
 
-netGOplot(netCond = out@step4$network_cond1, 
+netGOplot(netCond = getNetworkCond1(out), 
           resultsGO = t1, 
           netGO = t2, 
-          anno = out@step4$anno, 
+          anno = getAnno(out), 
           label = TRUE)
 ```
 
 Finally, we will merge the results from the network of condition 1 (Gene-Gene and TF-Gene interaction) with groupGO results (GO-Gene or GO-TF interaction). The final results has the objective to integrate the results in order to have a complete view of the data.
 ```{r networkPlot, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
-networkPlot(netCond = out@step4$network_cond1, 
+networkPlot(netCond = getNetworkCond1(out), 
             netGO = t2, 
-            keyTFs = out@step4$keytf)
+            keyTFs = getRIFkeyTF(out))
 ```
 
 
