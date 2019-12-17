@@ -2,40 +2,49 @@
 % Please edit documentation in R/networkPlot.R
 \name{networkPlot}
 \alias{networkPlot}
-\title{Final network plot}
+\title{Network integrated plot}
 \usage{
 networkPlot(netCond, netGO, keyTFs)
 }
 \arguments{
-\item{netCond}{Network of a specific condition. Can be found in result of \link[pcitRif]{runAnalysis} (step4 -> network_cond1 or network_cond2)}
+\item{netCond}{Network of a specific condition. Can be found in result of \code{\link{runAnalysis}} (see \code{\link{getNet1}} and \code{\link{getNet2}})}
 
-\item{netGO}{Dataframe with the results of \link[pcitRif]{getGroupGO} (second element of list). This result can be decreased applying filters for the pathways selection.}
+\item{netGO}{Dataframe with the results of \code{\link{getGroupGO}}
+(second element of list).}
 
-\item{keyTFs}{TFs identified as importants by \link[pcitRif]{runAnalysis} (step4 -> keytf)}
+\item{keyTFs}{TFs identified as importants by \code{\link{runAnalysis}} (see \code{\link{getKeyTF}})}
 }
 \value{
-A network.
+A network with interaction between genes, TFs and/or ontologies.
 }
 \description{
-Generate the network that integrates the network of a condition with groupGO results.
+Generate the plot for network that integrates the network data
+from a condition with \code{\link{getGroupGO}} results.
 }
 \examples{
+# load the annotation package
 library(org.Hs.eg.db)
 
-data("pcitrifExample")
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
 
+# getting the genes in network of condition 1
 genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
                  as.character(getNet1(pcitrifExample)[,2])))
 
+# performing getGroupGO analysis
 cond1 <- getGroupGO(genes = genes,
                     ont = "BP",
                     keyType = "ENSEMBL",
                     annoPkg = org.Hs.eg.db)
 
+# selecting only first 12 pathways
 t1 <- head(cond1$results, 12)
-#Subsetting the network for the conditions to make available only the 12 nodes subsetted
+
+# subsetting the network to have only the first 12 pathways
 t2 <- subset(cond1$netGO, cond1$netGO$gene1 \%in\% as.character(t1[,1]))
 
+# generate the networkPlot for condition1
 networkPlot(netCond = getNet1(pcitrifExample),
             netGO = t2,
             keyTFs = getKeyTF(pcitrifExample))

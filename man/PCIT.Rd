@@ -9,17 +9,33 @@ PCIT(input, tolType = "mean")
 \arguments{
 \item{input}{A correlation matrix.}
 
-\item{tolType}{Type of tolerance given the 3 pairwise correlations (mean, min, max, median).}
+\item{tolType}{Type of tolerance given the 3 pairwise correlations
+(see \code{\link{tolerance}})}
 }
 \value{
-A list with the significant correlations, raw adjacency matrix and significant adjacency matrix.
+A list with the significant correlations, raw adjacency matrix
+and significant adjacency matrix.
 }
 \description{
-The PCIT algorithm (Reverter and Chan, 2008) identify the significant correlation of a given matrix of expression.
+The PCIT algorithm is used for reconstruction of gene co-expression
+networks (GCN) that combines the concept partial correlation coefficient
+with information theory to identify significant gene to gene associations
+defining edges in the reconstruction of GCN.
 }
 \examples{
+# loading a simulated normalized data
 data('simNorm')
-results <- PCIT(simNorm)
-head(results$out, 15)
 
+# getting the PCIT results
+results <- PCIT(simNorm)
+
+# printing PCIT output first 15 rows
+head(results$tab, 15)
+
+}
+\references{
+REVERTER, Antonio; CHAN, Eva KF. Combining partial correlation and
+an information theory approach to the reversed engineering of gene
+co-expression networks. Bioinformatics, v. 24, n. 21, p. 2491-2497, 2008.
+\url{https://academic.oup.com/bioinformatics/article/24/21/2491/192682}
 }

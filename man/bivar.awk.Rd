@@ -2,25 +2,28 @@
 % Please edit documentation in R/bivar_awk.R
 \name{bivar.awk}
 \alias{bivar.awk}
-\title{Statistics from a data frame}
+\title{Summary statistics from two variables}
 \usage{
 bivar.awk(x)
 }
 \arguments{
-\item{x}{Dataframe of two columns.}
+\item{x}{a dataframe with two columns (variables).}
 }
 \value{
-Report with statistics.
+A summary statistics for two variables.
 }
 \description{
-Provides a report of number of elements, mean,
-standard deviation, minimum and maximum for each of two
-columns and calculate the correlation and regression for
-the columns.
+Reads two columns of data values (say X and Y)
+and computes summary statistics including N, Mean, SD, Min
+and Max for X and Y, as well as the correlation between X
+and Y and the regression of Y on X.
 }
 \examples{
+# creating a random dataframe with two columns (variables)
 df <- data.frame(a = sample(1:1000, 100, replace=TRUE),
-b = sample(1:1000, 100, replace=TRUE))
+                 b = sample(1:1000, 100, replace=TRUE))
+
+# running bivar.awk function
 bivar.awk(df)
 
 }

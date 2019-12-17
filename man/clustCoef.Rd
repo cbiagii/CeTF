@@ -16,8 +16,19 @@ The clustering coefficient(s) for the adjacency matrix.
 Calculate the clustering coefficient for an adjacency matrix.
 }
 \examples{
+# loading a simulated counts data
 data('simNorm')
+
+# running PCIT analysis
 results <- PCIT(simNorm)
+
+# getting the clustering coefficient
 clustCoef(results$adj_sig)
 
+}
+\references{
+Nathan S. Watson-Haigh, Haja N. Kadarmideen, and Antonio Reverter (2010).
+PCIT: an R package for weighted gene co-expression networks based on
+partial correlation and information theory approaches. Bioinformatics.
+26(3) 411-413. \url{https://academic.oup.com/bioinformatics/article/26/3/411/215002}
 }

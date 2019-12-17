@@ -11,24 +11,32 @@ getGroupGO(genes, ont = "BP", keyType = NULL, annoPkg = NULL)
 
 \item{ont}{One of 'MF', 'BP', and 'CC' subontologies.}
 
-\item{keyType}{key type of input gene.}
+\item{keyType}{key type of input gene (i.e. "ENSEMBL", "SYMBOL", "ENTREZID").}
 
 \item{annoPkg}{Package of annotation of specific organism (OrgDb).}
 }
 \value{
-A list with results of functional profile of genes and a network with the ontology related with which gene.
+A list with the results of the functional profile of the genes and a
+network with the ontologies (column 1) and the corresponding
+genes (column 2).
 }
 \description{
-Functional Profile of a gene set at specific GO level. Given a vector of genes, this function will return the GO profile at a specific level.
+Functional Profile of a gene set at specific GO level.
+Given a vector of genes, this function will return the GO profile at
+a specific level.
 }
 \examples{
+# load the annotation package
 library(org.Hs.eg.db)
 
-data("pcitrifExample")
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
 
+# getting the genes in network of condition 1
 genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
                  as.character(getNet1(pcitrifExample)[,2])))
 
+# performing getGroupGO analysis
 cond1 <- getGroupGO(genes = genes,
                     ont = "BP",
                     keyType = "ENSEMBL",

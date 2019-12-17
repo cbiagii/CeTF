@@ -14,36 +14,70 @@ expDiff(
 )
 }
 \arguments{
-\item{exp}{Count data where the rows are genes and coluns the samples (conditions).}
+\item{exp}{Count data where the rows are genes and coluns the samples.}
 
-\item{anno}{A dataframe of only one column. The columns must contain the conditions and be named as 'cond', and the rownames must be the names of samples.}
+\item{anno}{A single column dataframe. The column name must be 'cond',
+and the rownames must be the names of samples.}
 
-\item{conditions}{A character vector containing the name of the two conditions. The first name will be selected as reference.}
+\item{conditions}{A character vector containing the name of the two
+conditions. The first name will be selected as reference.}
 
-\item{lfc}{logFoldChange module threshold to define a gene as differentially expressed.}
+\item{lfc}{log2 fold change module threshold to define a gene as
+differentially expressed.}
 
-\item{padj}{Sifnificance value to define a gene as differentially expressed.}
+\item{padj}{Significance value to define a gene as differentially
+expressed.}
 
-\item{diffMethod}{Choose between Reverter or DESeq2 method. The DESeq2 method is only for counts data.}
+\item{diffMethod}{Choose between Reverter or DESeq2 method.
+The DESeq2 method is only for counts data. See details for more
+details}
 }
 \value{
 A character with the names of differentially expressed genes.
 }
 \description{
-This function calculate the differential expressed genes for two conditions.
+This function returns the differentially expressed genes
+when comparing two conditions.
+}
+\details{
+The \strong{Reverter} option to diffMethod parameter works as follows:
+\enumerate{
+   \item Calculation of mean between samples of each condition for all genes;
+   \item Subtraction between mean of control condition relative to other condition;
+   \item Calculation of variance of subtraction previously obtained;
+   \item The last step calculates the differential expression using the following
+   formula, where x is the result of substraction (item 2) and var is the
+   variance calculated in item 3:
+       \deqn{diff = \frac{x - (sum(x)/length(x))}{\sqrt{var}}}
+}
+
+The \strong{DESeq2} option to diffMethod parameter is recommended only for
+count data. This method apply the differential expression analysis based
+on the negative binomial distribution (see \code{\link[DESeq2]{DESeq}}).
 }
 \examples{
+# loading a simulated counts data
 data('simCounts')
 
+# creating the dataframe with annotation for each sample
 anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)),
-row.names = colnames(simCounts))
+                   row.names = colnames(simCounts))
+
+# renaming colums of simulated counts data
 colnames(simCounts) <- paste(colnames(simCounts), anno$cond, sep = '_')
 
+# performing differential expression analysis using Reverter method
 out <- expDiff(exp = simCounts,
-            anno = anno,
-            conditions = c('cond1', 'cond2'),
-            lfc = 2,
-            padj = 0.05,
-            diffMethod = 'Reverter')
+               anno = anno,
+               conditions = c('cond1', 'cond2'),
+               lfc = 2,
+               padj = 0.05,
+               diffMethod = 'Reverter')
 
+}
+\references{
+REVERTER, Antonio et al. Simultaneous identification of differential
+gene expression and connectivity in inflammation, adipogenesis and cancer.
+Bioinformatics, v. 22, n. 19, p. 2396-2404, 2006.
+\url{https://academic.oup.com/bioinformatics/article/22/19/2396/240742}
 }

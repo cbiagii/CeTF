@@ -2,22 +2,28 @@
 % Please edit documentation in R/densityPlot.R
 \name{densityPlot}
 \alias{densityPlot}
-\title{Density Plot of Raw Correlation Coefficients}
+\title{Density Plot of raw correlation coefficients}
 \usage{
 densityPlot(mat)
 }
 \arguments{
-\item{mat}{An adjacency matrix.}
+\item{mat}{An raw adjacency matrix.}
 }
 \value{
-The density plot of raw correlation coefficients.
+A density plot for raw correlation coefficients.
 }
 \description{
 Generate the density plot for an adjacency matrix.
 }
 \examples{
-data('simNorm')
+# loading a simulated normalized data
+data(simNorm)
+
+# getting the PCIT results
 results <- PCIT(simNorm)
+
+# using the PCIT results, more specifically the raw adjacency
+matrix to get the density plot
 densityPlot(results$adj_raw)
 
 }

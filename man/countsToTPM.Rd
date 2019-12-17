@@ -2,21 +2,27 @@
 % Please edit documentation in R/countsToTPM.R
 \name{countsToTPM}
 \alias{countsToTPM}
-\title{Counts to TPM}
+\title{Counts data to TPM}
 \usage{
 countsToTPM(counts)
 }
 \arguments{
-\item{counts}{A matrix or dataframe of counts}
+\item{counts}{A matrix or dataframe with counts data, where the rows
+contains the genes and the columns the samples.}
 }
 \value{
-Returns a table with TPM values
+a table with TPM values.
 }
 \description{
-Convert the count data to TPM
+Convert the count data to TPM. Note: this function
+is written very simply and can be easily altered to produce other
+behavior by examining the source code.
 }
 \examples{
+# loading a simulated counts data
 data('simCounts')
+
+# getting the TPM matrix from counts
 tpm <- countsToTPM(simCounts)
 
 

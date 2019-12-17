@@ -2,23 +2,28 @@
 % Please edit documentation in R/normExp.R
 \name{normExp}
 \alias{normExp}
-\title{Normalization of data}
+\title{Normalized expression transformation}
 \usage{
 normExp(tab)
 }
 \arguments{
-\item{tab}{A matrix or dataframe of expression data}
+\item{tab}{A matrix or dataframe of expression data (i.e. TPM, counts, FPKM).}
 }
 \value{
-Returns a table with noralized values
+A table with normalized values.
 }
 \description{
 Normalize the expression data of any type of experiment
 by columns, applying log(x + 1)/log(2).
 }
 \examples{
+# loading a simulated counts data
 data('simCounts')
+
+# getting the TPM matrix from counts
 tpm <- countsToTPM(simCounts)
+
+# normalizing TPM data
 norm <- normExp(tpm)
 
 

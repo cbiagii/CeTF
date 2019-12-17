@@ -7,17 +7,24 @@
 histPlot(mat)
 }
 \arguments{
-\item{mat}{Adjacency matrix resulting from PCIT analysis in which has some zero values.}
+\item{mat}{Adjacency matrix resulting from PCIT analysis in which
+has some zero values.}
 }
 \value{
 The histogram of connectivity distribution.
 }
 \description{
-Generate the histogram for adjacency matrix to show the clustering coefficient distribution.
+Generate the histogram for adjacency matrix to
+show the clustering coefficient distribution.
 }
 \examples{
-data('simNorm')
+# loading a simulated normalized data
+data(simNorm)
+
+# getting the PCIT results
 results <- PCIT(simNorm)
+
+# plotting the histogram for PCIT significance results
 histPlot(results$adj_sig)
 
 

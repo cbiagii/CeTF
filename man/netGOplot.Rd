@@ -2,43 +2,58 @@
 % Please edit documentation in R/netGOplot.R
 \name{netGOplot}
 \alias{netGOplot}
-\title{getGroupGO network plot}
+\title{Plot a network for getGroupGO function}
 \usage{
 netGOplot(netCond, resultsGO, netGO, anno, label = FALSE)
 }
 \arguments{
-\item{netCond}{Network of a specific condition. Can be found in result of \link[pcitRif]{runAnalysis} (step4 -> network_cond1 or network_cond2)}
+\item{netCond}{Network of a specific condition. Can be found in
+result of \code{\link{runAnalysis}} (see \code{\link{getNet1}} and
+\code{\link{getNet2}})}
 
-\item{resultsGO}{Dataframe with the results of \link[pcitRif]{getGroupGO} (first element of list). This result can be decreased applying filters for the pathways selection.}
+\item{resultsGO}{Dataframe with the results of \code{\link{getGroupGO}}
+(first element of list). This result can be filtered by applying filters
+for pathways selection.}
 
-\item{netGO}{Dataframe with the results of \link[pcitRif]{getGroupGO} (second element of list).}
+\item{netGO}{Dataframe with the results of \code{\link{getGroupGO}}
+(second element of list).}
 
-\item{anno}{Annotation of gene or TFs. Can be found in result of runAnalysis (step4 -> anno)}
+\item{anno}{Annotation of gene or TFs. Can be found in result of
+\code{\link{runAnalysis}} function (see \code{\link{getAnno}})}
 
 \item{label}{If label is TRUE, shows the names of nodes.}
 }
 \value{
-The network for groupGO for a determined condition.
+The network for \code{\link{getGroupGO}} output under a condition.
 }
 \description{
-Generate the plot of groupGO network result.
+Generate the plot of groupGO network result of
+\code{\link{getGroupGO}} function.
 }
 \examples{
+# load the annotation package
 library(org.Hs.eg.db)
 
-data("pcitrifExample")
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
 
+# getting the genes in network of condition 1
 genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
                  as.character(getNet1(pcitrifExample)[,2])))
 
+# performing getGroupGO analysis
 cond1 <- getGroupGO(genes = genes,
                     ont = "BP",
                     keyType = "ENSEMBL",
                     annoPkg = org.Hs.eg.db)
 
+# selecting only first 12 pathways
 t1 <- head(cond1$results, 12)
+
+# subsetting the network to have only the first 12 pathways
 t2 <- subset(cond1$netGO, cond1$netGO$gene1 \%in\% as.character(t1[,1]))
 
+# generate the netGOplot
 netGOplot(netCond = getNet1(pcitrifExample),
           resultsGO = t1,
           netGO = t2,

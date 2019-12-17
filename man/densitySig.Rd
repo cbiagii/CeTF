@@ -2,29 +2,35 @@
 % Please edit documentation in R/densitySig.R
 \name{densitySig}
 \alias{densitySig}
-\title{Density Plot of raw correlation and significant PCIT}
+\title{Density distribution of correlation coefficients and significant PCIT values}
 \usage{
 densitySig(mat1, mat2, threshold = 0.5)
 }
 \arguments{
 \item{mat1}{Raw adjacency matrix.}
 
-\item{mat2}{Adjacency matrix resulting from PCIT analysis in which has some zero values.}
+\item{mat2}{Significant adjacency matrix.}
 
 \item{threshold}{Threshold of correlation module to plot.}
 }
 \value{
-The density plot of raw correlation with significant PCIT values.
+a density plot of raw correlation with significant PCIT values.
 }
 \description{
-Generate the density plot for adjacency matrices.
+Generate the density plot for adjacency matrices. This
+function uses the raw adjacency matrix and significant adjacency
+matrix resulted from \code{\link{PCIT}} function.
 }
 \examples{
+# loading a simulated normalized data
 data('simNorm')
+
+# getting the PCIT results
 results <- PCIT(simNorm)
 
+# using the PCIT results to get density distribution of correlation coefficients
 densitySig(mat1 = results$adj_raw,
-mat2 = results$adj_sig,
-threshold = 0.5)
+           mat2 = results$adj_sig,
+           threshold = 0.5)
 
 }
