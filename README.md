@@ -28,11 +28,11 @@ To install R packages dependencies, run:
 
 ```R
 #CRAN dependencies
-packagesCRAN <- c("crayon", "pbapply", "reshape2", "kableExtra", "knitr", "rmarkdown", "ggplot2", "gridExtra", "BiocManager")
+packagesCRAN <- c('crayon', 'geomnet', 'GGally', 'ggplot2', 'ggpubr', 'graphics', 'kableExtra', 'knitr', 'network', 'pbapply', 'reshape2', 'rmarkdown', 'scales', 'stats', 'testthat', 'utils')
 install.packages(packagesCRAN[!packagesCRAN %in% installed.packages()[,1]])
 
 #Bioconductor dependencies
-packagesBioc <- c("airway", "SummarizedExperiment", "DESeq2")
+packagesBioc <- c('airway', 'clusterProfiler', 'DESeq2', 'org.Hs.eg.db', 'SummarizedExperiment')
 BiocManager::install(packagesBioc[!packagesBioc %in% installed.packages()[,1]])
 
 ```
@@ -59,7 +59,7 @@ To install docker follow the instructions in the links below depending on your o
 Once docker is installed, the next step is pull the target-prediction image from dockerhub using the following command:
 
 ```docker
-docker pull biagii/pcitRif
+docker pull biagii/pcitRif:0.99.0
 ```
 
 #### Running image
@@ -67,7 +67,7 @@ docker pull biagii/pcitRif
 There are several differents parameters to run the downloaded image. The most commom way is executing the following command:
 
 ```docker
-docker run --rm --name [ANY_NAME] -v /server/path/:/docker/path/ biagii/pcitRif
+docker run --rm --name [ANY_NAME] -v /server/path/:/docker/path/ biagii/pcitRif:0.99.0
 ```
 ## Help
 
