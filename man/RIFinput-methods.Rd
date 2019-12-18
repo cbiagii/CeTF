@@ -3,15 +3,30 @@
 \name{RIFinput}
 \alias{RIFinput}
 \alias{RIFinput,pcitrif-method}
-\title{Method RIFinput.}
+\title{Accessors for the RIF analysis input in 'step3'
+slot of a pcitrif object.}
 \usage{
 RIFinput(x)
 
 \S4method{RIFinput}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the RIF input
+Return the input used for RIF analysis.
 }
 \description{
-Method RIFinput.
+The step3 slot holds the Regulatory Impact Factors (RIF)
+analysis, that includes the \code{input for RIF} (\code{\link{RIFinput}})
+and output (\code{\link{RIFout}}).
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+RIFinput(pcitrifExample)
+}
+\seealso{
+\code{\link{RIF}} and \code{\link{runAnalysis}}.
 }

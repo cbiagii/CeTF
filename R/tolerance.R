@@ -1,11 +1,11 @@
-#' @title Tolerance between 3 pairwise correlations
+#' @title Tolerance level between 3 pairwise correlations
 #'
-#' @description Function for calculating the local tolerance given the 3 pairwise correlations between a, b and c.
+#' @description Calculates the local tolerance for every trio of genes.
 #'
 #' @param a Interactor 1.
 #' @param b Interactor 2.
 #' @param c Interactor 3.
-#' @param tolType Type of tolerance given the 3 pairwise correlations (mean, min, max, median).
+#' @param tolType Calculation type for tolerance (mean, min, max, median).
 #'
 #' @return Value of tolerance.
 #'

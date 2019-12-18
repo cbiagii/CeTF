@@ -3,15 +3,31 @@
 \name{rawData}
 \alias{rawData}
 \alias{rawData,pcitrif-method}
-\title{Accessors for the raw data in 'step1' slot of a pcitrif object.}
+\title{Accessors for the raw data in 'step1' slot of a
+pcitrif object.}
 \usage{
 rawData(x)
 
 \S4method{rawData}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the raw data inputed
+Return the raw data.
 }
 \description{
-Accessors for the raw data in 'step1' slot of a pcitrif object.
+The step1 slot holds the data adjustment, that includes the
+\code{raw data} (\code{\link{rawData}}), TPM data (\code{\link{tpmData}}),
+filtered genes (\code{\link{getGenes}}) and normalized data
+(\code{\link{normData}}).
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+rawData(pcitrifExample)
+}
+\seealso{
+\code{\link{runAnalysis}}.
 }

@@ -3,15 +3,31 @@
 \name{getGenes}
 \alias{getGenes}
 \alias{getGenes,pcitrif-method}
-\title{Method getGenes.}
+\title{Accessors for the filtered genes in 'step1' slot
+of a pcitrif object.}
 \usage{
 getGenes(x)
 
 \S4method{getGenes}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the filtered genes
+Return the filtered genes.
 }
 \description{
-Method getGenes.
+The step1 slot holds the data adjustment, that includes the
+raw data (\code{\link{rawData}}), TPM data (\code{\link{tpmData}}),
+\code{filtered genes} (\code{\link{getGenes}}) and normalized data
+(\code{\link{normData}}).
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+getGenes(pcitrifExample)
+}
+\seealso{
+\code{\link{PCIT}} and \code{\link{runAnalysis}}.
 }

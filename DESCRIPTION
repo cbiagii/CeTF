@@ -20,9 +20,22 @@ Description: This package provides the necessary functions for performing the
   from gene expression data. These two algorithms when combined provide a 
   very relevant layer of information for gene expression studies 
   (Microarray, RNA-seq and single-cell RNA-seq data).
-Imports: crayon, clusterProfiler, DESeq2, geomnet, GGally, ggplot2, ggpubr, 
-  graphics, network, pbapply, reshape2, scales, stats, SummarizedExperiment, 
-  utils
+Imports: 
+    crayon, 
+    clusterProfiler, 
+    DESeq2, 
+    geomnet, 
+    GGally, 
+    ggplot2, 
+    ggpubr, 
+    graphics, 
+    network, 
+    pbapply, 
+    reshape2, 
+    scales, 
+    stats, 
+    SummarizedExperiment, 
+    utils
 Suggests: 
     airway,
     kableExtra,

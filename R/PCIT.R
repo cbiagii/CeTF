@@ -1,4 +1,5 @@
-#' @title Partial Correlation and Information Theory (PCIT) analysis
+#' @title
+#' Partial Correlation and Information Theory (PCIT) analysis
 #'
 #' @description
 #' The PCIT algorithm is used for reconstruction of gene co-expression
@@ -41,10 +42,10 @@ PCIT <- function(input, tolType = "mean") {
     "/" <- function(x, y) ifelse(y == 0, 0, base::"/"(x,
         y))
 
-    cat(green("################################" %+%
+    cat(green("###########################" %+%
         "\n" %+% sprintf("Number of genes       =  %s",
         nrow(input)) %+% "\n" %+% sprintf("Number of conditions  =  %s",
-        ncol(input)) %+% "\n" %+% "################################" %+%
+        ncol(input)) %+% "\n" %+% "###########################" %+%
         "\n"))
 
     suppressWarnings(gene_corr <- cor(t(input)))

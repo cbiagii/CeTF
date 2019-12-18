@@ -3,15 +3,31 @@
 \name{PCITout2}
 \alias{PCITout2}
 \alias{PCITout2,pcitrif-method}
-\title{Method PCITout2.}
+\title{Accessors for the PCIT output for condition2 in
+'step4' slot of a pcitrif object.}
 \usage{
 PCITout2(x)
 
 \S4method{PCITout2}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the PCIT output for condition2
+Return the PCIT output for condition2.
 }
 \description{
-Method PCITout2.
+The step4 slot holds the Partial Correlation and Information
+Theory (PCIT) analysis, that includes the PCIT input, output and the
+network with gene-gene/gene-TFs interaction for condition1 and condition2,
+besides the key TFs and the annotation (classification) of genes and TFs.
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+PCITout2(pcitrifExample)
+}
+\seealso{
+\code{\link{PCIT}} and \code{\link{runAnalysis}}.
 }

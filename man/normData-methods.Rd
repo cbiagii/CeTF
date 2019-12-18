@@ -3,15 +3,30 @@
 \name{normData}
 \alias{normData}
 \alias{normData,pcitrif-method}
-\title{Method normData.}
+\title{Accessors for the normalized data in 'step1' slot of a pcitrif object.}
 \usage{
 normData(x)
 
 \S4method{normData}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the normalized data
+Return the normalized data.
 }
 \description{
-Method normData.
+The step1 slot holds the data adjustment, that includes the
+raw data (\code{\link{rawData}}), TPM data (\code{\link{tpmData}}),
+filtered genes (\code{\link{getGenes}}) and \code{normalized data}
+(\code{\link{normData}}).
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+normData(pcitrifExample)
+}
+\seealso{
+\code{\link{PCIT}} and \code{\link{runAnalysis}}.
 }

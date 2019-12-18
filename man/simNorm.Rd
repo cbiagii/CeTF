@@ -9,7 +9,9 @@
 data(simNorm)
 }
 \description{
-Simulated normalized data created using PROPER package. This data contains 69 genes, and 10 samples (correspondent to only one condition).
+Simulated normalized data created using PROPER package.
+This data contains 69 genes, and 10 samples
+(correspondent to only one condition).
 }
 \examples{
 data(simNorm)

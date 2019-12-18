@@ -7,28 +7,47 @@
 RIF(input, nta = NULL, ntf = NULL, ncond1 = NULL, ncond2 = NULL)
 }
 \arguments{
-\item{input}{A matrix of expression with differential expressed genes and transcript factors in rows, and the two conditions in columns.}
+\item{input}{A matrix of expression with differentially expressed genes
+and transcript factors in rows, and the samples in columns.}
 
-\item{nta}{Number of differential expressed genes.}
+\item{nta}{Number of Differentially Expressed (DE) genes.}
 
-\item{ntf}{Number of transcript factors.}
+\item{ntf}{Number of Transcription Factors (TFs).}
 
-\item{ncond1}{Number of condition 1.}
+\item{ncond1}{Number of samples of condition 1.}
 
-\item{ncond2}{Number of condition 2.}
+\item{ncond2}{Number of samples of condition 2.}
 }
 \value{
-A dataframe with the regulatory impact factors metric for each transcript factor.
+A dataframe with the regulatory impact factors metric for
+each transcript factor.
 }
 \description{
-The RIF algorithm (Reverter and Chan, 2010) identify critical transcript factors (TF) from gene expression data.
+The RIF algorithm identify critical transcript factors (TF) from
+gene expression data.
+}
+\details{
+The input matrix must have the rows and columns ordered by the following request:
+\enumerate{
+   \item \strong{rows}: DE genes followed by TFs;
+   \item \strong{columns}: samples of condition1 followed by samples of condition2.
+}
 }
 \examples{
+# load RIF input example
 data('RIF_input')
-RIF_out <- RIF(input = RIF_input,
-nta = 104,
-ntf = 50,
-ncond1 = 10,
-ncond2 = 10)
 
+# performing RIF analysis
+RIF_out <- RIF(input = RIF_input,
+               nta = 104,
+               ntf = 50,
+               ncond1 = 10,
+               ncond2 = 10)
+
+}
+\references{
+REVERTER, Antonio et al. Regulatory impact factors: unraveling the
+transcriptional regulation of complex traits from expression data.
+Bioinformatics, v. 26, n. 7, p. 896-904, 2010.
+\url{https://academic.oup.com/bioinformatics/article/26/7/896/212064}
 }

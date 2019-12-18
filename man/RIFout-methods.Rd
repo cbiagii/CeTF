@@ -3,15 +3,30 @@
 \name{RIFout}
 \alias{RIFout}
 \alias{RIFout,pcitrif-method}
-\title{Method RIFout.}
+\title{Accessors for the RIF analysis output in 'step3'
+slot of a pcitrif object.}
 \usage{
 RIFout(x)
 
 \S4method{RIFout}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the RIF output
+Return the output from RIF analysis.
 }
 \description{
-Method RIFout.
+The step3 slot holds the Regulatory Impact Factors (RIF)
+analysis, that includes the input for RIF (\code{\link{RIFinput}})
+and \code{output} (\code{\link{RIFout}}).
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+RIFout(pcitrifExample)
+}
+\seealso{
+\code{\link{RIF}} and \code{\link{runAnalysis}}.
 }

@@ -1,6 +1,8 @@
-#' pcitrif class object example
+#' @title pcitrif class object example
 #'
-#' A pcitrif class object to run the examples in functions. This obect was generated after running the runAnalysis function.
+#' @description A pcitrif class object to run the examples in functions.
+#' This object was generated after running the runAnalysis function.
+#' This object is the same generated in vignette for complete analysis.
 #'
 #' @docType data
 #'

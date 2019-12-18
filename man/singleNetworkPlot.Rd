@@ -2,31 +2,35 @@
 % Please edit documentation in R/singleNetworkPlot.R
 \name{singleNetworkPlot}
 \alias{singleNetworkPlot}
-\title{Network plot for each condition}
+\title{Network plot of gene-gene/gene-TFs interactions}
 \usage{
 singleNetworkPlot(x)
 }
 \arguments{
-\item{x}{pcitrif object resulted from \link[pcitRif]{runAnalysis} function.}
+\item{x}{pcitrif object resulted from \code{\link{runAnalysis}} function.}
 }
 \value{
 The network for both conditions.
 }
 \description{
-Generate the network for the conditions.
+Generate the network plot of gene-gene/gene-TFs interactions for both conditions.
 }
 \examples{
+# loading a simulated counts data
 data('simCounts')
-out <- runAnalysis(mat = simCounts,
-conditions=c('cond1', 'cond2'),
-lfc = 2.57,
-padj = 0.05,
-TFs = paste0('TF_', 1:1000),
-ncond1 = 10,
-ncond2= 10,
-tolType = 'mean',
-diffMethod = 'Reverter')
 
+# performing runAnalysis function
+out <- runAnalysis(mat = simCounts,
+                   conditions=c('cond1', 'cond2'),
+                   lfc = 2.57,
+                   padj = 0.05,
+                   TFs = paste0('TF_', 1:1000),
+                   ncond1 = 10,
+                   ncond2= 10,
+                   tolType = 'mean',
+                   diffMethod = 'Reverter',
+                   data.type = "counts")
+# plotting networks conditions
 singleNetworkPlot(out)
 
 

@@ -1,6 +1,7 @@
 #' Transcripit Factors data
 #'
-#' Transcripit Factors data from Kai Wang and Hiroki Nishida, 2015 for Homo sapiens.
+#' Transcripit Factors data from Kai Wang and Hiroki Nishida, 2015
+#' for Homo sapiens.
 #'
 #' @docType data
 #'

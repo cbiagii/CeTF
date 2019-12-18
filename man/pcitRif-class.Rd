@@ -5,18 +5,22 @@
 \alias{pcitrif-class}
 \alias{pcitrif}
 \title{The pcitrif Class}
+\value{
+A pcitrif object.
+}
 \description{
-The pcitrif class is data storage class that stores all the results of complete RIF and PCIT analysis.
+The pcitrif class is data storage class that stores all the
+results from \code{\link{runAnalysis}} function.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{step1}}{List of objects related to step 1 (Data Adjustment) of analysis.}
+\item{\code{step1}}{List of objects related to data adjustment.}
 
-\item{\code{step2}}{List of objects related to step 2 (Differential Expression) of analysis.}
+\item{\code{step2}}{List of objects related to differential expression analysis.}
 
-\item{\code{step3}}{List of objects related to step 3 (Regulatory Impact Factors) of analysis.}
+\item{\code{step3}}{List of objects related to Regulatory Impact Factors analysis.}
 
-\item{\code{step4}}{List of objects related to step 4 (Partial Correlation and Information Theory) of analysis.}
+\item{\code{step4}}{List of objects related to Partial Correlation and Information Theory analysis.}
 }}
 

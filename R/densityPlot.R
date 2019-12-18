@@ -15,8 +15,7 @@
 #' # getting the PCIT results
 #' results <- PCIT(simNorm)
 #'
-#' # using the PCIT results, more specifically the raw adjacency
-#' matrix to get the density plot
+#' # using the PCIT results, more specifically the raw adjacency matrix to get the density plot
 #' densityPlot(results$adj_raw)
 #'
 #' @export

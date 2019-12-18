@@ -29,8 +29,7 @@ differentially expressed.}
 expressed.}
 
 \item{diffMethod}{Choose between Reverter or DESeq2 method.
-The DESeq2 method is only for counts data. See details for more
-details}
+The DESeq2 method is only for counts data (see details).}
 }
 \value{
 A character with the names of differentially expressed genes.

@@ -20,10 +20,10 @@ and Y and the regression of Y on X.
 }
 \examples{
 # creating a random dataframe with two columns (variables)
-df <- data.frame(a = sample(1:1000, 100, replace=TRUE),
-                 b = sample(1:1000, 100, replace=TRUE))
+tab <- data.frame(a = sample(1:1000, 100, replace=TRUE),
+                  b = sample(1:1000, 100, replace=TRUE))
 
 # running bivar.awk function
-bivar.awk(df)
+bivar.awk(tab)
 
 }
