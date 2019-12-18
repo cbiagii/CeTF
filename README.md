@@ -50,7 +50,7 @@ docker pull biagii/pcitRif:0.99.0
 #### Running image
 There are several differents parameters to run the downloaded image. The most commom way is executing the following command:
 ```docker
-docker run --rm --name [ANY_NAME] -v /server/path/:/docker/path/ biagii/pcitRif:0.99.0
+docker run --rm -d -p PORT:PORT -e PASSWORD=password --name [ANY_NAME] -v /server/path/:/docker/path/ -e USERID=$UID biagii/pcitrif:0.99.0
 ```
 Once the docker image is running, the Rstudio interface with all the necessary dependencies will be made available, and of course the pcitrif package, installed ready for use.
 
