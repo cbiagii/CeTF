@@ -14,7 +14,7 @@ getDE(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return Differentially Expressed (DE) genes.
+Returns the Differentially Expressed (DE) genes.
 }
 \description{
 The step2 slot holds the differential expression analysis,

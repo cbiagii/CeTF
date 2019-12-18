@@ -19,7 +19,7 @@ and transcript factors in rows, and the samples in columns.}
 \item{ncond2}{Number of samples of condition 2.}
 }
 \value{
-A dataframe with the regulatory impact factors metric for
+Returns an dataframe with the regulatory impact factors metric for
 each transcript factor.
 }
 \description{

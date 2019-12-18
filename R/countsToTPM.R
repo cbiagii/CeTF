@@ -7,7 +7,7 @@
 #' @param counts A matrix or dataframe with counts data, where the rows
 #' contains the genes and the columns the samples.
 #'
-#' @return a table with TPM values.
+#' @return Returns an table with TPM values.
 #'
 #' @examples
 #' # loading a simulated counts data
@@ -20,15 +20,10 @@
 #'
 #' @export
 countsToTPM <- function(counts) {
-<<<<<<< HEAD
-    if(!is.data.frame(counts) & !is.matrix(counts)){stop("input must be a count dataframe or a matrix")}
-
-=======
     if (!is.data.frame(counts) & !is.matrix(counts)) {
         stop("input must be a count dataframe or a matrix")
     }
     
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
     return(apply(counts, 2, function(x) {
         (1e+06 * x)/sum(x)
     }))

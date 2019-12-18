@@ -14,7 +14,7 @@ PCITinput1(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the PCIT input for condition1.
+Returns the PCIT input for condition1.
 }
 \description{
 The step4 slot holds the Partial Correlation and Information

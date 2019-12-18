@@ -11,16 +11,11 @@
 #' @param lfc log2 fold change module threshold to define a gene as
 #' differentially expressed (default: 1.5).
 #' @param padj Significance value to define a gene as differentially
-<<<<<<< HEAD
 #' expressed (default: 0.05).
-#' @param diffMethod Choose between Reverter or DESeq2 method (default: "Reverter").
-=======
-#' expressed.
-#' @param diffMethod Choose between Reverter or DESeq2 method.
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
+#' @param diffMethod Choose between Reverter or DESeq2 method (default: 'Reverter').
 #' The DESeq2 method is only for counts data (see details).
 #'
-#' @return A character with the names of differentially expressed genes.
+#' @return Returns an character with the names of differentially expressed genes.
 #'
 #' @details
 #' The \strong{Reverter} option to diffMethod parameter works as follows:
@@ -70,29 +65,24 @@
 #' @export
 expDiff <- function(exp, anno = NULL, conditions = NULL, 
     lfc = 1.5, padj = 0.05, diffMethod = "Reverter") {
-<<<<<<< HEAD
-
-    if(missing(anno)){stop("No \"anno\" parameter provided")}
-    if(nrow(anno)==0){stop("anno must have some conditions to compare")}
-    if(missing(conditions)){stop("No \"conditions\" parameter provided")}
-    if(!is.character(conditions) & length(conditions)!=2) {stop("you must input 2 conditions")}
-    if(!is.data.frame(exp) & !is.matrix(exp)){stop("exp must be a dataframe or a matrix")}
-
-=======
-    if (!is.data.frame(exp) & !is.matrix(exp)) {
-        stop("exp must be a dataframe or a matrix")
-    }
     
+    if (missing(anno)) {
+        stop("No \"anno\" parameter provided")
+    }
     if (nrow(anno) == 0) {
         stop("anno must have some conditions to compare")
     }
-    
+    if (missing(conditions)) {
+        stop("No \"conditions\" parameter provided")
+    }
     if (!is.character(conditions) & length(conditions) != 
         2) {
         stop("you must input 2 conditions")
     }
+    if (!is.data.frame(exp) & !is.matrix(exp)) {
+        stop("exp must be a dataframe or a matrix")
+    }
     
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
     if (diffMethod == "Reverter") {
         de.j <- data.frame(cond1 = apply(exp[, grep(paste0("_", 
             conditions[1]), colnames(exp))], 1, mean), 

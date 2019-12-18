@@ -12,7 +12,7 @@
 #' @slot step3 List of objects related to Regulatory Impact Factors analysis.
 #' @slot step4 List of objects related to Partial Correlation and Information Theory analysis.
 #'
-#' @return A pcitrif object.
+#' @return Returns an pcitrif object.
 #'
 #' @importFrom methods new
 #'
@@ -20,7 +20,7 @@
 #'
 #' @exportClass pcitrif
 #'
-pcitrif <- setClass(Class = "pcitrif", slots = list(step1 = "list",
+pcitrif <- setClass(Class = "pcitrif", slots = list(step1 = "list", 
     step2 = "list", step3 = "list", step4 = "list"))
 
 
@@ -41,7 +41,7 @@ pcitrif <- setClass(Class = "pcitrif", slots = list(step1 = "list",
 #' @seealso \code{\link{runAnalysis}}.
 #' @name rawData
 #' @rdname rawData-methods
-#' @return Return the raw data.
+#' @return Returns the raw data.
 #' @exportMethod rawData
 setGeneric("rawData", function(x) standardGeneric("rawData"))
 
@@ -61,7 +61,7 @@ setGeneric("rawData", function(x) standardGeneric("rawData"))
 #' @seealso \code{\link{countsToTPM}} and \code{\link{runAnalysis}}.
 #' @name tpmData
 #' @rdname tpmData-methods
-#' @return Return the TPM data.
+#' @return Returns the TPM data.
 #' @exportMethod tpmData
 setGeneric("tpmData", function(x) standardGeneric("tpmData"))
 
@@ -81,7 +81,7 @@ setGeneric("tpmData", function(x) standardGeneric("tpmData"))
 #' @seealso \code{\link{PCIT}} and \code{\link{runAnalysis}}.
 #' @name getGenes
 #' @rdname getGenes-methods
-#' @return Return the filtered genes.
+#' @return Returns the filtered genes.
 #' @exportMethod getGenes
 setGeneric("getGenes", function(x) standardGeneric("getGenes"))
 
@@ -100,7 +100,7 @@ setGeneric("getGenes", function(x) standardGeneric("getGenes"))
 #' @seealso \code{\link{PCIT}} and \code{\link{runAnalysis}}.
 #' @name normData
 #' @rdname normData-methods
-#' @return Return the normalized data.
+#' @return Returns the normalized data.
 #' @exportMethod normData
 setGeneric("normData", function(x) standardGeneric("normData"))
 
@@ -119,7 +119,7 @@ setGeneric("normData", function(x) standardGeneric("normData"))
 #' @seealso \code{\link{expDiff}} and \code{\link{runAnalysis}}.
 #' @name getDE
 #' @rdname getDE-methods
-#' @return Return Differentially Expressed (DE) genes.
+#' @return Returns the Differentially Expressed (DE) genes.
 #' @exportMethod getDE
 setGeneric("getDE", function(x) standardGeneric("getDE"))
 
@@ -138,7 +138,7 @@ setGeneric("getDE", function(x) standardGeneric("getDE"))
 #' @seealso \code{\link{PCIT}} and \code{\link{runAnalysis}}.
 #' @name getTF
 #' @rdname getTF-methods
-#' @return Return the Transcription Factors (TFs).
+#' @return Returns the Transcription Factors (TFs).
 #' @exportMethod getTF
 setGeneric("getTF", function(x) standardGeneric("getTF"))
 
@@ -157,7 +157,7 @@ setGeneric("getTF", function(x) standardGeneric("getTF"))
 #' @seealso \code{\link{RIF}} and \code{\link{runAnalysis}}.
 #' @name RIFinput
 #' @rdname RIFinput-methods
-#' @return Return the input used for RIF analysis.
+#' @return Returns the input used for RIF analysis.
 #' @exportMethod RIFinput
 setGeneric("RIFinput", function(x) standardGeneric("RIFinput"))
 
@@ -176,7 +176,7 @@ setGeneric("RIFinput", function(x) standardGeneric("RIFinput"))
 #' @seealso \code{\link{RIF}} and \code{\link{runAnalysis}}.
 #' @name RIFout
 #' @rdname RIFout-methods
-#' @return Return the output from RIF analysis.
+#' @return Returns the output from RIF analysis.
 #' @exportMethod RIFout
 setGeneric("RIFout", function(x) standardGeneric("RIFout"))
 
@@ -196,7 +196,7 @@ setGeneric("RIFout", function(x) standardGeneric("RIFout"))
 #' @seealso \code{\link{PCIT}} and \code{\link{runAnalysis}}.
 #' @name PCITinput1
 #' @rdname PCITinput1-methods
-#' @return Return the PCIT input for condition1.
+#' @return Returns the PCIT input for condition1.
 #' @exportMethod PCITinput1
 setGeneric("PCITinput1", function(x) standardGeneric("PCITinput1"))
 
@@ -216,7 +216,7 @@ setGeneric("PCITinput1", function(x) standardGeneric("PCITinput1"))
 #' @seealso \code{\link{PCIT}} and \code{\link{runAnalysis}}.
 #' @name PCITinput2
 #' @rdname PCITinput2-methods
-#' @return Return the PCIT input for condition2.
+#' @return Returns the PCIT input for condition2.
 #' @exportMethod PCITinput2
 setGeneric("PCITinput2", function(x) standardGeneric("PCITinput2"))
 
@@ -236,7 +236,7 @@ setGeneric("PCITinput2", function(x) standardGeneric("PCITinput2"))
 #' @seealso \code{\link{PCIT}} and \code{\link{runAnalysis}}.
 #' @name PCITout1
 #' @rdname PCITout1-methods
-#' @return Return the PCIT output for condition1.
+#' @return Returns the PCIT output for condition1.
 #' @exportMethod PCITout1
 setGeneric("PCITout1", function(x) standardGeneric("PCITout1"))
 
@@ -256,7 +256,7 @@ setGeneric("PCITout1", function(x) standardGeneric("PCITout1"))
 #' @seealso \code{\link{PCIT}} and \code{\link{runAnalysis}}.
 #' @name PCITout2
 #' @rdname PCITout2-methods
-#' @return Return the PCIT output for condition2.
+#' @return Returns the PCIT output for condition2.
 #' @exportMethod PCITout2
 setGeneric("PCITout2", function(x) standardGeneric("PCITout2"))
 
@@ -276,7 +276,7 @@ setGeneric("PCITout2", function(x) standardGeneric("PCITout2"))
 #' @seealso \code{\link{runAnalysis}}.
 #' @name getNet1
 #' @rdname getNet1-methods
-#' @return Return the network of interactions between gene and key TFs for condition1.
+#' @return Returns the network of interactions between gene and key TFs for condition1.
 #' @exportMethod getNet1
 setGeneric("getNet1", function(x) standardGeneric("getNet1"))
 
@@ -296,7 +296,7 @@ setGeneric("getNet1", function(x) standardGeneric("getNet1"))
 #' @seealso \code{\link{runAnalysis}}.
 #' @name getNet2
 #' @rdname getNet2-methods
-#' @return Return the network of interactions between gene and key TFs for condition2.
+#' @return Returns the network of interactions between gene and key TFs for condition2.
 #' @exportMethod getNet2
 setGeneric("getNet2", function(x) standardGeneric("getNet2"))
 
@@ -315,7 +315,7 @@ setGeneric("getNet2", function(x) standardGeneric("getNet2"))
 #' @seealso \code{\link{runAnalysis}}.
 #' @name getKeyTF
 #' @rdname getKeyTF-methods
-#' @return Return the key TFs after PCIT and RIF analysis.
+#' @return Returns the key TFs after PCIT and RIF analysis.
 #' @exportMethod getKeyTF
 setGeneric("getKeyTF", function(x) standardGeneric("getKeyTF"))
 
@@ -335,7 +335,7 @@ setGeneric("getKeyTF", function(x) standardGeneric("getKeyTF"))
 #' @seealso \code{\link{runAnalysis}}.
 #' @name getAnno
 #' @rdname getAnno-methods
-#' @return Return the annotation for each gene and TFs.
+#' @return Returns the annotation for each gene and TFs.
 #' @exportMethod getAnno
 setGeneric("getAnno", function(x) standardGeneric("getAnno"))
 

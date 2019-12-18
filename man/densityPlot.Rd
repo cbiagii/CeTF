@@ -10,7 +10,7 @@ densityPlot(mat)
 \item{mat}{An raw adjacency matrix.}
 }
 \value{
-A density plot for raw correlation coefficients.
+Returns an density plot for raw correlation coefficients.
 }
 \description{
 Generate the density plot for an adjacency matrix.

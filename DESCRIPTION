@@ -4,15 +4,16 @@ Title: Regulatory Impact Factors and Partial Correlation and Information Theory 
 Version: 0.99.0
 Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi-Junior", email = "cbiagijr@gmail.com", role = c("aut", "cre")),
         person("Ricardo", "Perecin Nociti", email = "rnociti@gmail.com", role = c("aut", "ctb")),
-        person("Breno", "Osvaldo", email = "osvaldobreno99@gmail.com ", role = c("aut", "ctb")),
+        person("Breno", "Osvaldo Funicheli", email = "osvaldobreno99@gmail.com ", role = c("aut", "ctb")),
         person("João Paulo", "Bianchi Ximenez", email = "joaopaulo.ximenez@me.com", role = c("ctb")),
-        person("Patrícia", "Ruy", email = "patiruy@gmail.com", role = c("ctb")),
-        person("Marcelo", "Gomes", email = "marcelogomesrp@gmail.com", role = c("ctb")),
+        person("Patrícia", "de Cássia Ruy", email = "patiruy@gmail.com", role = c("ctb")),
+        person("Marcelo", "Gomes de Paula", email = "marcelogomesrp@gmail.com", role = c("ctb")),
         person("Rafael", "dos Santos Bezerra", email = "rafaelbezerra50@yahoo.com", role = c("ctb")),
-        person("Wilson", "Silva Junior", email = "wilsonjr@usp.br", role = c("aut", "ctb")))
-Author: Carlos Biagi Jr [aut, cre], Ricardo Perecin Nociti [aut, ctb], Breno Osvaldo [aut, ctb], 
-    João Paulo Bianchi Ximenez [ctb], Patrícia Ruy [ctb], Marcelo Gomes [ctb], 
-    Rafael dos Santos Bezerra [ctb], Wilson Silva Junior [aut, ctb]
+        person("Wilson", "Araújo da Silva-Junior", email = "wilsonjr@usp.br", role = c("aut", "ctb")))
+Author: Carlos Biagi Jr [aut, cre], Ricardo Perecin Nociti [aut, ctb], 
+    Breno Osvaldo Funicheli [aut, ctb], João Paulo Bianchi Ximenez [ctb], 
+    Patrícia de Cássia Ruy [ctb], Marcelo Gomes de Paula [ctb], 
+    Rafael dos Santos Bezerra [ctb], Wilson Araújo da Silva-Junior [aut, ctb]
 Description: This package provides the necessary functions for performing the 
   Partial Correlation coefficient with Information Theory (PCIT) from Reverter 
   and Chan 2008 and Regulatory Impact Factors (RIF) from Reverter et al. 2010 
@@ -23,35 +24,9 @@ Description: This package provides the necessary functions for performing the
   from gene expression data. These two algorithms when combined provide a 
   very relevant layer of information for gene expression studies 
   (Microarray, RNA-seq and single-cell RNA-seq data).
-<<<<<<< HEAD
 Imports: crayon, clusterProfiler, DESeq2, geomnet, GGally, ggplot2, ggpubr, graphics, 
     network, pbapply, reshape2, scales, stats, SummarizedExperiment, utils
 Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown, testthat
-=======
-Imports: 
-    crayon, 
-    clusterProfiler, 
-    DESeq2, 
-    geomnet, 
-    GGally, 
-    ggplot2, 
-    ggpubr, 
-    graphics, 
-    network, 
-    pbapply, 
-    reshape2, 
-    scales, 
-    stats, 
-    SummarizedExperiment, 
-    utils
-Suggests: 
-    airway,
-    kableExtra,
-    knitr,
-    org.Hs.eg.db,
-    rmarkdown,
-    testthat
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 Depends: R (>= 3.6), methods
 License: GPL-3
 Encoding: UTF-8

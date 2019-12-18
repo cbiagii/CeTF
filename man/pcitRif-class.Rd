@@ -6,7 +6,7 @@
 \alias{pcitrif}
 \title{The pcitrif Class}
 \value{
-A pcitrif object.
+Returns an pcitrif object.
 }
 \description{
 The pcitrif class is data storage class that stores all the

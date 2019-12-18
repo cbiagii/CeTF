@@ -14,7 +14,7 @@ PCITout2(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the PCIT output for condition2.
+Returns the PCIT output for condition2.
 }
 \description{
 The step4 slot holds the Partial Correlation and Information

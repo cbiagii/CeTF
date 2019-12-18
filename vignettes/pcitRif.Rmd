@@ -1,12 +1,14 @@
 ---
 title: "Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory"
-author: "Carlos Biagi Jr, Ricardo Perecin Nociti, Patrícia Ruy, Marcelo Gomes, João Paulo Bianchi Ximenez, Rafael dos Santos Bezerra, Breno Osvaldo and Wilson Araújo da Silva Junior"
+author: "Carlos Alberto Oliveira de Biagi-Junior, Ricardo Perecin Nociti, Breno Osvaldo Funicheli, João Paulo Bianchi Ximenez, Patrícia de Cássia Ruy, Marcelo Gomes de Paula, Rafael dos Santos Bezerra and Wilson Araújo da Silva-Junior"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 output:
   rmarkdown::html_document:
     highlight: pygments
     toc: true
-    fig_width: 5
+    fig_width: 8
+    fig_height: 6
+    fig_retina: NULL
 bibliography: library.bib
 vignette: >
   %\VignetteIndexEntry{Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory}
@@ -149,21 +151,21 @@ kable(PCIT_out_trt$tab[1:10, ]) %>%
 
 ## Histogram of connectivity distribution
 After performing the PCIT analysis, it is possible to verify the histogram distribution of the clustering coefficient of the adjacency matrix with the significant values.
-```{r hist, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
+```{r hist, eval=TRUE, fig.align="center"}
 # Example for trt condition
 histPlot(PCIT_out_trt$adj_sig)
 ```
 
 ## Density Plot of Raw Correlation Coefficients
 We can also, from the PCIT analysis result, generate a density plot for the raw adjacency matrix.
-```{r densityRaw, eval=TRUE,fig.height = 4, fig.width = 6, fig.align = "center"}
+```{r densityRaw, eval=TRUE, fig.align="center"}
 # Example for trt condition
 densityPlot(PCIT_out_trt$adj_raw)
 ```
 
 ## Density Plot of raw correlation and significant PCIT
 It's possible to generate the density plot only with the significance values of correlation. We'll use the raw adjacency matrix and the adjacency matrix with significant values. It is necessary to define a cutoff of the correlation module (values between -1 and 1) that will be considered as significant.
-```{r densitySig, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
+```{r densitySig, eval=TRUE, fig.align="center"}
 # Example for trt condition
 densitySig(mat1 = PCIT_out_trt$adj_raw, 
            mat2 = PCIT_out_trt$adj_sig, 
@@ -274,13 +276,13 @@ out <- runAnalysis(mat = counts,
 
 ## Plotting networks output
 The first output is a network for both conditions resulted from \emph{runAnalysis}.
-```{r singleNetworkPlot, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
+```{r singleNetworkPlot, eval=TRUE, fig.align="center"}
 # Using the runAnalysis output (pcitrif class object)
 singleNetworkPlot(out)
 ```
 
-Then we will associate the genes in both conditions with Gene Ontology (GO). GroupGO analysis will be performed where a set of genes are counted within all possible ontologies, without statistical power. In this example we will perform only for first condition:
-```{r getGroupGO, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
+Then we will associate the genes in both conditions with Gene Ontology (GO). GroupGO analysis will be performed where a set of genes are counted within all possible ontologies, without statistical power. This function is capable of perform groupGO for any organism as long as it's annotation package exists (i.e. org.Hs.eg.db, org.Bt.eg.db, org.Rn.eg.db, etc). In this example we will perform only for first condition:
+```{r getGroupGO, eval=TRUE, fig.align="center"}
 # Loading Homo sapiens annotation package
 library(org.Hs.eg.db)
 
@@ -296,7 +298,7 @@ cond1 <- getGroupGO(genes = genes,
 ```
 
 After this we are able to plot the network of previously obtained ontologies. It's possible to choose which variables ("pathways", "TFs" or "genes") we want to group. All these variables are inputted by the user, that is, the user can choose the pathways, TFs or genes returned from analysis from the runAnalysis function and pcitrif class object, or can also choose by specific pathways, TFs or genes of interest.
-```{r netGOplot, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
+```{r netGOplot, eval=TRUE, fig.align="center"}
 # Subsetting only the first 12 Ontologies with more counts
 t1 <- head(cond1$results, 12)
 
@@ -308,7 +310,7 @@ netGOplot(netCond = getNet1(out),
           resultsGO = t1, 
           netGO = t2, 
           anno = getAnno(out), 
-          label = TRUE)
+          label = FALSE)
 
 # generating the netGOplot grouping by TFs
 TFs <- getKeyTF(out)$TF[1:8]
@@ -318,7 +320,7 @@ netGOplot(netCond = getNet1(out),
          anno = getAnno(out),
          groupBy = 'TFs',
          TFs = TFs,
-         label = TRUE)
+         label = FALSE)
 
 # generating the netGOplot grouping by specifics genes
 genes <- c('ENSG00000011465', 'ENSG00000026025', 'ENSG00000075624', 'ENSG00000077942', 'ENSG00000087086', 'ENSG00000087245', 'ENSG00000091136', 'ENSG00000100234')
@@ -328,11 +330,11 @@ netGOplot(netCond = getNet1(out),
          anno = getAnno(out),
          groupBy = 'genes',
          genes = genes,
-         label = TRUE)
+         label = FALSE)
 ```
 
 Finally, we will merge the results from the network of condition 1 (Gene-Gene and TF-Gene interaction) with groupGO results (GO-Gene or GO-TF interaction). The final results has the objective to integrate all these data in order to results in a complete view of the data.
-```{r networkPlot, eval=TRUE,fig.height = 6, fig.width = 8, fig.align = "center"}
+```{r networkPlot, eval=TRUE, fig.align="center"}
 networkPlot(netCond = getNet1(out), 
             netGO = t2, 
             keyTFs = getKeyTF(out))

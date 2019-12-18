@@ -15,7 +15,7 @@ networkPlot(netCond, netGO, keyTFs)
 \item{keyTFs}{TFs identified as importants by \code{\link{runAnalysis}} (see \code{\link{getKeyTF}})}
 }
 \value{
-A network with interaction between genes, TFs and/or ontologies.
+Returns an network plot with interaction between genes, TFs and/or ontologies.
 }
 \description{
 Generate the plot for network that integrates the network data

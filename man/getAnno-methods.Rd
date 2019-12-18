@@ -14,7 +14,7 @@ getAnno(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the annotation for each gene and TFs.
+Returns the annotation for each gene and TFs.
 }
 \description{
 The step4 slot holds the Partial Correlation and Information

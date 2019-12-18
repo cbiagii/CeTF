@@ -11,7 +11,7 @@ countsToTPM(counts)
 contains the genes and the columns the samples.}
 }
 \value{
-a table with TPM values.
+Returns an table with TPM values.
 }
 \description{
 Convert the count data to TPM. Note: this function

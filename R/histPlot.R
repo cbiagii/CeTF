@@ -6,7 +6,7 @@
 #' @param mat Adjacency matrix resulting from PCIT analysis in which
 #' has some zero values.
 #'
-#' @return The histogram of connectivity distribution.
+#' @return Returns the histogram of connectivity distribution.
 #'
 #' @importFrom ggplot2 ggplot geom_histogram xlab ylab element_line element_blank geom_step
 #' @importFrom graphics hist
@@ -27,15 +27,10 @@
 #'
 #' @export
 histPlot <- function(mat) {
-<<<<<<< HEAD
-    if(!is.data.frame(mat) & !is.matrix(mat)){stop("input must be a dataframe or a matrix")}
-
-=======
     if (!is.data.frame(mat) & !is.matrix(mat)) {
         stop("input must be a dataframe or a matrix")
     }
     
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
     cc <- clustCoef(mat)
     
     df1 <- data.frame(clustcoef = cc)

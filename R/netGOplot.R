@@ -13,19 +13,12 @@
 #' (second element of list).
 #' @param anno Annotation of gene or TFs. Can be found in result of
 #' \code{\link{runAnalysis}} function (see \code{\link{getAnno}}).
-<<<<<<< HEAD
-#' @param groupBy Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: "pathways").
+#' @param groupBy Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: 'pathways').
 #' @param TFs A character with selected TFs.
 #' @param genes A character with selected genes.
 #' @param label If label is TRUE, shows the names of nodes (default: FALSE).
-=======
-#' @param groupBy Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes'.
-#' @param TFs A character with selected TFs.
-#' @param genes A character with selected genes.
-#' @param label If label is TRUE, shows the names of nodes.
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 #'
-#' @return The network for \code{\link{getGroupGO}} output under a condition.
+#' @return Returns the network for \code{\link{getGroupGO}} output under a condition.
 #'
 #' @importFrom geomnet geom_net theme_net as.edgedf
 #' @importFrom ggplot2 fortify ggplot facet_wrap element_rect
@@ -85,110 +78,103 @@
 #'
 #'
 #' @export
-netGOplot <- function(netCond, resultsGO, netGO, anno,
-    groupBy = "pathways", TFs = NULL, genes = NULL,
+netGOplot <- function(netCond, resultsGO, netGO, anno, 
+    groupBy = "pathways", TFs = NULL, genes = NULL, 
     label = FALSE) {
-<<<<<<< HEAD
-    if(groupBy == "TFs" & is.null(TFs)){stop("for TFs groupBy parameter you must input some TFs")}
-    if(groupBy == "genes" & is.null(genes)){stop("for genes groupBy parameter you must input some genes")}
-=======
     if (groupBy == "TFs" & is.null(TFs)) {
         stop("for TFs groupBy parameter you must input some TFs")
     }
-
     if (groupBy == "genes" & is.null(genes)) {
         stop("for genes groupBy parameter you must input some genes")
     }
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
-
+    
     if (groupBy == "pathways") {
         tmp <- apply(resultsGO, 1, function(x) {
-            gns <- as.character(subset(netGO, netGO$gene1 ==
+            gns <- as.character(subset(netGO, netGO$gene1 == 
                 as.character(x[["ID"]]))[, 2])
-            tmp1 <- netCond[which(netCond$gene1 %in%
+            tmp1 <- netCond[which(netCond$gene1 %in% 
                 gns & netCond$gene2 %in% gns), ]
             tmp1$pathway <- as.character(x[["ID"]])
             return(tmp1)
         })
         tmp <- do.call(rbind, tmp)
-
-        suppressMessages(tab <- fortify(as.edgedf(tmp),
+        
+        suppressMessages(tab <- fortify(as.edgedf(tmp), 
             anno, group = "pathway"))
-        pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) +
-            geom_net(aes(colour = class, group = class,
-                linewidth = 0.5), layout.alg = "fruchtermanreingold",
-                ealpha = 0.5, size = 3, curvature = 0.05,
-                directed = FALSE, arrowsize = 0.5, na.rm = TRUE,
-                show.legend = TRUE, fiteach = TRUE,
-                labelon = label, fontsize = 0.5, alpha = 0.25,
-                labelcolour = "black", singletons = FALSE,) +
-            ggtitle("Network for Pathways") + facet_wrap(~pathway) +
-            theme_net() + theme(panel.background = element_rect(colour = "black"))
+        pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) + 
+            geom_net(aes(colour = class, group = class, 
+                linewidth = 0.5), layout.alg = "fruchtermanreingold", 
+                ealpha = 0.5, size = 3, curvature = 0.05, 
+                directed = FALSE, arrowsize = 0.5, 
+                na.rm = TRUE, show.legend = TRUE, fiteach = TRUE, 
+                labelon = label, fontsize = 0.5, alpha = 0.25, 
+                labelcolour = "black", singletons = FALSE, 
+                ) + ggtitle("Network for Pathways") + 
+            facet_wrap(~pathway) + theme_net() + theme(panel.background = element_rect(colour = "black"))
     } else if (groupBy == "TFs") {
         tmp1 <- apply(resultsGO, 1, function(x) {
-            gns <- as.character(subset(netGO, netGO$gene1 ==
+            gns <- as.character(subset(netGO, netGO$gene1 == 
                 as.character(x[["ID"]]))[, 2])
             tmp1 <- data.frame(genes = gns)
             tmp1$pathway <- as.character(x[["ID"]])
             return(tmp1)
         })
         tmp1 <- do.call(rbind, tmp1)
-
+        
         tmp2 <- NULL
         for (i in seq_len(length(TFs))) {
             t1 <- subset(tmp1, tmp1$genes == TFs[i])
-            t2 <- subset(netGO, netGO$gene1 %in%
-                t1$pathway)
+            t2 <- subset(netGO, netGO$gene1 %in% t1$pathway)
             t2$TF <- TFs[i]
             tmp2 <- rbind(tmp2, t2)
         }
-
-        anno <- rbind(anno, data.frame(genes = unique(as.character(tmp2$gene1)),
+        
+        anno <- rbind(anno, data.frame(genes = unique(as.character(tmp2$gene1)), 
             class = "pathway"))
-        suppressMessages(tab <- fortify(as.edgedf(tmp2),
+        suppressMessages(tab <- fortify(as.edgedf(tmp2), 
             anno, group = "TF"))
-        pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) +
-            geom_net(aes(colour = class, group = class,
-                linewidth = 0.5), layout.alg = "fruchtermanreingold",
-                ealpha = 0.5, size = 3, curvature = 0.05,
-                directed = FALSE, arrowsize = 0.5, na.rm = TRUE,
-                show.legend = TRUE, fiteach = TRUE,
-                labelon = label, fontsize = 0.5, alpha = 0.25,
-                labelcolour = "black", singletons = FALSE) +
-            ggtitle("Network for TFs") + facet_wrap(~TF) +
+        pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) + 
+            geom_net(aes(colour = class, group = class, 
+                linewidth = 0.5), layout.alg = "fruchtermanreingold", 
+                ealpha = 0.5, size = 3, curvature = 0.05, 
+                directed = FALSE, arrowsize = 0.5, 
+                na.rm = TRUE, show.legend = TRUE, fiteach = TRUE, 
+                labelon = label, fontsize = 0.5, alpha = 0.25, 
+                labelcolour = "black", singletons = FALSE) + 
+            ggtitle("Network for TFs") + facet_wrap(~TF) + 
             theme_net() + theme(panel.background = element_rect(colour = "black"))
     } else if (groupBy == "genes") {
         tmp1 <- apply(resultsGO, 1, function(x) {
-            gns <- as.character(subset(netGO, netGO$gene1 ==
+            gns <- as.character(subset(netGO, netGO$gene1 == 
                 as.character(x[["ID"]]))[, 2])
             tmp1 <- data.frame(genes = gns)
             tmp1$pathway <- as.character(x[["ID"]])
             return(tmp1)
         })
         tmp1 <- do.call(rbind, tmp1)
-
+        
         tmp2 <- NULL
         for (i in seq_len(length(genes))) {
             t1 <- subset(tmp1, tmp1$genes == genes[i])
-            t2 <- subset(netGO, netGO$gene1 %in%
-                t1$pathway)
+            t2 <- subset(netGO, netGO$gene1 %in% t1$pathway)
             t2$genes <- genes[i]
             tmp2 <- rbind(tmp2, t2)
         }
-
-        anno <- rbind(anno, data.frame(genes = unique(as.character(tmp2$gene1)),
+        
+        anno <- rbind(anno, data.frame(genes = unique(as.character(tmp2$gene1)), 
             class = "pathway"))
-        suppressMessages(tab <- fortify(as.edgedf(tmp2),
+        suppressMessages(tab <- fortify(as.edgedf(tmp2), 
             anno, group = "genes"))
-        pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) +
-            geom_net(aes(colour = class, group = class,
-                linewidth = 0.5), layout.alg = "fruchtermanreingold",
-                ealpha = 0.5, size = 3, curvature = 0.05,
-                directed = FALSE, arrowsize = 0.5, na.rm = TRUE,
-                show.legend = TRUE, fiteach = TRUE, labelon = label,
-                fontsize = 0.5, alpha = 0.25, labelcolour = "black",
-                singletons = FALSE) + ggtitle("Network for Genes") +
-            facet_wrap(~genes) + theme_net() + theme(panel.background = element_rect(colour = "black"))
+        pt <- ggplot(tab, aes(from_id = from, to_id = to_id)) + 
+            geom_net(aes(colour = class, group = class, 
+                linewidth = 0.5), layout.alg = "fruchtermanreingold", 
+                ealpha = 0.5, size = 3, curvature = 0.05, 
+                directed = FALSE, arrowsize = 0.5, 
+                na.rm = TRUE, show.legend = TRUE, fiteach = TRUE, 
+                labelon = label, fontsize = 0.5, alpha = 0.25, 
+                labelcolour = "black", singletons = FALSE) + 
+            ggtitle("Network for Genes") + facet_wrap(~genes) + 
+            theme_net() + theme(panel.background = element_rect(colour = "black"))
     }
     return(pt)
 }

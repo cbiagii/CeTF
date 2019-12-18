@@ -10,7 +10,7 @@ clustCoef(mat)
 \item{mat}{An adjacency matrix. Calculating the clustering coefficient only makes sense if some connections are zero i.e. no connection.}
 }
 \value{
-The clustering coefficient(s) for the adjacency matrix.
+Returns the clustering coefficient(s) for the adjacency matrix.
 }
 \description{
 Calculate the clustering coefficient for an adjacency matrix.

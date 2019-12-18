@@ -7,13 +7,13 @@
 bivar.awk(x)
 }
 \arguments{
-\item{x}{a dataframe with two columns (variables).}
+\item{x}{A dataframe with two columns (variables).}
 }
 \value{
-A summary statistics for two variables.
+Returns an summary statistics for two variables.
 }
 \description{
-Reads two columns of data values (say X and Y)
+Read two columns of data values (say X and Y)
 and computes summary statistics including N, Mean, SD, Min
 and Max for X and Y, as well as the correlation between X
 and Y and the regression of Y on X.

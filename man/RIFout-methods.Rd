@@ -14,7 +14,7 @@ RIFout(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the output from RIF analysis.
+Returns the output from RIF analysis.
 }
 \description{
 The step3 slot holds the Regulatory Impact Factors (RIF)

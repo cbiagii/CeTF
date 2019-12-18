@@ -4,7 +4,7 @@
 #'
 #' @param mat An adjacency matrix. Calculating the clustering coefficient only makes sense if some connections are zero i.e. no connection.
 #'
-#' @return The clustering coefficient(s) for the adjacency matrix.
+#' @return Returns the clustering coefficient(s) for the adjacency matrix.
 #'
 #' @importFrom stats median
 #'
@@ -26,15 +26,10 @@
 #'
 #' @export
 clustCoef <- function(mat) {
-<<<<<<< HEAD
-    if(!is.data.frame(mat) & !is.matrix(mat)){stop("mat must be a dataframe or a matrix")}
-
-=======
     if (!is.data.frame(mat) & !is.matrix(mat)) {
         stop("mat must be a dataframe or a matrix")
     }
     
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
     nGenes <- as.integer(nrow(mat))
     
     cc <- E <- k <- rep(0, length = nrow(mat))

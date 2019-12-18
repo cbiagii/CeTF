@@ -14,7 +14,7 @@ densitySig(mat1, mat2, threshold = 0.5)
 \item{threshold}{Threshold of correlation module to plot (default: 0.5).}
 }
 \value{
-a density plot of raw correlation with significant PCIT values.
+Returns an density plot of raw correlation with significant PCIT values.
 }
 \description{
 Generate the density plot for adjacency matrices. This

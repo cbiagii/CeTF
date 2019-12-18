@@ -14,7 +14,7 @@ getGenes(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the filtered genes.
+Returns the filtered genes.
 }
 \description{
 The step1 slot holds the data adjustment, that includes the

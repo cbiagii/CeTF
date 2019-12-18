@@ -14,7 +14,7 @@ tpmData(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the TPM data.
+Returns the TPM data.
 }
 \description{
 The step1 slot holds the data adjustment, that includes the

@@ -14,7 +14,7 @@ getTF(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the Transcription Factors (TFs).
+Returns the Transcription Factors (TFs).
 }
 \description{
 The step2 slot holds the differential expression analysis,

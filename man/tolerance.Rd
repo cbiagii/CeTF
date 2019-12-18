@@ -13,14 +13,10 @@ tolerance(a, b, c, tolType = "mean")
 
 \item{c}{Interactor 3.}
 
-<<<<<<< HEAD
-\item{tolType}{Calculation type for tolerance (mean, min, max, median) (default: "mean").}
-=======
-\item{tolType}{Calculation type for tolerance (mean, min, max, median).}
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
+\item{tolType}{Calculation type for tolerance (mean, min, max, median) (default: 'mean').}
 }
 \value{
-Value of tolerance.
+Returns the value of tolerance.
 }
 \description{
 Calculates the local tolerance for every trio of genes.

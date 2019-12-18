@@ -29,17 +29,8 @@ for pathways selection.}
 
 \item{anno}{Annotation of gene or TFs. Can be found in result of
 \code{\link{runAnalysis}} function (see \code{\link{getAnno}}).}
-<<<<<<< HEAD
-=======
 
-\item{groupBy}{Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes'.}
-
-\item{TFs}{A character with selected TFs.}
-
-\item{genes}{A character with selected genes.}
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
-
-\item{groupBy}{Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: "pathways").}
+\item{groupBy}{Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: 'pathways').}
 
 \item{TFs}{A character with selected TFs.}
 
@@ -48,7 +39,7 @@ for pathways selection.}
 \item{label}{If label is TRUE, shows the names of nodes (default: FALSE).}
 }
 \value{
-The network for \code{\link{getGroupGO}} output under a condition.
+Returns the network for \code{\link{getGroupGO}} output under a condition.
 }
 \description{
 Generate the plot of groupGO network result of

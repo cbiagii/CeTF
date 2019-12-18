@@ -14,7 +14,7 @@ RIFinput(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the input used for RIF analysis.
+Returns the input used for RIF analysis.
 }
 \description{
 The step3 slot holds the Regulatory Impact Factors (RIF)

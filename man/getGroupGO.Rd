@@ -9,14 +9,14 @@ getGroupGO(genes, ont = "BP", keyType = NULL, annoPkg = NULL)
 \arguments{
 \item{genes}{Character vector with the genes to perform the functional profile.}
 
-\item{ont}{One of 'MF', 'BP', and 'CC' subontologies (default: "BP").}
+\item{ont}{One of 'MF', 'BP', and 'CC' subontologies (default: 'BP').}
 
-\item{keyType}{key type of input gene (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').}
+\item{keyType}{Key type of inputted genes (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').}
 
-\item{annoPkg}{Package of annotation of specific organism (OrgDb).}
+\item{annoPkg}{Package of annotation of specific organism (i.e. org.Hs.eg.db, org.Bt.eg.db, org.Rn.eg.db, etc).}
 }
 \value{
-A list with the results of the functional profile of the genes and a
+Returns an list with the results of the functional profile of the genes and a
 network with the ontologies (column 1) and the corresponding
 genes (column 2).
 }

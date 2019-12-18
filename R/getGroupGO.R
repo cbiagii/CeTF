@@ -5,16 +5,12 @@
 #' a specific level.
 #'
 #' @param genes Character vector with the genes to perform the functional profile.
-<<<<<<< HEAD
-#' @param ont One of 'MF', 'BP', and 'CC' subontologies (default: "BP").
-=======
-#' @param ont One of 'MF', 'BP', and 'CC' subontologies.
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
-#' @param keyType key type of input gene (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').
-#' @param annoPkg Package of annotation of specific organism (OrgDb).
+#' @param ont One of 'MF', 'BP', and 'CC' subontologies (default: 'BP').
+#' @param keyType Key type of inputted genes (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').
+#' @param annoPkg Package of annotation of specific organism (i.e. org.Hs.eg.db, org.Bt.eg.db, org.Rn.eg.db, etc).
 #'
 #' @return
-#' A list with the results of the functional profile of the genes and a
+#' Returns an list with the results of the functional profile of the genes and a
 #' network with the ontologies (column 1) and the corresponding
 #' genes (column 2).
 #'
@@ -43,16 +39,15 @@
 #' @export
 getGroupGO <- function(genes, ont = "BP", keyType = NULL, 
     annoPkg = NULL) {
-<<<<<<< HEAD
-    if(missing(keyType)){stop("No \"keyType\" parameter provided")}
-    if(missing(annoPkg)){stop("No \"annoPkg\" parameter provided")}
-
-    ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg,
-        ont = ont, readable = FALSE, keyType = keyType,
-=======
+    if (missing(keyType)) {
+        stop("No \"keyType\" parameter provided")
+    }
+    if (missing(annoPkg)) {
+        stop("No \"annoPkg\" parameter provided")
+    }
+    
     ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg, 
         ont = ont, readable = FALSE, keyType = keyType, 
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
         level = 3)
     
     results <- ggo@result

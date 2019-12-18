@@ -13,7 +13,7 @@ getKeyTF(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the key TFs after PCIT and RIF analysis.
+Returns the key TFs after PCIT and RIF analysis.
 }
 \description{
 The step4 slot holds the Partial Correlation and Information

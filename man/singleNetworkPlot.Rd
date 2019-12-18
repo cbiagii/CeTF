@@ -10,7 +10,7 @@ singleNetworkPlot(x)
 \item{x}{pcitrif object resulted from \code{\link{runAnalysis}} function.}
 }
 \value{
-The network for both conditions.
+Returns the network plot for both conditions.
 }
 \description{
 Generate the network plot of gene-gene/gene-TFs interactions for both conditions.
@@ -29,7 +29,7 @@ out <- runAnalysis(mat = simCounts,
                    ncond2= 10,
                    tolType = 'mean',
                    diffMethod = 'Reverter',
-                   data.type = "counts")
+                   data.type = 'counts')
 # plotting networks conditions
 singleNetworkPlot(out)
 

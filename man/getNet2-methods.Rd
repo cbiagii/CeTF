@@ -14,7 +14,7 @@ getNet2(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Return the network of interactions between gene and key TFs for condition2.
+Returns the network of interactions between gene and key TFs for condition2.
 }
 \description{
 The step4 slot holds the Partial Correlation and Information

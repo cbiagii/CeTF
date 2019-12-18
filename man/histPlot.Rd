@@ -11,7 +11,7 @@ histPlot(mat)
 has some zero values.}
 }
 \value{
-The histogram of connectivity distribution.
+Returns the histogram of connectivity distribution.
 }
 \description{
 Generate the histogram for adjacency matrix to
