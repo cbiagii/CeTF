@@ -13,7 +13,11 @@ tolerance(a, b, c, tolType = "mean")
 
 \item{c}{Interactor 3.}
 
+<<<<<<< HEAD
 \item{tolType}{Calculation type for tolerance (mean, min, max, median) (default: 'mean').}
+=======
+\item{tolType}{Calculation type for tolerance (mean, min, max, median) (default: "mean").}
+>>>>>>> 5933744e7cfbeaa1c3f84f3b6d6f5f3edf20958f
 }
 \value{
 Returns the value of tolerance.

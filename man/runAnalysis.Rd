@@ -32,9 +32,15 @@ runAnalysis(
 
 \item{ncond2}{Number of samples that correspond to second condition.}
 
+<<<<<<< HEAD
 \item{tolType}{Tolerance calculation type (see \code{\link{tolerance}}) (default: 'mean').}
 
 \item{diffMethod}{Method to calculate Differential Expressed (DE) genes (see \code{\link{expDiff}}) (default: 'Reverter')}
+=======
+\item{tolType}{Tolerance calculation type (see \code{\link{tolerance}}) (default: "mean").}
+
+\item{diffMethod}{Method to calculate Differential Expressed (DE) genes (see \code{\link{expDiff}}) (default: "Reverter")}
+>>>>>>> 5933744e7cfbeaa1c3f84f3b6d6f5f3edf20958f
 
 \item{data.type}{Type of input data. If is \emph{expression} (FPKM, TPM, etc) or \emph{counts.}}
 }

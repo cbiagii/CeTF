@@ -5,7 +5,7 @@
 #' a specific level.
 #'
 #' @param genes Character vector with the genes to perform the functional profile.
-#' @param ont One of 'MF', 'BP', and 'CC' subontologies (default: 'BP').
+#' @param ont One of 'MF', 'BP', and 'CC' subontologies (default: "BP").
 #' @param keyType Key type of inputted genes (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').
 #' @param annoPkg Package of annotation of specific organism (i.e. org.Hs.eg.db, org.Bt.eg.db, org.Rn.eg.db, etc).
 #'
@@ -37,24 +37,20 @@
 #'
 #'
 #' @export
-getGroupGO <- function(genes, ont = "BP", keyType = NULL, 
+getGroupGO <- function(genes, ont = "BP", keyType = NULL,
     annoPkg = NULL) {
-    if (missing(keyType)) {
-        stop("No \"keyType\" parameter provided")
-    }
-    if (missing(annoPkg)) {
-        stop("No \"annoPkg\" parameter provided")
-    }
-    
-    ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg, 
-        ont = ont, readable = FALSE, keyType = keyType, 
+    if(missing(keyType)){stop("No \"keyType\" parameter provided")}
+    if(missing(annoPkg)){stop("No \"annoPkg\" parameter provided")}
+
+    ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg,
+        ont = ont, readable = FALSE, keyType = keyType,
         level = 3)
-    
+
     results <- ggo@result
-    results <- results[order(results$Count, decreasing = TRUE), 
+    results <- results[order(results$Count, decreasing = TRUE),
         ]
     results <- results[results$Count > 0, ]
-    
+
     tmp <- pbapply(results, 1, function(x) {
         temp <- NULL
         pathways1 <- NULL
@@ -65,6 +61,6 @@ getGroupGO <- function(genes, ont = "BP", keyType = NULL,
     })
     tmp <- do.call(rbind, tmp)
     tmp <- data.frame(gene1 = tmp$pathways, gene2 = tmp$gc)
-    
+
     return(list(results = results, netGO = tmp))
 }

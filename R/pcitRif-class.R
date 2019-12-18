@@ -20,7 +20,7 @@
 #'
 #' @exportClass pcitrif
 #'
-pcitrif <- setClass(Class = "pcitrif", slots = list(step1 = "list", 
+pcitrif <- setClass(Class = "pcitrif", slots = list(step1 = "list",
     step2 = "list", step3 = "list", step4 = "list"))
 
 
