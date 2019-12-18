@@ -11,7 +11,6 @@
 #'
 #' @param mat Count data where the rows are genes and coluns the samples (conditions).
 #' @param conditions A vector of characters identifying the names of conditions (i.e. c('normal', 'tumoral')).
-<<<<<<< HEAD
 #' @param lfc logFoldChange module threshold to define a gene as differentially expressed (default: 2.57).
 #' @param padj Significance value to define a gene as differentially expressed (default: 0.05).
 #' @param TFs A vector of character with all transcripts factors of specific organism.
@@ -19,15 +18,6 @@
 #' @param ncond2 Number of samples that correspond to second condition.
 #' @param tolType Tolerance calculation type (see \code{\link{tolerance}}) (default: "mean").
 #' @param diffMethod Method to calculate Differential Expressed (DE) genes (see \code{\link{expDiff}}) (default: "Reverter")
-=======
-#' @param lfc logFoldChange module threshold to define a gene as differentially expressed.
-#' @param padj Significance value to define a gene as differentially expressed.
-#' @param TFs A vector of character with all transcripts factors of specific organism.
-#' @param ncond1 Number of samples that correspond to first condition.
-#' @param ncond2 Number of samples that correspond to second condition.
-#' @param tolType Tolerance calculation type (see \code{\link{tolerance}}).
-#' @param diffMethod Method to calculate Differential Expressed (DE) genes (see \code{\link{expDiff}})
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 #' @param data.type Type of input data. If is \emph{expression} (FPKM, TPM, etc) or \emph{counts.}
 #'
 #' @return Returns a pcitRif object with output variables of each step of analysis.
@@ -56,7 +46,6 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57,
     padj = 0.05, TFs = NULL, ncond1 = NULL, ncond2 = NULL,
     tolType = "mean", diffMethod = "Reverter", data.type = NULL) {
 
-<<<<<<< HEAD
     if(data.type == "counts" & !all(mat == floor(mat))){stop("for data.type = counts you must input a table of integers numbers")}
     if(!is.data.frame(mat) & !is.matrix(mat)){stop("counts must be a dataframe or a matrix")}
     if(missing(conditions)){stop("No \"conditions\" parameter provided")}
@@ -67,23 +56,6 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57,
     if(missing(ncond2)){stop("No \"ncond2\" parameter provided")}
     if(!is.numeric(ncond1) | !is.numeric(ncond2)){stop("the number of conditions must be a numeric greater than zero")}
     if(missing(data.type)){stop("No \"data.type\" parameter provided")}
-=======
-    if (data.type == "counts" & !all(mat == floor(mat))) {
-        stop("for data.type = counts you must input a table of integers numbers")
-    }
-    if (!is.data.frame(mat) & !is.matrix(mat)) {
-        stop("counts must be a dataframe or a matrix")
-    }
-    if (length(conditions) != 2) {
-        stop("you must input two conditions")
-    }
-    if (length(TFs) == 0 | !is.character(TFs)) {
-        stop("the transcript factors must be a character")
-    }
-    if (!is.numeric(ncond1) | !is.numeric(ncond2)) {
-        stop("the number of conditions must be a numeric greater than zero")
-    }
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 
     cat(green("##### STEP 1: Data adjustment #####" %+%
         "\n"))

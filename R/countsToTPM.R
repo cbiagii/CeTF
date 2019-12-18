@@ -20,15 +20,8 @@
 #'
 #' @export
 countsToTPM <- function(counts) {
-<<<<<<< HEAD
     if(!is.data.frame(counts) & !is.matrix(counts)){stop("input must be a count dataframe or a matrix")}
 
-=======
-    if (!is.data.frame(counts) & !is.matrix(counts)) {
-        stop("input must be a count dataframe or a matrix")
-    }
-    
->>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
     return(apply(counts, 2, function(x) {
         (1e+06 * x)/sum(x)
     }))
