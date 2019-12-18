@@ -19,7 +19,7 @@ To properly run <b>pcitRif</b> package is necessary to install some dependencies
 To install R packages dependencies, run:
 ```R
 #CRAN dependencies
-packagesCRAN <- c('crayon', 'geomnet', 'GGally', 'ggplot2', 'ggpubr', 'graphics', 'kableExtra', 'knitr', 'network', 'pbapply', 'reshape2', 'rmarkdown', 'scales', 'stats', 'testthat', 'utils')
+packagesCRAN <- c('BiocManager', 'crayon', 'geomnet', 'GGally', 'ggplot2', 'ggpubr', 'kableExtra', 'knitr', 'network', 'pbapply', 'reshape2', 'rmarkdown', 'scales', 'testthat')
 install.packages(packagesCRAN[!packagesCRAN %in% installed.packages()[,1]])
 
 #Bioconductor dependencies
