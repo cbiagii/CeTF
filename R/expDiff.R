@@ -11,8 +11,13 @@
 #' @param lfc log2 fold change module threshold to define a gene as
 #' differentially expressed (default: 1.5).
 #' @param padj Significance value to define a gene as differentially
+<<<<<<< HEAD
 #' expressed (default: 0.05).
 #' @param diffMethod Choose between Reverter or DESeq2 method (default: "Reverter").
+=======
+#' expressed.
+#' @param diffMethod Choose between Reverter or DESeq2 method.
+>>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 #' The DESeq2 method is only for counts data (see details).
 #'
 #' @return A character with the names of differentially expressed genes.
@@ -63,8 +68,9 @@
 #' @importFrom SummarizedExperiment colData
 #'
 #' @export
-expDiff <- function(exp, anno = NULL, conditions = NULL,
+expDiff <- function(exp, anno = NULL, conditions = NULL, 
     lfc = 1.5, padj = 0.05, diffMethod = "Reverter") {
+<<<<<<< HEAD
 
     if(missing(anno)){stop("No \"anno\" parameter provided")}
     if(nrow(anno)==0){stop("anno must have some conditions to compare")}
@@ -72,27 +78,42 @@ expDiff <- function(exp, anno = NULL, conditions = NULL,
     if(!is.character(conditions) & length(conditions)!=2) {stop("you must input 2 conditions")}
     if(!is.data.frame(exp) & !is.matrix(exp)){stop("exp must be a dataframe or a matrix")}
 
+=======
+    if (!is.data.frame(exp) & !is.matrix(exp)) {
+        stop("exp must be a dataframe or a matrix")
+    }
+    
+    if (nrow(anno) == 0) {
+        stop("anno must have some conditions to compare")
+    }
+    
+    if (!is.character(conditions) & length(conditions) != 
+        2) {
+        stop("you must input 2 conditions")
+    }
+    
+>>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
     if (diffMethod == "Reverter") {
-        de.j <- data.frame(cond1 = apply(exp[, grep(paste0("_",
-            conditions[1]), colnames(exp))], 1, mean),
-            cond2 = apply(exp[, grep(paste0("_", conditions[2]),
+        de.j <- data.frame(cond1 = apply(exp[, grep(paste0("_", 
+            conditions[1]), colnames(exp))], 1, mean), 
+            cond2 = apply(exp[, grep(paste0("_", conditions[2]), 
                 colnames(exp))], 1, mean))
         tmp1 <- de.j[, 1] - de.j[, 2]
-        var = (sum(tmp1^2) - (sum(tmp1) * sum(tmp1))/(length(tmp1)))/(length(tmp1) -
+        var = (sum(tmp1^2) - (sum(tmp1) * sum(tmp1))/(length(tmp1)))/(length(tmp1) - 
             1)
         de.j <- cbind(de.j, diff = (tmp1 - (sum(tmp1)/length(tmp1)))/sqrt(var))
-        DE_unique <- rownames(subset(de.j, abs(de.j$diff) >
+        DE_unique <- rownames(subset(de.j, abs(de.j$diff) > 
             lfc))
     } else if (diffMethod == "DESeq2") {
-        ddsHTSeq <- DESeqDataSetFromMatrix(countData = exp,
+        ddsHTSeq <- DESeqDataSetFromMatrix(countData = exp, 
             colData = anno, design = ~cond)
-
-        colData(ddsHTSeq)[, 1] <- relevel(colData(ddsHTSeq)[,
+        
+        colData(ddsHTSeq)[, 1] <- relevel(colData(ddsHTSeq)[, 
             1], ref = conditions[1])
         dds <- DESeq(ddsHTSeq)
-        res <- results(dds, contrast = c("cond", conditions[1],
+        res <- results(dds, contrast = c("cond", conditions[1], 
             conditions[2]))
-        DE_unique <- rownames(res)[which(abs(res$log2FoldChange) >
+        DE_unique <- rownames(res)[which(abs(res$log2FoldChange) > 
             lfc & res$padj < padj)]
     }
     return(DE_unique)

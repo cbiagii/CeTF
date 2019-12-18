@@ -24,7 +24,11 @@ runAnalysis(
 
 \item{lfc}{logFoldChange module threshold to define a gene as differentially expressed (default: 2.57).}
 
+<<<<<<< HEAD
 \item{padj}{Significance value to define a gene as differentially expressed (default: 0.05).}
+=======
+\item{padj}{Significance value to define a gene as differentially expressed.}
+>>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 
 \item{TFs}{A vector of character with all transcripts factors of specific organism.}
 
@@ -32,9 +36,15 @@ runAnalysis(
 
 \item{ncond2}{Number of samples that correspond to second condition.}
 
+<<<<<<< HEAD
 \item{tolType}{Tolerance calculation type (see \code{\link{tolerance}}) (default: "mean").}
 
 \item{diffMethod}{Method to calculate Differential Expressed (DE) genes (see \code{\link{expDiff}}) (default: "Reverter")}
+=======
+\item{tolType}{Tolerance calculation type (see \code{\link{tolerance}}).}
+
+\item{diffMethod}{Method to calculate Differential Expressed (DE) genes (see \code{\link{expDiff}})}
+>>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 
 \item{data.type}{Type of input data. If is \emph{expression} (FPKM, TPM, etc) or \emph{counts.}}
 }

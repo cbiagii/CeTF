@@ -5,7 +5,11 @@
 #' @param a Interactor 1.
 #' @param b Interactor 2.
 #' @param c Interactor 3.
+<<<<<<< HEAD
 #' @param tolType Calculation type for tolerance (mean, min, max, median) (default: "mean").
+=======
+#' @param tolType Calculation type for tolerance (mean, min, max, median).
+>>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 #'
 #' @return Value of tolerance.
 #'

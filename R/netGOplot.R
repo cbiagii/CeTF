@@ -13,10 +13,17 @@
 #' (second element of list).
 #' @param anno Annotation of gene or TFs. Can be found in result of
 #' \code{\link{runAnalysis}} function (see \code{\link{getAnno}}).
+<<<<<<< HEAD
 #' @param groupBy Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: "pathways").
 #' @param TFs A character with selected TFs.
 #' @param genes A character with selected genes.
 #' @param label If label is TRUE, shows the names of nodes (default: FALSE).
+=======
+#' @param groupBy Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes'.
+#' @param TFs A character with selected TFs.
+#' @param genes A character with selected genes.
+#' @param label If label is TRUE, shows the names of nodes.
+>>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 #'
 #' @return The network for \code{\link{getGroupGO}} output under a condition.
 #'
@@ -81,8 +88,18 @@
 netGOplot <- function(netCond, resultsGO, netGO, anno,
     groupBy = "pathways", TFs = NULL, genes = NULL,
     label = FALSE) {
+<<<<<<< HEAD
     if(groupBy == "TFs" & is.null(TFs)){stop("for TFs groupBy parameter you must input some TFs")}
     if(groupBy == "genes" & is.null(genes)){stop("for genes groupBy parameter you must input some genes")}
+=======
+    if (groupBy == "TFs" & is.null(TFs)) {
+        stop("for TFs groupBy parameter you must input some TFs")
+    }
+
+    if (groupBy == "genes" & is.null(genes)) {
+        stop("for genes groupBy parameter you must input some genes")
+    }
+>>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 
     if (groupBy == "pathways") {
         tmp <- apply(resultsGO, 1, function(x) {

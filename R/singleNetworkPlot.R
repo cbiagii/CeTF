@@ -35,7 +35,13 @@
 #'
 #' @export
 singleNetworkPlot <- function(x) {
+<<<<<<< HEAD
     if(!is(x, "pcitrif")){stop("the input must be a pcitrif class object")}
+=======
+    if (class(x) != "pcitrif") {
+        stop("the input must be a pcitrif class object")
+    }
+>>>>>>> 43614a53fc5fd047595c36314fe49c8a0a0915a2
 
     TFs <- as.character(x@step4$keytf$TF)
     mainTFs <- x@step4$keytf[order(x@step4$keytf$freq.diff,
