@@ -28,8 +28,8 @@
 #'
 #' # performing getGroupGO analysis
 #' cond1 <- getGroupGO(genes = genes,
-#'                     ont = "BP",
-#'                     keyType = "ENSEMBL",
+#'                     ont = 'BP',
+#'                     keyType = 'ENSEMBL',
 #'                     annoPkg = org.Hs.eg.db)
 #'
 #' # selecting only first 12 pathways
@@ -47,6 +47,10 @@
 #'
 #' @export
 networkPlot <- function(netCond, netGO, keyTFs) {
+    if(missing(netCond)){stop("No \"netCond\" parameter provided")}
+    if(missing(netGO)){stop("No \"netGO\" parameter provided")}
+    if(missing(keyTFs)){stop("No \"keyTFs\" parameter provided")}
+
     network <- rbind(netCond, netGO)
     net <- network(network, directed = FALSE)
 

@@ -6,7 +6,7 @@
 #'
 #' @param mat1 Raw adjacency matrix.
 #' @param mat2 Significant adjacency matrix.
-#' @param threshold Threshold of correlation module to plot.
+#' @param threshold Threshold of correlation module to plot (default: 0.5).
 #'
 #' @return a density plot of raw correlation with significant PCIT values.
 #'
@@ -27,12 +27,8 @@
 #'
 #' @export
 densitySig <- function(mat1, mat2, threshold = 0.5) {
-    if (!is.data.frame(mat1) & !is.matrix(mat1)) {
-        stop("mat1 must be a dataframe or a matrix")
-    }
-    if (!is.data.frame(mat2) & !is.matrix(mat2)) {
-        stop("mat2 must be a dataframe or a matrix")
-    }
+    if(!is.data.frame(mat1) & !is.matrix(mat1)){stop("mat1 must be a dataframe or a matrix")}
+    if(!is.data.frame(mat2) & !is.matrix(mat2)){stop("mat2 must be a dataframe or a matrix")}
 
     df1 <- data.frame(corr = mat1[upper.tri(mat1) &
         !is.na(mat1)], sig = "All")

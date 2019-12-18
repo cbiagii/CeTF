@@ -26,9 +26,7 @@
 #'
 #' @export
 clustCoef <- function(mat) {
-    if (!is.data.frame(mat) & !is.matrix(mat)) {
-        stop("mat must be a dataframe or a matrix")
-    }
+    if(!is.data.frame(mat) & !is.matrix(mat)){stop("mat must be a dataframe or a matrix")}
 
     nGenes <- as.integer(nrow(mat))
 

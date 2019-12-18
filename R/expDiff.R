@@ -9,12 +9,11 @@
 #' @param conditions A character vector containing the name of the two
 #' conditions. The first name will be selected as reference.
 #' @param lfc log2 fold change module threshold to define a gene as
-#' differentially expressed.
+#' differentially expressed (default: 1.5).
 #' @param padj Significance value to define a gene as differentially
-#' expressed.
-#' @param diffMethod Choose between Reverter or DESeq2 method.
-#' The DESeq2 method is only for counts data. See details for more
-#' details
+#' expressed (default: 0.05).
+#' @param diffMethod Choose between Reverter or DESeq2 method (default: "Reverter").
+#' The DESeq2 method is only for counts data (see details).
 #'
 #' @return A character with the names of differentially expressed genes.
 #'
@@ -66,18 +65,12 @@
 #' @export
 expDiff <- function(exp, anno = NULL, conditions = NULL,
     lfc = 1.5, padj = 0.05, diffMethod = "Reverter") {
-    if (!is.data.frame(exp) & !is.matrix(exp)) {
-        stop("exp must be a dataframe or a matrix")
-    }
 
-    if (nrow(anno) == 0) {
-        stop("anno must have some conditions to compare")
-    }
-
-    if (!is.character(conditions) & length(conditions) !=
-        2) {
-        stop("you must input 2 conditions")
-    }
+    if(missing(anno)){stop("No \"anno\" parameter provided")}
+    if(nrow(anno)==0){stop("anno must have some conditions to compare")}
+    if(missing(conditions)){stop("No \"conditions\" parameter provided")}
+    if(!is.character(conditions) & length(conditions)!=2) {stop("you must input 2 conditions")}
+    if(!is.data.frame(exp) & !is.matrix(exp)){stop("exp must be a dataframe or a matrix")}
 
     if (diffMethod == "Reverter") {
         de.j <- data.frame(cond1 = apply(exp[, grep(paste0("_",

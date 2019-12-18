@@ -1,4 +1,5 @@
-#' @title Partial Correlation and Information Theory (PCIT) analysis
+#' @title
+#' Partial Correlation and Information Theory (PCIT) analysis
 #'
 #' @description
 #' The PCIT algorithm is used for reconstruction of gene co-expression
@@ -7,7 +8,7 @@
 #' defining edges in the reconstruction of GCN.
 #'
 #' @param input A correlation matrix.
-#' @param tolType Type of tolerance given the 3 pairwise correlations
+#' @param tolType Type of tolerance (default: "mean") given the 3 pairwise correlations
 #' (see \code{\link{tolerance}})
 #'
 #' @return A list with the significant correlations, raw adjacency matrix
@@ -35,16 +36,13 @@
 #'
 #' @export
 PCIT <- function(input, tolType = "mean") {
-    if (!is.data.frame(input) & !is.matrix(input)) {
-        stop("input must be a dataframe or a matrix")
-    }
-    "/" <- function(x, y) ifelse(y == 0, 0, base::"/"(x,
-        y))
+    if(!is.data.frame(input) & !is.matrix(input)){stop("input must be a dataframe or a matrix")}
+    "/" <- function(x, y) ifelse(y == 0, 0, base::"/"(x,y))
 
-    cat(green("################################" %+%
+    cat(green("###########################" %+%
         "\n" %+% sprintf("Number of genes       =  %s",
         nrow(input)) %+% "\n" %+% sprintf("Number of conditions  =  %s",
-        ncol(input)) %+% "\n" %+% "################################" %+%
+        ncol(input)) %+% "\n" %+% "###########################" %+%
         "\n"))
 
     suppressWarnings(gene_corr <- cor(t(input)))

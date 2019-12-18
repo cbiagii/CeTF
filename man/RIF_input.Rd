@@ -9,7 +9,8 @@
 data(RIF_input)
 }
 \description{
-Data used to the examples of RIF analysis. This data was generated based on simulated counts and normalized data.
+Data used to the examples of RIF analysis. This data was generated based
+on simulated counts and normalized data.
 }
 \examples{
 data(RIF_input)

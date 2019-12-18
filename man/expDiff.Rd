@@ -23,14 +23,13 @@ and the rownames must be the names of samples.}
 conditions. The first name will be selected as reference.}
 
 \item{lfc}{log2 fold change module threshold to define a gene as
-differentially expressed.}
+differentially expressed (default: 1.5).}
 
 \item{padj}{Significance value to define a gene as differentially
-expressed.}
+expressed (default: 0.05).}
 
-\item{diffMethod}{Choose between Reverter or DESeq2 method.
-The DESeq2 method is only for counts data. See details for more
-details}
+\item{diffMethod}{Choose between Reverter or DESeq2 method (default: "Reverter").
+The DESeq2 method is only for counts data (see details).}
 }
 \value{
 A character with the names of differentially expressed genes.

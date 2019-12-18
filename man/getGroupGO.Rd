@@ -9,9 +9,9 @@ getGroupGO(genes, ont = "BP", keyType = NULL, annoPkg = NULL)
 \arguments{
 \item{genes}{Character vector with the genes to perform the functional profile.}
 
-\item{ont}{One of 'MF', 'BP', and 'CC' subontologies.}
+\item{ont}{One of 'MF', 'BP', and 'CC' subontologies (default: "BP").}
 
-\item{keyType}{key type of input gene (i.e. "ENSEMBL", "SYMBOL", "ENTREZID").}
+\item{keyType}{key type of input gene (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').}
 
 \item{annoPkg}{Package of annotation of specific organism (OrgDb).}
 }
@@ -38,8 +38,8 @@ genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
 
 # performing getGroupGO analysis
 cond1 <- getGroupGO(genes = genes,
-                    ont = "BP",
-                    keyType = "ENSEMBL",
+                    ont = 'BP',
+                    keyType = 'ENSEMBL',
                     annoPkg = org.Hs.eg.db)
 
 

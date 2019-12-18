@@ -11,7 +11,7 @@ densitySig(mat1, mat2, threshold = 0.5)
 
 \item{mat2}{Significant adjacency matrix.}
 
-\item{threshold}{Threshold of correlation module to plot.}
+\item{threshold}{Threshold of correlation module to plot (default: 0.5).}
 }
 \value{
 a density plot of raw correlation with significant PCIT values.

@@ -1,6 +1,7 @@
 #' Regulatory Impact Factors (RIF) input
 #'
-#' Data used to the examples of RIF analysis. This data was generated based on simulated counts and normalized data.
+#' Data used to the examples of RIF analysis. This data was generated based
+#' on simulated counts and normalized data.
 #'
 #' @docType data
 #'

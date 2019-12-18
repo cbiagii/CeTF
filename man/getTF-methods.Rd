@@ -3,15 +3,30 @@
 \name{getTF}
 \alias{getTF}
 \alias{getTF,pcitrif-method}
-\title{Method getTF.}
+\title{Accessors for the transcription factors in 'step2'
+slot of a pcitrif object.}
 \usage{
 getTF(x)
 
 \S4method{getTF}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the TFs
+Return the Transcription Factors (TFs).
 }
 \description{
-Method getTF.
+The step2 slot holds the differential expression analysis,
+that includes the differentially expressed genes (\code{\link{getDE}})
+and the \code{Transcription Factors (TFs)} (\code{\link{getTF}}).
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+getTF(pcitrifExample)
+}
+\seealso{
+\code{\link{PCIT}} and \code{\link{runAnalysis}}.
 }

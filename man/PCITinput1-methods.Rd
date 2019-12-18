@@ -3,15 +3,31 @@
 \name{PCITinput1}
 \alias{PCITinput1}
 \alias{PCITinput1,pcitrif-method}
-\title{Method PCITinput1.}
+\title{Accessors for the PCIT input for condition1 in
+'step4' slot of a pcitrif object.}
 \usage{
 PCITinput1(x)
 
 \S4method{PCITinput1}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the PCIT input for condition1
+Return the PCIT input for condition1.
 }
 \description{
-Method PCITinput1.
+The step4 slot holds the Partial Correlation and Information
+Theory (PCIT) analysis, that includes the PCIT input, output and the
+network with gene-gene/gene-TFs interaction for condition1 and condition2,
+besides the key TFs and the annotation (classification) of genes and TFs.
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+PCITinput1(pcitrifExample)
+}
+\seealso{
+\code{\link{PCIT}} and \code{\link{runAnalysis}}.
 }

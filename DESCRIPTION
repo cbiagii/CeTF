@@ -1,35 +1,31 @@
 Package: pcitRif
 Type: Package
-Title: Regulatory Impact Factors and Partial Correlation and Information Theory
-Version: 0.1.0
-Authors@R: c(person("Carlos", "Biagi Jr", email = "cbiagijr@gmail.com", role = c("aut", "cre")),
-        person("Ricardo", "Perecin Nociti", email = "rnociti@gmail.com", role = c("aut")),
-        person("Patrícia", "Ruy", email = "patiruy@gmail.com", role = c("aut")),
-        person("Marcelo", "Gomes", email = "marcelogomesrp@gmail.com", role = c("aut")),
-        person("João Paulo", "Bianchi Ximenez", email = "joaopaulo.ximenez@me.com", role = c("aut")),
-        person("Rafael", "dos Santos Bezerra", email = "rafaelbezerra50@yahoo.com", role = c("aut")),
-        person("Breno", "Osvaldo", email = "osvaldobreno99@gmail.com ", role = c("aut")),
-        person("Wilson", "Silva Junior", email = "wilsonjr@usp.br", role = c("aut")))
+Title: Regulatory Impact Factors and Partial Correlation and Information Theory analysis
+Version: 0.99.0
+Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi-Junior", email = "cbiagijr@gmail.com", role = c("aut", "cre")),
+        person("Ricardo", "Perecin Nociti", email = "rnociti@gmail.com", role = c("aut", "ctb")),
+        person("Breno", "Osvaldo", email = "osvaldobreno99@gmail.com ", role = c("aut", "ctb")),
+        person("João Paulo", "Bianchi Ximenez", email = "joaopaulo.ximenez@me.com", role = c("ctb")),
+        person("Patrícia", "Ruy", email = "patiruy@gmail.com", role = c("ctb")),
+        person("Marcelo", "Gomes", email = "marcelogomesrp@gmail.com", role = c("ctb")),
+        person("Rafael", "dos Santos Bezerra", email = "rafaelbezerra50@yahoo.com", role = c("ctb")),
+        person("Wilson", "Silva Junior", email = "wilsonjr@usp.br", role = c("aut", "ctb")))
+Author: Carlos Biagi Jr [aut, cre], Ricardo Perecin Nociti [aut, ctb], Breno Osvaldo [aut, ctb], 
+    João Paulo Bianchi Ximenez [ctb], Patrícia Ruy [ctb], Marcelo Gomes [ctb], 
+    Rafael dos Santos Bezerra [ctb], Wilson Silva Junior [aut, ctb]
 Description: This package provides the necessary functions for performing the 
   Partial Correlation coefficient with Information Theory (PCIT) from Reverter 
   and Chan 2008 and Regulatory Impact Factors (RIF) from Reverter et al. 2010 
-  algorithm. The PCIT algorithm identifies meaningful correlations to define 
+  algorithms. The PCIT algorithm identifies meaningful correlations to define 
   edges in a weighted network. The algorithm can be applied to any 
   correlation-based network including but not limited to gene co-expression 
   networks. While the RIF algorithm identify critical transcript factors (TF) 
   from gene expression data. These two algorithms when combined provide a 
   very relevant layer of information for gene expression studies 
   (Microarray, RNA-seq and single-cell RNA-seq data).
-Imports: crayon, clusterProfiler, DESeq2, geomnet, GGally, ggplot2, ggpubr, 
-  graphics, network, pbapply, reshape2, scales, stats, SummarizedExperiment, 
-  utils
-Suggests: 
-    airway,
-    kableExtra,
-    knitr,
-    org.Hs.eg.db,
-    rmarkdown,
-    testthat
+Imports: crayon, clusterProfiler, DESeq2, geomnet, GGally, ggplot2, ggpubr, graphics, 
+    network, pbapply, reshape2, scales, stats, SummarizedExperiment, utils
+Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown, testthat
 Depends: R (>= 3.6), methods
 License: GPL-3
 Encoding: UTF-8
@@ -39,12 +35,4 @@ biocViews: Sequencing, RNASeq, Microarray, GeneExpression, Transcription,
         Normalization, DifferentialExpression, SingleCell, Network, 
         Regression, ChIPSeq, ImmunoOncology, Coverage
 VignetteBuilder: knitr
-Author: Carlos Biagi Jr [aut, cre],
-  Ricardo Perecin Nociti [aut],
-  Patrícia Ruy [aut],
-  Marcelo Gomes [aut],
-  João Paulo Bianchi Ximenez [aut],
-  Rafael dos Santos Bezerra [aut],
-  Breno Osvaldo [aut],
-  Wilson Silva Junior [aut]
-Maintainer: Carlos Biagi Jr <cbiagijr@gmail.com>
+Maintainer: Carlos Alberto Oliveira de Biagi-Junior <cbiagijr@gmail.com>

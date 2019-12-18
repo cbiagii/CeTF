@@ -1,11 +1,11 @@
-#' @title Tolerance between 3 pairwise correlations
+#' @title Tolerance level between 3 pairwise correlations
 #'
-#' @description Function for calculating the local tolerance given the 3 pairwise correlations between a, b and c.
+#' @description Calculates the local tolerance for every trio of genes.
 #'
 #' @param a Interactor 1.
 #' @param b Interactor 2.
 #' @param c Interactor 3.
-#' @param tolType Type of tolerance given the 3 pairwise correlations (mean, min, max, median).
+#' @param tolType Calculation type for tolerance (mean, min, max, median) (default: "mean").
 #'
 #' @return Value of tolerance.
 #'
@@ -19,10 +19,14 @@
 #'
 #' @export
 tolerance <- function(a, b, c, tolType = "mean") {
+    if(missing(a)){stop("No \"a\" parameter provided")}
+    if(missing(b)){stop("No \"b\" parameter provided")}
+    if(missing(c)){stop("No \"c\" parameter provided")}
+
     a_z = (a - b * c)/sqrt((1 - b^2) * (1 - c^2))
     b_y = (b - a * c)/sqrt((1 - a^2) * (1 - c^2))
     c_x = (c - a * b)/sqrt((1 - a^2) * (1 - b^2))
-    
+
     if (tolType == "mean") {
         tol <- mean(c(abs(a_z/a), abs(b_y/b), abs(c_x/c)))
     } else if (tolType == "min") {

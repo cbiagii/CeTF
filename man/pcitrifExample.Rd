@@ -9,7 +9,9 @@
 data(pcitrifExample)
 }
 \description{
-A pcitrif class object to run the examples in functions. This obect was generated after running the runAnalysis function.
+A pcitrif class object to run the examples in functions.
+This object was generated after running the runAnalysis function.
+This object is the same generated in vignette for complete analysis.
 }
 \examples{
 data(pcitrifExample)

@@ -34,8 +34,8 @@ genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
 
 # performing getGroupGO analysis
 cond1 <- getGroupGO(genes = genes,
-                    ont = "BP",
-                    keyType = "ENSEMBL",
+                    ont = 'BP',
+                    keyType = 'ENSEMBL',
                     annoPkg = org.Hs.eg.db)
 
 # selecting only first 12 pathways

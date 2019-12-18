@@ -3,15 +3,31 @@
 \name{tpmData}
 \alias{tpmData}
 \alias{tpmData,pcitrif-method}
-\title{Method tpmData.}
+\title{Accessors for the TPM data in 'step1' slot of a
+pcitrif object.}
 \usage{
 tpmData(x)
 
 \S4method{tpmData}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the TPM data
+Return the TPM data.
 }
 \description{
-Method tpmData.
+The step1 slot holds the data adjustment, that includes the
+raw data (\code{\link{rawData}}), \code{TPM data} (\code{\link{tpmData}}),
+filtered genes (\code{\link{getGenes}}) and normalized data
+(\code{\link{normData}}).
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+tpmData(pcitrifExample)
+}
+\seealso{
+\code{\link{countsToTPM}} and \code{\link{runAnalysis}}.
 }

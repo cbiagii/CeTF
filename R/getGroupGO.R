@@ -5,8 +5,8 @@
 #' a specific level.
 #'
 #' @param genes Character vector with the genes to perform the functional profile.
-#' @param ont One of 'MF', 'BP', and 'CC' subontologies.
-#' @param keyType key type of input gene (i.e. "ENSEMBL", "SYMBOL", "ENTREZID").
+#' @param ont One of 'MF', 'BP', and 'CC' subontologies (default: "BP").
+#' @param keyType key type of input gene (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').
 #' @param annoPkg Package of annotation of specific organism (OrgDb).
 #'
 #' @return
@@ -30,8 +30,8 @@
 #'
 #' # performing getGroupGO analysis
 #' cond1 <- getGroupGO(genes = genes,
-#'                     ont = "BP",
-#'                     keyType = "ENSEMBL",
+#'                     ont = 'BP',
+#'                     keyType = 'ENSEMBL',
 #'                     annoPkg = org.Hs.eg.db)
 #'
 #'
@@ -39,6 +39,9 @@
 #' @export
 getGroupGO <- function(genes, ont = "BP", keyType = NULL,
     annoPkg = NULL) {
+    if(missing(keyType)){stop("No \"keyType\" parameter provided")}
+    if(missing(annoPkg)){stop("No \"annoPkg\" parameter provided")}
+
     ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg,
         ont = ont, readable = FALSE, keyType = keyType,
         level = 3)

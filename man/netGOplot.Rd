@@ -4,12 +4,21 @@
 \alias{netGOplot}
 \title{Plot a network for getGroupGO function}
 \usage{
-netGOplot(netCond, resultsGO, netGO, anno, label = FALSE)
+netGOplot(
+  netCond,
+  resultsGO,
+  netGO,
+  anno,
+  groupBy = "pathways",
+  TFs = NULL,
+  genes = NULL,
+  label = FALSE
+)
 }
 \arguments{
 \item{netCond}{Network of a specific condition. Can be found in
 result of \code{\link{runAnalysis}} (see \code{\link{getNet1}} and
-\code{\link{getNet2}})}
+\code{\link{getNet2}}).}
 
 \item{resultsGO}{Dataframe with the results of \code{\link{getGroupGO}}
 (first element of list). This result can be filtered by applying filters
@@ -19,9 +28,15 @@ for pathways selection.}
 (second element of list).}
 
 \item{anno}{Annotation of gene or TFs. Can be found in result of
-\code{\link{runAnalysis}} function (see \code{\link{getAnno}})}
+\code{\link{runAnalysis}} function (see \code{\link{getAnno}}).}
 
-\item{label}{If label is TRUE, shows the names of nodes.}
+\item{groupBy}{Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: "pathways").}
+
+\item{TFs}{A character with selected TFs.}
+
+\item{genes}{A character with selected genes.}
+
+\item{label}{If label is TRUE, shows the names of nodes (default: FALSE).}
 }
 \value{
 The network for \code{\link{getGroupGO}} output under a condition.
@@ -43,8 +58,8 @@ genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
 
 # performing getGroupGO analysis
 cond1 <- getGroupGO(genes = genes,
-                    ont = "BP",
-                    keyType = "ENSEMBL",
+                    ont = 'BP',
+                    keyType = 'ENSEMBL',
                     annoPkg = org.Hs.eg.db)
 
 # selecting only first 12 pathways
@@ -53,13 +68,34 @@ t1 <- head(cond1$results, 12)
 # subsetting the network to have only the first 12 pathways
 t2 <- subset(cond1$netGO, cond1$netGO$gene1 \%in\% as.character(t1[,1]))
 
-# generate the netGOplot
+# generate the netGOplot grouping by pathways
 netGOplot(netCond = getNet1(pcitrifExample),
           resultsGO = t1,
           netGO = t2,
           anno = getAnno(pcitrifExample),
+          groupBy = 'pathways',
           label = TRUE)
 
+# generate the netGOplot grouping by TFs
+TFs <- getKeyTF(pcitrifExample)$TF[1:8]
+netGOplot(netCond = getNet1(pcitrifExample),
+          resultsGO = t1,
+          netGO = t2,
+          anno = getAnno(pcitrifExample),
+          groupBy = 'TFs',
+          TFs = TFs,
+          label = TRUE)
+
+# generate the netGOplot grouping by specifics genes
+netGOplot(netCond = getNet1(pcitrifExample),
+          resultsGO = t1,
+          netGO = t2,
+          anno = getAnno(pcitrifExample),
+          groupBy = 'genes',
+          genes = c('ENSG00000011465', 'ENSG00000026025', 'ENSG00000075624',
+          'ENSG00000077942', 'ENSG00000087086', 'ENSG00000087245',
+          'ENSG00000091136', 'ENSG00000100234'),
+          label = TRUE)
 
 
 

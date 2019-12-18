@@ -15,15 +15,12 @@
 #' # getting the PCIT results
 #' results <- PCIT(simNorm)
 #'
-#' # using the PCIT results, more specifically the raw adjacency
-#' matrix to get the density plot
+#' # using the PCIT results, more specifically the raw adjacency matrix to get the density plot
 #' densityPlot(results$adj_raw)
 #'
 #' @export
 densityPlot <- function(mat) {
-    if (!is.matrix(mat)) {
-        stop("mat must be a dataframe or a matrix")
-    }
+    if(!is.matrix(mat)){stop("mat must be a dataframe or a matrix")}
 
     df <- data.frame(corr = mat[upper.tri(mat)])
     pt <- ggplot(df, aes(x = corr)) + geom_density(colour = "black",

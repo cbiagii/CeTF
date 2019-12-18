@@ -14,17 +14,17 @@ runAnalysis(
   ncond2 = NULL,
   tolType = "mean",
   diffMethod = "Reverter",
-  data.type = "expression"
+  data.type = NULL
 )
 }
 \arguments{
 \item{mat}{Count data where the rows are genes and coluns the samples (conditions).}
 
-\item{conditions}{A vector of character identifying the names of conditions (i.e. c('normal', 'tumoral')).}
+\item{conditions}{A vector of characters identifying the names of conditions (i.e. c('normal', 'tumoral')).}
 
-\item{lfc}{logFoldChange module threshold to define a gene as differentially expressed.}
+\item{lfc}{logFoldChange module threshold to define a gene as differentially expressed (default: 2.57).}
 
-\item{padj}{Sifnificance value to define a gene as differentially expressed.}
+\item{padj}{Significance value to define a gene as differentially expressed (default: 0.05).}
 
 \item{TFs}{A vector of character with all transcripts factors of specific organism.}
 
@@ -32,28 +32,39 @@ runAnalysis(
 
 \item{ncond2}{Number of samples that correspond to second condition.}
 
-\item{tolType}{Type of tolerance given the 3 pairwise correlations (mean, min, max, median).}
+\item{tolType}{Tolerance calculation type (see \code{\link{tolerance}}) (default: "mean").}
 
-\item{diffMethod}{Method to calculate Differential Expressed (DE) genes (e.g. Reverter or DESEq2).}
+\item{diffMethod}{Method to calculate Differential Expressed (DE) genes (see \code{\link{expDiff}}) (default: "Reverter")}
 
-\item{data.type}{Type of input data. If is expression (FPKM, TPM, etc) or counts.}
+\item{data.type}{Type of input data. If is \emph{expression} (FPKM, TPM, etc) or \emph{counts.}}
 }
 \value{
-Returns a pcitRif object with output variables of each step of analysis. The outputs can be used to generate the networks in Cytoscape.
+Returns a pcitRif object with output variables of each step of analysis.
 }
 \description{
-This function uses RIF (Reverter and Chan, 2010) and PCIT (Reverter and Chan, 2008) to run the whole pipeline analysis.
+This function uses RIF and PCIT algorithms to run the whole pipeline analysis.
+The pipeline is composed by 4 steps:
+\enumerate{
+    \item \strong{Step 1:} Data adjustment;
+    \item \strong{Step 2:} Differential expression analysis;
+    \item \strong{Step 3:} Regulatory Impact Factors analysis;
+    \item \strong{Step 4:} Partial Correlation and Information Theory analysis.
+}
 }
 \examples{
 data('simCounts')
 out <- runAnalysis(mat = simCounts,
-conditions=c('cond1', 'cond2'),
-lfc = 2.57,
-padj = 0.05,
-TFs = paste0('TF_', 1:1000),
-ncond1 = 10,
-ncond2= 10,
-tolType = 'mean',
-diffMethod = 'Reverter')
+                   conditions=c('cond1', 'cond2'),
+                   lfc = 2.57,
+                   padj = 0.05,
+                   TFs = paste0('TF_', 1:1000),
+                   ncond1 = 10,
+                   ncond2= 10,
+                   tolType = 'mean',
+                   diffMethod = 'Reverter',
+                   data.type = 'counts')
 
+}
+\seealso{
+\code{\link{pcitrif-class}}
 }

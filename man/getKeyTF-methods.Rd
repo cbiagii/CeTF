@@ -3,15 +3,30 @@
 \name{getKeyTF}
 \alias{getKeyTF}
 \alias{getKeyTF,pcitrif-method}
-\title{Method getKeyTF.}
+\title{Accessors for the key TFs in 'step4' slot of a pcitrif object.}
 \usage{
 getKeyTF(x)
 
 \S4method{getKeyTF}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the main TFs after PCIT and RIF analysis
+Return the key TFs after PCIT and RIF analysis.
 }
 \description{
-Method getKeyTF.
+The step4 slot holds the Partial Correlation and Information
+Theory (PCIT) analysis, that includes the PCIT input, output and the
+network with gene-gene/gene-TFs interaction for condition1 and condition2,
+besides the key TFs and the annotation (classification) of genes and TFs.
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+getKeyTF(pcitrifExample)
+}
+\seealso{
+\code{\link{runAnalysis}}.
 }

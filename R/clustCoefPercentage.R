@@ -26,9 +26,7 @@
 #'
 #' @export
 clustCoefPercentage <- function(mat) {
-    if (!is.data.frame(mat) & !is.matrix(mat)) {
-        stop("mat must be a dataframe or a matrix")
-    }
+    if(!is.data.frame(mat) & !is.matrix(mat)){stop("mat must be a dataframe or a matrix")}
 
     tmp <- mat[upper.tri(mat)]
     tmp1 <- tmp[which(tmp != 0)]

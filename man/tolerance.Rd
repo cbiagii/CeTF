@@ -2,7 +2,7 @@
 % Please edit documentation in R/tolerance.R
 \name{tolerance}
 \alias{tolerance}
-\title{Tolerance between 3 pairwise correlations}
+\title{Tolerance level between 3 pairwise correlations}
 \usage{
 tolerance(a, b, c, tolType = "mean")
 }
@@ -13,13 +13,13 @@ tolerance(a, b, c, tolType = "mean")
 
 \item{c}{Interactor 3.}
 
-\item{tolType}{Type of tolerance given the 3 pairwise correlations (mean, min, max, median).}
+\item{tolType}{Calculation type for tolerance (mean, min, max, median) (default: "mean").}
 }
 \value{
 Value of tolerance.
 }
 \description{
-Function for calculating the local tolerance given the 3 pairwise correlations between a, b and c.
+Calculates the local tolerance for every trio of genes.
 }
 \examples{
 tolerance(0.5, -0.65, 0.23, tolType = 'mean')

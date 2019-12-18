@@ -3,15 +3,30 @@
 \name{getDE}
 \alias{getDE}
 \alias{getDE,pcitrif-method}
-\title{Method getDE.}
+\title{Accessors for the differentially expressed genes in 'step2' slot
+of a pcitrif object.}
 \usage{
 getDE(x)
 
 \S4method{getDE}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return Differentially Expressed genes
+Return Differentially Expressed (DE) genes.
 }
 \description{
-Method getDE.
+The step2 slot holds the differential expression analysis,
+that includes the \code{differentially expressed genes} (\code{\link{getDE}})
+and the Transcription Factors (TFs) (\code{\link{getTF}}).
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+getDE(pcitrifExample)
+}
+\seealso{
+\code{\link{expDiff}} and \code{\link{runAnalysis}}.
 }

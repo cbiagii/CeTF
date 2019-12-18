@@ -3,15 +3,31 @@
 \name{getNet1}
 \alias{getNet1}
 \alias{getNet1,pcitrif-method}
-\title{Method getNet1.}
+\title{Accessors for the network of interactions between key TFs and
+genes for condition1 in 'step4' slot of a pcitrif object.}
 \usage{
 getNet1(x)
 
 \S4method{getNet1}{pcitrif}(x)
 }
+\arguments{
+\item{x}{\code{\link{pcitrif-class}} object}
+}
 \value{
-Return the network of interactions between gene-TFs for condition1
+Return the network of interactions between gene and key TFs for condition1.
 }
 \description{
-Method getNet1.
+The step4 slot holds the Partial Correlation and Information
+Theory (PCIT) analysis, that includes the PCIT input, output and the
+network with gene-gene/gene-TFs interaction for condition1 and condition2,
+besides the key TFs and the annotation (classification) of genes and TFs.
+}
+\examples{
+# load the pcitrif class object resulted from runAnalysis function
+data(pcitrifExample)
+
+getNet1(pcitrifExample)
+}
+\seealso{
+\code{\link{runAnalysis}}.
 }
