@@ -30,11 +30,7 @@ for pathways selection.}
 \item{anno}{Annotation of gene or TFs. Can be found in result of
 \code{\link{runAnalysis}} function (see \code{\link{getAnno}}).}
 
-<<<<<<< HEAD
-\item{groupBy}{Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: 'pathways').}
-=======
 \item{groupBy}{Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: "pathways").}
->>>>>>> 5933744e7cfbeaa1c3f84f3b6d6f5f3edf20958f
 
 \item{TFs}{A character with selected TFs.}
 

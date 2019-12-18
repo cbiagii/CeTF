@@ -29,7 +29,7 @@ out <- runAnalysis(mat = simCounts,
                    ncond2= 10,
                    tolType = 'mean',
                    diffMethod = 'Reverter',
-                   data.type = 'counts')
+                   data.type = "counts")
 # plotting networks conditions
 singleNetworkPlot(out)
 

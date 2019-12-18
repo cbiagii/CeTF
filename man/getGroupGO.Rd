@@ -9,7 +9,7 @@ getGroupGO(genes, ont = "BP", keyType = NULL, annoPkg = NULL)
 \arguments{
 \item{genes}{Character vector with the genes to perform the functional profile.}
 
-\item{ont}{One of 'MF', 'BP', and 'CC' subontologies (default: 'BP').}
+\item{ont}{One of 'MF', 'BP', and 'CC' subontologies (default: "BP").}
 
 \item{keyType}{Key type of inputted genes (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').}
 
