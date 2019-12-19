@@ -4,7 +4,7 @@
 \alias{getGroupGO}
 \title{Functional Profile of a gene set at specific GO level}
 \usage{
-getGroupGO(genes, ont = "BP", keyType = NULL, annoPkg = NULL)
+getGroupGO(genes, ont = "BP", keyType, annoPkg)
 }
 \arguments{
 \item{genes}{Character vector with the genes to perform the functional profile.}

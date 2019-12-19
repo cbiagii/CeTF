@@ -10,7 +10,7 @@ normExp(tab)
 \item{tab}{A matrix or dataframe of expression data (i.e. TPM, counts, FPKM).}
 }
 \value{
-Returns an table with normalized values.
+Returns a table with normalized values.
 }
 \description{
 Normalize the expression data of any type of experiment

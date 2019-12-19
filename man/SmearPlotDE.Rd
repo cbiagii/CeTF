@@ -4,7 +4,7 @@
 \alias{SmearPlotDE}
 \title{Smear plot for Differentially Expressed genes}
 \usage{
-SmearPlotDE(object, diffMethod, lfc = 1.5, padjust = 0.05, conditions = NULL)
+SmearPlotDE(object, diffMethod, lfc = 1.5, padjust = 0.05, conditions)
 }
 \arguments{
 \item{object}{pcitrif class object resulted from \code{\link{runAnalysis}} function.}

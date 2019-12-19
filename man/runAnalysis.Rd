@@ -20,7 +20,7 @@ runAnalysis(
 \arguments{
 \item{mat}{Count data where the rows are genes and coluns the samples (conditions).}
 
-\item{conditions}{A vector of characters identifying the names of conditions (i.e. c('normal', 'tumoral')).}
+\item{conditions}{A vector of characters identifying the names of conditions (i.e. c('normal', 'tumor')).}
 
 \item{lfc}{logFoldChange module threshold to define a gene as differentially expressed (default: 2.57).}
 

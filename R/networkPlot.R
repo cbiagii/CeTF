@@ -80,10 +80,10 @@ networkPlot <- function(netCond, netGO, keyTFs) {
     labels = c(pathways, as.character(head(keyTFs, 2)[, 1]), as.character(tail(keyTFs, 
         2)[, 1]))
     
-    pt <- ggnet2(net, color = "color", color.legend = "", palette = y, edge.size = 0.5, 
-        edge.color = "gray70", label.size = 1, alpha = 0.75, size = "degree", 
-        edge.alpha = 0.5, label = labels, legend.position = "bottom", mode = "spring") + 
-        coord_equal() + guides(size = FALSE)
+    pt <- ggnet2(net, color = "color", color.legend = "", palette = y, 
+        edge.size = 0.5, edge.color = "gray70", label.size = 1, alpha = 0.75, 
+        size = "degree", edge.alpha = 0.5, label = labels, legend.position = "bottom", 
+        mode = "spring") + coord_equal() + guides(size = FALSE)
     
     out <- list(plot = pt, tab = network)
     

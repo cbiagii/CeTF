@@ -1,6 +1,6 @@
 ---
 title: "Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory"
-author: "Carlos Alberto Oliveira de Biagi-Junior, Ricardo Perecin Nociti, Breno Osvaldo Funicheli, João Paulo Bianchi Ximenez, Patrícia de Cássia Ruy, Marcelo Gomes de Paula, Rafael dos Santos Bezerra and Wilson Araújo da Silva-Junior"
+author: "Carlos Alberto Oliveira de Biagi Junior, Ricardo Perecin Nociti, Breno Osvaldo Funicheli, João Paulo Bianchi Ximenez, Patrícia de Cássia Ruy, Marcelo Gomes de Paula, Rafael dos Santos Bezerra and Wilson Araújo da Silva Junior"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 output:
   rmarkdown::html_document:
