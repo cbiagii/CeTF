@@ -24,7 +24,7 @@ normExp <- function(tab) {
     if (!is.data.frame(tab) & !is.matrix(tab)) {
         stop("input must be a expression dataframe or a matrix")
     }
-
+    
     return(apply(tab, 2, function(x) {
         log(x + 1)/log(2)
     }))

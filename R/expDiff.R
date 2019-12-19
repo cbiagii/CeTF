@@ -100,8 +100,8 @@ expDiff <- function(exp, anno = NULL, conditions = NULL, lfc = 1.5, padj = 0.05,
         dds <- DESeq(ddsHTSeq)
         res <- results(dds, contrast = c("cond", conditions[1], conditions[2]))
         DE <- as.data.frame(res)
-        DE_unique <- as.data.frame(res[which(abs(res$log2FoldChange) > lfc & 
-            res$padj < padj), ])
+        DE_unique <- as.data.frame(res[which(abs(res$log2FoldChange) > 
+            lfc & res$padj < padj), ])
     }
     return(list(DE = DE, DE_unique = DE_unique))
 }

@@ -81,8 +81,8 @@ RIF <- function(input, nta = NULL, ntf = NULL, nSamples1 = NULL, nSamples2 = NUL
             if (is.na(gene_ccorr)) {
                 gene_ccorr <- 0
             }
-            gene_ncorr <- cor(i[(nSamples1 + 1):(nSamples1 + nSamples2)], j[(nSamples1 + 
-                1):(nSamples1 + nSamples2)])  #cond2
+            gene_ncorr <- cor(i[(nSamples1 + 1):(nSamples1 + nSamples2)], 
+                j[(nSamples1 + 1):(nSamples1 + nSamples2)])  #cond2
             if (is.na(gene_ncorr)) {
                 gene_ncorr <- 0
             }
@@ -99,8 +99,10 @@ RIF <- function(input, nta = NULL, ntf = NULL, nSamples1 = NULL, nSamples2 = NUL
             list((c(rif1 = rif1, rif2 = rif2)))
         })
         
-        rif1 <- sum(vapply(lapply(lapply(tmp1, `[[`, 1), `[[`, 1), sum, FUN.VALUE = 0))/nta
-        rif2 <- sum(vapply(lapply(lapply(tmp1, `[[`, 1), `[[`, 2), sum, FUN.VALUE = 0))/nta
+        rif1 <- sum(vapply(lapply(lapply(tmp1, `[[`, 1), `[[`, 1), sum, 
+            FUN.VALUE = 0))/nta
+        rif2 <- sum(vapply(lapply(lapply(tmp1, `[[`, 1), `[[`, 2), sum, 
+            FUN.VALUE = 0))/nta
         
         list((c(rif1 = rif1, rif2 = rif2)))
     })
@@ -108,8 +110,8 @@ RIF <- function(input, nta = NULL, ntf = NULL, nSamples1 = NULL, nSamples2 = NUL
     df <- data.frame(matrix(unlist(tmp), nrow = length(tmp), byrow = TRUE))
     
     out <- data.frame(TF = rownames(tf), avgexpr = rowMeans(tf), RIF1 = (df$X1 - 
-        mean(df[, 1]))/sd(df[, 1]), RIF2 = (df$X2 - mean(df[, 2]))/sd(df[, 2]), 
-        row.names = NULL, stringsAsFactors = FALSE)
+        mean(df[, 1]))/sd(df[, 1]), RIF2 = (df$X2 - mean(df[, 2]))/sd(df[, 
+        2]), row.names = NULL, stringsAsFactors = FALSE)
     
     return(out)
 }

@@ -37,7 +37,7 @@
 #'
 #'
 #' @export
-getGroupGO <- function(genes, ont = "BP", keyType = NULL, annoPkg = NULL) {
+getGroupGO <- function(genes, ont = "BP", keyType, annoPkg) {
     if (missing(keyType)) {
         stop("No \"keyType\" parameter provided")
     }
@@ -45,8 +45,8 @@ getGroupGO <- function(genes, ont = "BP", keyType = NULL, annoPkg = NULL) {
         stop("No \"annoPkg\" parameter provided")
     }
     
-    ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg, ont = ont, readable = FALSE, 
-        keyType = keyType, level = 3)
+    ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg, ont = ont, 
+        readable = FALSE, keyType = keyType, level = 3)
     
     results <- ggo@result
     results <- results[order(results$Count, decreasing = TRUE), ]

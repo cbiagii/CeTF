@@ -34,15 +34,15 @@ histPlot <- function(mat) {
     cc <- clustCoef(mat)
     
     df1 <- data.frame(clustcoef = cc)
-    pt1 <- ggplot(df1, aes(clustcoef)) + geom_histogram(breaks = seq(0, 0.6, 
-        by = 0.05), col = "black", fill = "#1F3552") + ggtitle("Connectivity Distribution") + 
+    pt1 <- ggplot(df1, aes(clustcoef)) + geom_histogram(breaks = seq(0, 
+        0.6, by = 0.05), col = "black", fill = "#1F3552") + ggtitle("Connectivity Distribution") + 
         xlab("Proportion of Connections") + ylab("Number of Genes") + scale_y_continuous(expand = c(0, 
         0)) + scale_x_continuous(labels = percent) + theme_bw() + theme(axis.line = element_line(size = 1, 
         colour = "black"), panel.grid.major = element_line(colour = "#d3d3d3"), 
         panel.grid.minor = element_blank(), panel.border = element_blank(), 
         panel.background = element_blank(), plot.title = element_text(size = 14, 
-            face = "bold"), axis.text.x = element_text(colour = "black", size = 9), 
-        axis.text.y = element_text(colour = "black", size = 9))
+            face = "bold"), axis.text.x = element_text(colour = "black", 
+            size = 9), axis.text.y = element_text(colour = "black", size = 9))
     
     
     df2 <- data.frame(clustcoef = cc * length(cc))
@@ -53,7 +53,8 @@ histPlot <- function(mat) {
             panel.grid.minor = element_blank(), panel.border = element_blank(), 
             panel.background = element_blank(), plot.title = element_text(size = 14, 
                 face = "bold"), axis.text.x = element_text(colour = "black", 
-                size = 9), axis.text.y = element_text(colour = "black", size = 9))
+                size = 9), axis.text.y = element_text(colour = "black", 
+                size = 9))
     
     return(ggarrange(pt1, pt2, ncol = 2))
 }

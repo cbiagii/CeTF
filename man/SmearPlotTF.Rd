@@ -4,14 +4,7 @@
 \alias{SmearPlotTF}
 \title{Smear plot for specifics Transcription Factors}
 \usage{
-SmearPlotTF(
-  object,
-  diffMethod,
-  lfc = 1.5,
-  conditions = NULL,
-  TF,
-  label = FALSE
-)
+SmearPlotTF(object, diffMethod, lfc = 1.5, conditions, TF, label = FALSE)
 }
 \arguments{
 \item{object}{pcitrif class object resulted from \code{\link{runAnalysis}} function.}

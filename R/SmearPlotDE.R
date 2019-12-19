@@ -33,7 +33,8 @@
 #'
 #'
 #' @export
-SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05, conditions = NULL) {
+SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05, 
+    conditions) {
     if (!is(object, "pcitrif")) {
         stop("the input must be a pcitrif class object")
     }
@@ -42,9 +43,6 @@ SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05, condition
     }
     if (missing(diffMethod)) {
         stop("No \"diffMethod\" parameter provided")
-    }
-    if (length(conditions) != 2) {
-        stop("you must input two conditions")
     }
     if (missing(conditions)) {
         stop("No \"conditions\" parameter provided")
@@ -68,8 +66,8 @@ SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05, condition
         dt$baseMean <- rowMeans(dt[, c(1, 2)])
     } else if (diffMethod == "DESeq2") {
         dt <- tab %>% mutate(Type = ifelse(tab[[var1]] > lfc & padj < padjust, 
-            conditions[1], ifelse(tab[[var1]] < -lfc & padj < padjust, conditions[2], 
-                "Not Different")))
+            conditions[1], ifelse(tab[[var1]] < -lfc & padj < padjust, 
+                conditions[2], "Not Different")))
         dt <- dt %>% mutate(Type = ifelse((genes %in% getTF(object) & tab[[var1]] > 
             lfc & padj < padjust), paste("TF", conditions[1]), ifelse((genes %in% 
             getTF(object) & tab[[var1]] < -lfc & padj < padjust), paste("TF", 
@@ -78,28 +76,30 @@ SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05, condition
             Type))))
     }
     
-    dt$Type <- factor(dt$Type, levels = c(conditions[1], conditions[2], "Not Different", 
-        paste("TF", conditions[2]), paste("TF", conditions[1]), "Not Different TF"))
+    dt$Type <- factor(dt$Type, levels = c(conditions[1], conditions[2], 
+        "Not Different", paste("TF", conditions[2]), paste("TF", conditions[1]), 
+        "Not Different TF"))
     dt <- na.omit(dt)
     
-    pt <- ggplot(dt) + geom_point(aes(x = log2(baseMean), y = dt[[var1]], color = "Not Different")) + 
-        geom_point(data = subset(dt, Type == conditions[1]), aes(x = log2(baseMean), 
-            y = subset(dt, Type == conditions[1])[[var1]], colour = conditions[1]), 
-            size = 2) + geom_point(data = subset(dt, Type == conditions[2]), 
-        aes(x = log2(baseMean), y = subset(dt, Type == conditions[2])[[var1]], 
-            colour = conditions[2]), size = 2) + geom_point(data = subset(dt, 
-        Type == paste("TF", conditions[1])), aes(x = log2(baseMean), y = subset(dt, 
-        Type == paste("TF", conditions[1]))[[var1]], colour = paste("Target", 
-        conditions[1])), size = 2) + geom_point(data = subset(dt, Type == paste("TF", 
-        conditions[2])), aes(x = log2(baseMean), y = subset(dt, Type == paste("TF", 
-        conditions[2]))[[var1]], colour = paste("Target", conditions[2])), size = 2) + 
-        geom_point(data = subset(dt, Type == "Not Different TF"), aes(x = log2(baseMean), 
-            y = subset(dt, Type == "Not Different TF")[[var1]], colour = "Not Different TF"), 
-            size = 2) + scale_colour_manual(values = c("black", "gray50", "violetred1", 
-        "springgreen", "#1515ff", "red2")) + theme_bw() + ylab(var2) + xlab(var3) + 
-        theme(legend.position = "top") + geom_hline(yintercept = lfc, linetype = "dashed", 
-        color = "black") + geom_hline(yintercept = -lfc, linetype = "dashed", 
-        color = "black") + labs(colour = "")
+    pt <- ggplot(dt) + geom_point(aes(x = log2(baseMean), y = dt[[var1]], 
+        color = "Not Different")) + geom_point(data = subset(dt, Type == 
+        conditions[1]), aes(x = log2(baseMean), y = subset(dt, Type == 
+        conditions[1])[[var1]], colour = conditions[1]), size = 2) + geom_point(data = subset(dt, 
+        Type == conditions[2]), aes(x = log2(baseMean), y = subset(dt, 
+        Type == conditions[2])[[var1]], colour = conditions[2]), size = 2) + 
+        geom_point(data = subset(dt, Type == paste("TF", conditions[1])), 
+            aes(x = log2(baseMean), y = subset(dt, Type == paste("TF", 
+                conditions[1]))[[var1]], colour = paste("Target", conditions[1])), 
+            size = 2) + geom_point(data = subset(dt, Type == paste("TF", 
+        conditions[2])), aes(x = log2(baseMean), y = subset(dt, Type == 
+        paste("TF", conditions[2]))[[var1]], colour = paste("Target", conditions[2])), 
+        size = 2) + geom_point(data = subset(dt, Type == "Not Different TF"), 
+        aes(x = log2(baseMean), y = subset(dt, Type == "Not Different TF")[[var1]], 
+            colour = "Not Different TF"), size = 2) + scale_colour_manual(values = c("black", 
+        "gray50", "violetred1", "springgreen", "#1515ff", "red2")) + theme_bw() + 
+        ylab(var2) + xlab(var3) + theme(legend.position = "top") + geom_hline(yintercept = lfc, 
+        linetype = "dashed", color = "black") + geom_hline(yintercept = -lfc, 
+        linetype = "dashed", color = "black") + labs(colour = "")
     
     return(pt)
 }

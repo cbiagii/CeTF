@@ -36,8 +36,8 @@ clustCoef <- function(mat) {
     idx <- seq_len(nrow(mat))
     
     for (i in seq_len(nGenes)) {
-        neighbours <- (mat[i, seq_len(nGenes)] != 0 | mat[seq_len(nGenes), i] != 
-            0)
+        neighbours <- (mat[i, seq_len(nGenes)] != 0 | mat[seq_len(nGenes), 
+            i] != 0)
         k[i] = sum(neighbours)
         if (k[i] < 2) {
             (next)()
