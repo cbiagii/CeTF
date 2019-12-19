@@ -1,7 +1,7 @@
 Package: pcitRif
 Type: Package
 Title: Regulatory Impact Factors and Partial Correlation and Information Theory analysis
-Version: 0.99.0
+Version: 0.99.1
 Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = "cbiagijr@gmail.com", role = c("aut", "cre")),
         person("Ricardo", "Perecin Nociti", email = "rnociti@gmail.com", role = c("aut", "ctb")),
         person("Breno", "Osvaldo Funicheli", email = "osvaldobreno99@gmail.com ", role = c("aut", "ctb")),
