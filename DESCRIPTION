@@ -9,11 +9,7 @@ Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = "cbiag
         person("Patrícia", "de Cássia Ruy", email = "patiruy@gmail.com", role = c("ctb")),
         person("Marcelo", "Gomes de Paula", email = "marcelogomesrp@gmail.com", role = c("ctb")),
         person("Rafael", "dos Santos Bezerra", email = "rafaelbezerra50@yahoo.com", role = c("ctb")),
-        person("Wilson", "Araújo da Silva Junior", email = "wilsonjr@usp.br", role = c("aut", "ctb")))
-Author: Carlos Alberto Oliveira de Biagi Jr [aut, cre], Ricardo Perecin Nociti [aut, ctb], 
-    Breno Osvaldo Funicheli [aut, ctb], João Paulo Bianchi Ximenez [ctb], 
-    Patrícia de Cássia Ruy [ctb], Marcelo Gomes de Paula [ctb], 
-    Rafael dos Santos Bezerra [ctb], Wilson Araújo da Silva Junior [aut, ctb]
+        person("Wilson", "Araújo da Silva Junior", email = "wilsonjr@usp.br", role = c("aut", "ctb", "ths")))
 Description: This vignette provides the necessary instructions for performing the Partial 
   Correlation coefficient with Information Theory (PCIT) (Reverter and Chan 2008) 
   and Regulatory Impact Factors (RIF) (Reverter et al. 2010) algorithm. The PCIT 
