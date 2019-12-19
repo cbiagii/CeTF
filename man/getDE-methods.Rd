@@ -14,7 +14,8 @@ getDE(x)
 \item{x}{\code{\link{pcitrif-class}} object}
 }
 \value{
-Returns the Differentially Expressed (DE) genes.
+Returns an list with all calculations of differentially expressed genes
+and the subsetted differentially expressed genes by lfc and/or padj.
 }
 \description{
 The step2 slot holds the differential expression analysis,

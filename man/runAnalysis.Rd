@@ -10,8 +10,8 @@ runAnalysis(
   lfc = 2.57,
   padj = 0.05,
   TFs = NULL,
-  ncond1 = NULL,
-  ncond2 = NULL,
+  nSamples1 = NULL,
+  nSamples2 = NULL,
   tolType = "mean",
   diffMethod = "Reverter",
   data.type = NULL
@@ -28,13 +28,13 @@ runAnalysis(
 
 \item{TFs}{A vector of character with all transcripts factors of specific organism.}
 
-\item{ncond1}{Number of samples that correspond to first condition.}
+\item{nSamples1}{Number of samples that correspond to first condition.}
 
-\item{ncond2}{Number of samples that correspond to second condition.}
+\item{nSamples2}{Number of samples that correspond to second condition.}
 
-\item{tolType}{Tolerance calculation type (see \code{\link{tolerance}}) (default: "mean").}
+\item{tolType}{Tolerance calculation type (see \code{\link{tolerance}}) (default: 'mean').}
 
-\item{diffMethod}{Method to calculate Differential Expressed (DE) genes (see \code{\link{expDiff}}) (default: "Reverter")}
+\item{diffMethod}{Method to calculate Differentially Expressed (DE) genes (see \code{\link{expDiff}}) (default: 'Reverter')}
 
 \item{data.type}{Type of input data. If is \emph{expression} (FPKM, TPM, etc) or \emph{counts.}}
 }
@@ -58,8 +58,8 @@ out <- runAnalysis(mat = simCounts,
                    lfc = 2.57,
                    padj = 0.05,
                    TFs = paste0('TF_', 1:1000),
-                   ncond1 = 10,
-                   ncond2= 10,
+                   nSamples1 = 10,
+                   nSamples2= 10,
                    tolType = 'mean',
                    diffMethod = 'Reverter',
                    data.type = 'counts')

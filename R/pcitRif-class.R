@@ -20,8 +20,8 @@
 #'
 #' @exportClass pcitrif
 #'
-pcitrif <- setClass(Class = "pcitrif", slots = list(step1 = "list",
-    step2 = "list", step3 = "list", step4 = "list"))
+pcitrif <- setClass(Class = "pcitrif", slots = list(step1 = "list", step2 = "list", 
+    step3 = "list", step4 = "list"))
 
 
 
@@ -119,7 +119,8 @@ setGeneric("normData", function(x) standardGeneric("normData"))
 #' @seealso \code{\link{expDiff}} and \code{\link{runAnalysis}}.
 #' @name getDE
 #' @rdname getDE-methods
-#' @return Returns the Differentially Expressed (DE) genes.
+#' @return Returns an list with all calculations of differentially expressed genes
+#' and the subsetted differentially expressed genes by lfc and/or padj.
 #' @exportMethod getDE
 setGeneric("getDE", function(x) standardGeneric("getDE"))
 

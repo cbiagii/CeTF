@@ -14,18 +14,18 @@ Author: Carlos Biagi Jr [aut, cre], Ricardo Perecin Nociti [aut, ctb],
     Breno Osvaldo Funicheli [aut, ctb], João Paulo Bianchi Ximenez [ctb], 
     Patrícia de Cássia Ruy [ctb], Marcelo Gomes de Paula [ctb], 
     Rafael dos Santos Bezerra [ctb], Wilson Araújo da Silva-Junior [aut, ctb]
-Description: This package provides the necessary functions for performing the 
-  Partial Correlation coefficient with Information Theory (PCIT) from Reverter 
-  and Chan 2008 and Regulatory Impact Factors (RIF) from Reverter et al. 2010 
-  algorithms. The PCIT algorithm identifies meaningful correlations to define 
-  edges in a weighted network. The algorithm can be applied to any 
-  correlation-based network including but not limited to gene co-expression 
-  networks. While the RIF algorithm identify critical transcript factors (TF) 
-  from gene expression data. These two algorithms when combined provide a 
-  very relevant layer of information for gene expression studies 
-  (Microarray, RNA-seq and single-cell RNA-seq data).
+Description: This vignette provides the necessary instructions for performing the Partial 
+  Correlation coefficient with Information Theory (PCIT) (Reverter and Chan 2008) 
+  and Regulatory Impact Factors (RIF) (Reverter et al. 2010) algorithm. The PCIT 
+  algorithm identifies meaningful correlations to define edges in a weighted network 
+  and can be applied to any correlation-based network including but not limited to 
+  gene co-expression networks, while the RIF algorithm identify critical Transcription 
+  Factors (TF) from gene expression data. These two algorithms when combined provide a 
+  very relevant layer of information for gene expression studies (Microarray, RNA-seq 
+  and single-cell RNA-seq data).
 Imports: crayon, clusterProfiler, DESeq2, geomnet, GGally, ggplot2, ggpubr, graphics, 
-    network, pbapply, reshape2, scales, stats, SummarizedExperiment, utils
+    network, pbapply, reshape2, scales, stats, SummarizedExperiment, utils, dplyr, tidyr, 
+    ggrepel
 Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown, testthat
 Depends: R (>= 3.6), methods
 License: GPL-3

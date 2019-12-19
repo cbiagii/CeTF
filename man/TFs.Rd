@@ -3,14 +3,14 @@
 \docType{data}
 \name{TFs}
 \alias{TFs}
-\title{Transcripit Factors data}
-\format{An character vector with TFs for Homo sapiens.}
+\title{Transcripition Factors data}
+\format{An character vector with TFs for \emph{Homo sapiens}.}
 \usage{
 data(TFs)
 }
 \description{
-Transcripit Factors data from Kai Wang and Hiroki Nishida, 2015
-for Homo sapiens.
+Transcripition Factors data from Kai Wang and Hiroki Nishida, 2015
+for \emph{Homo sapiens}.
 }
 \examples{
 data(TFs)

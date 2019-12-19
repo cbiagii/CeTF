@@ -9,7 +9,7 @@ PCIT(input, tolType = "mean")
 \arguments{
 \item{input}{A correlation matrix.}
 
-\item{tolType}{Type of tolerance (default: "mean") given the 3 pairwise correlations
+\item{tolType}{Type of tolerance (default: 'mean') given the 3 pairwise correlations
 (see \code{\link{tolerance}})}
 }
 \value{

@@ -30,7 +30,7 @@ for pathways selection.}
 \item{anno}{Annotation of gene or TFs. Can be found in result of
 \code{\link{runAnalysis}} function (see \code{\link{getAnno}}).}
 
-\item{groupBy}{Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: "pathways").}
+\item{groupBy}{Which variables do you want to group? The options are: 'pathways', 'TFs' and 'genes' (default: 'pathways').}
 
 \item{TFs}{A character with selected TFs.}
 
@@ -39,7 +39,9 @@ for pathways selection.}
 \item{label}{If label is TRUE, shows the names of nodes (default: FALSE).}
 }
 \value{
-Returns the network for \code{\link{getGroupGO}} output under a condition.
+Returns a list with the network for \code{\link{getGroupGO}} output
+under a condition and the table used to plot the network as list splitted by
+groupBy choice.
 }
 \description{
 Generate the plot of groupGO network result of
@@ -69,33 +71,15 @@ t1 <- head(cond1$results, 12)
 t2 <- subset(cond1$netGO, cond1$netGO$gene1 \%in\% as.character(t1[,1]))
 
 # generate the netGOplot grouping by pathways
-netGOplot(netCond = getNet1(pcitrifExample),
-          resultsGO = t1,
-          netGO = t2,
-          anno = getAnno(pcitrifExample),
-          groupBy = 'pathways',
-          label = TRUE)
-
-# generate the netGOplot grouping by TFs
-TFs <- getKeyTF(pcitrifExample)$TF[1:8]
-netGOplot(netCond = getNet1(pcitrifExample),
-          resultsGO = t1,
-          netGO = t2,
-          anno = getAnno(pcitrifExample),
-          groupBy = 'TFs',
-          TFs = TFs,
-          label = TRUE)
-
-# generate the netGOplot grouping by specifics genes
-netGOplot(netCond = getNet1(pcitrifExample),
-          resultsGO = t1,
-          netGO = t2,
-          anno = getAnno(pcitrifExample),
-          groupBy = 'genes',
-          genes = c('ENSG00000011465', 'ENSG00000026025', 'ENSG00000075624',
-          'ENSG00000077942', 'ENSG00000087086', 'ENSG00000087245',
-          'ENSG00000091136', 'ENSG00000100234'),
-          label = TRUE)
+pt <- netGOplot(netCond = getNet1(pcitrifExample),
+                resultsGO = t1,
+                netGO = t2,
+                anno = getAnno(pcitrifExample),
+                groupBy = 'pathways',
+                label = TRUE)
+# plotting the network and heading the table
+pt$plot
+head(pt$tab$`GO:0006807`)
 
 
 

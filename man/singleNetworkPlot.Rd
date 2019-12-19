@@ -25,11 +25,11 @@ out <- runAnalysis(mat = simCounts,
                    lfc = 2.57,
                    padj = 0.05,
                    TFs = paste0('TF_', 1:1000),
-                   ncond1 = 10,
-                   ncond2= 10,
+                   nSamples1 = 10,
+                   nSamples2= 10,
                    tolType = 'mean',
                    diffMethod = 'Reverter',
-                   data.type = "counts")
+                   data.type = 'counts')
 # plotting networks conditions
 singleNetworkPlot(out)
 

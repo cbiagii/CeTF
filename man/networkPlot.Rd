@@ -15,7 +15,8 @@ networkPlot(netCond, netGO, keyTFs)
 \item{keyTFs}{TFs identified as importants by \code{\link{runAnalysis}} (see \code{\link{getKeyTF}})}
 }
 \value{
-Returns an network plot with interaction between genes, TFs and/or ontologies.
+Returns an list with the network plot with interaction between genes, TFs and/or ontologies and
+the table of network used to the plot.
 }
 \description{
 Generate the plot for network that integrates the network data
@@ -45,9 +46,13 @@ t1 <- head(cond1$results, 12)
 t2 <- subset(cond1$netGO, cond1$netGO$gene1 \%in\% as.character(t1[,1]))
 
 # generate the networkPlot for condition1
-networkPlot(netCond = getNet1(pcitrifExample),
-            netGO = t2,
-            keyTFs = getKeyTF(pcitrifExample))
+pt <- networkPlot(netCond = getNet1(pcitrifExample),
+                  netGO = t2,
+                  keyTFs = getKeyTF(pcitrifExample))
+
+# plotting the network and heading the table
+pt$plot
+head(pt$tab)
 
 
 

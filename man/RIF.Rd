@@ -4,7 +4,7 @@
 \alias{RIF}
 \title{Regulatory Impact Factors (RIF) analysis}
 \usage{
-RIF(input, nta = NULL, ntf = NULL, ncond1 = NULL, ncond2 = NULL)
+RIF(input, nta = NULL, ntf = NULL, nSamples1 = NULL, nSamples2 = NULL)
 }
 \arguments{
 \item{input}{A matrix of expression with differentially expressed genes
@@ -14,9 +14,9 @@ and transcript factors in rows, and the samples in columns.}
 
 \item{ntf}{Number of Transcription Factors (TFs).}
 
-\item{ncond1}{Number of samples of condition 1.}
+\item{nSamples1}{Number of samples of condition 1.}
 
-\item{ncond2}{Number of samples of condition 2.}
+\item{nSamples2}{Number of samples of condition 2.}
 }
 \value{
 Returns an dataframe with the regulatory impact factors metric for
@@ -41,8 +41,8 @@ data('RIF_input')
 RIF_out <- RIF(input = RIF_input,
                nta = 104,
                ntf = 50,
-               ncond1 = 10,
-               ncond2 = 10)
+               nSamples1 = 10,
+               nSamples2 = 10)
 
 }
 \references{

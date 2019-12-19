@@ -28,11 +28,12 @@ differentially expressed (default: 1.5).}
 \item{padj}{Significance value to define a gene as differentially
 expressed (default: 0.05).}
 
-\item{diffMethod}{Choose between Reverter or DESeq2 method (default: "Reverter").
+\item{diffMethod}{Choose between Reverter or DESeq2 method (default: 'Reverter').
 The DESeq2 method is only for counts data (see details).}
 }
 \value{
-Returns an character with the names of differentially expressed genes.
+Returns an list with all calculations of differentially expressed genes
+and the subsetted differentially expressed genes by lfc and/or padj.
 }
 \description{
 This function returns the differentially expressed genes
