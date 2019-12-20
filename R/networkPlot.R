@@ -17,7 +17,8 @@
 #' @importFrom ggplot2 coord_equal guides
 #'
 #' @examples
-#' # load the annotation package
+#' \dontrun{
+#' #load the annotation package
 #' library(org.Hs.eg.db)
 #'
 #' # load the pcitrif class object resulted from runAnalysis function
@@ -47,7 +48,7 @@
 #' # plotting the network and heading the table
 #' pt$plot
 #' head(pt$tab)
-#'
+#' }
 #'
 #'
 #' @export

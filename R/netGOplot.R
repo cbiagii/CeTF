@@ -26,6 +26,7 @@
 #' @importFrom ggplot2 fortify ggplot facet_wrap element_rect
 #'
 #' @examples
+#' \dontrun{ 
 #' # load the annotation package
 #' library(org.Hs.eg.db)
 #'
@@ -58,7 +59,7 @@
 #' # plotting the network and heading the table
 #' pt$plot
 #' head(pt$tab$`GO:0006807`)
-#'
+#' }
 #'
 #'
 #' @export

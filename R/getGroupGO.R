@@ -18,6 +18,7 @@
 #' @importFrom pbapply pbapply
 #'
 #' @examples
+#' \dontrun{ 
 #' # load the annotation package
 #' library(org.Hs.eg.db)
 #'
@@ -33,7 +34,7 @@
 #'                     ont = 'BP',
 #'                     keyType = 'ENSEMBL',
 #'                     annoPkg = org.Hs.eg.db)
-#'
+#' }
 #'
 #'
 #' @export
