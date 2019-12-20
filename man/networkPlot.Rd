@@ -23,7 +23,8 @@ Generate the plot for network that integrates the network data
 from a condition with \code{\link{getGroupGO}} results.
 }
 \examples{
-# load the annotation package
+\dontrun{
+#load the annotation package
 library(org.Hs.eg.db)
 
 # load the pcitrif class object resulted from runAnalysis function
@@ -53,7 +54,7 @@ pt <- networkPlot(netCond = getNet1(pcitrifExample),
 # plotting the network and heading the table
 pt$plot
 head(pt$tab)
-
+}
 
 
 }

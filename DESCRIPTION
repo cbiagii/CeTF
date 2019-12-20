@@ -1,30 +1,15 @@
 Package: pcitRif
 Type: Package
 Title: Regulatory Impact Factors and Partial Correlation and Information Theory analysis
-<<<<<<< HEAD
-Version: 0.99.0
-Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = "cbiagijr@gmail.com", role = c("aut", "cre")),
-        person("Ricardo", "Perecin Nociti", email = "rnociti@gmail.com", role = c("aut", "ctb")),
-        person("Breno", "Osvaldo Funicheli", email = "osvaldobreno99@gmail.com ", role = c("aut", "ctb")),
-=======
-Version: 0.99.4
+Version: 0.99.5
 Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = "cbiagijr@gmail.com", role = c("aut", "cre")),
         person("Ricardo", "Perecin Nociti", email = "rnociti@gmail.com", role = c("aut")),
         person("Breno", "Osvaldo Funicheli", email = "osvaldobreno99@gmail.com ", role = c("aut")),
->>>>>>> 6b9b74b0088b4aa76bc6865b7f81fa04cf3c4461
         person("João Paulo", "Bianchi Ximenez", email = "joaopaulo.ximenez@me.com", role = c("ctb")),
         person("Patrícia", "de Cássia Ruy", email = "patiruy@gmail.com", role = c("ctb")),
         person("Marcelo", "Gomes de Paula", email = "marcelogomesrp@gmail.com", role = c("ctb")),
         person("Rafael", "dos Santos Bezerra", email = "rafaelbezerra50@yahoo.com", role = c("ctb")),
-<<<<<<< HEAD
-        person("Wilson", "Araújo da Silva Junior", email = "wilsonjr@usp.br", role = c("aut", "ctb")))
-Author: Carlos Alberto Oliveira de Biagi Jr [aut, cre], Ricardo Perecin Nociti [aut, ctb], 
-    Breno Osvaldo Funicheli [aut, ctb], João Paulo Bianchi Ximenez [ctb], 
-    Patrícia de Cássia Ruy [ctb], Marcelo Gomes de Paula [ctb], 
-    Rafael dos Santos Bezerra [ctb], Wilson Araújo da Silva Junior [aut, ctb]
-=======
         person("Wilson", "Araújo da Silva Junior", email = "wilsonjr@usp.br", role = c("aut", "ths")))
->>>>>>> 6b9b74b0088b4aa76bc6865b7f81fa04cf3c4461
 Description: This vignette provides the necessary instructions for performing the Partial 
   Correlation coefficient with Information Theory (PCIT) (Reverter and Chan 2008) 
   and Regulatory Impact Factors (RIF) (Reverter et al. 2010) algorithm. The PCIT 
@@ -47,7 +32,3 @@ biocViews: Sequencing, RNASeq, Microarray, GeneExpression, Transcription,
         Normalization, DifferentialExpression, SingleCell, Network, 
         Regression, ChIPSeq, ImmunoOncology, Coverage
 VignetteBuilder: knitr
-<<<<<<< HEAD
-Maintainer: Carlos Alberto Oliveira de Biagi Junior <cbiagijr@gmail.com>
-=======
->>>>>>> 6b9b74b0088b4aa76bc6865b7f81fa04cf3c4461

@@ -26,6 +26,7 @@ Given a vector of genes, this function will return the GO profile at
 a specific level.
 }
 \examples{
+\dontrun{ 
 # load the annotation package
 library(org.Hs.eg.db)
 
@@ -41,7 +42,7 @@ cond1 <- getGroupGO(genes = genes,
                     ont = 'BP',
                     keyType = 'ENSEMBL',
                     annoPkg = org.Hs.eg.db)
-
+}
 
 
 }

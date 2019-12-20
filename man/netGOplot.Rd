@@ -48,6 +48,7 @@ Generate the plot of groupGO network result of
 \code{\link{getGroupGO}} function.
 }
 \examples{
+\dontrun{ 
 # load the annotation package
 library(org.Hs.eg.db)
 
@@ -80,7 +81,7 @@ pt <- netGOplot(netCond = getNet1(pcitrifExample),
 # plotting the network and heading the table
 pt$plot
 head(pt$tab$`GO:0006807`)
-
+}
 
 
 }

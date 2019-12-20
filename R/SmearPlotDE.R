@@ -33,11 +33,7 @@
 #'
 #'
 #' @export
-<<<<<<< HEAD
 SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05,
-=======
-SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05, 
->>>>>>> 6b9b74b0088b4aa76bc6865b7f81fa04cf3c4461
     conditions) {
     if (!is(object, "pcitrif")) {
         stop("the input must be a pcitrif class object")
@@ -69,7 +65,7 @@ SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05,
             Type))))
         dt$baseMean <- rowMeans(dt[, c(1, 2)])
     } else if (diffMethod == "DESeq2") {
-<<<<<<< HEAD
+
         dt <- tab %>% mutate(Type = ifelse(tab[[var1]] > lfc & padj < padjust,
             conditions[1], ifelse(tab[[var1]] < -lfc & padj < padjust,
                 conditions[2], "Not Different")))
@@ -81,66 +77,30 @@ SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05,
             Type))))
     }
 
-    dt <- na.omit(dt)
-
-    # creating the different layers for plot
-    layer1 <- dt
-    layer2 <- subset(dt, Type == conditions[1])
-    layer3 <- subset(dt, Type == conditions[2])
-    layer4 <- subset(dt, Type == paste("TF", conditions[1]))
-    layer5 <- subset(dt, Type == paste("TF", conditions[2]))
-    layer6 <- subset(dt, Type == "Not Different TF")
-
-    pt <- ggplot() +
-        geom_point(data=layer1, aes(x=log2(baseMean), y=layer1[[var1]]), colour="black", size=2) +
-        geom_point(data=layer2, aes(x=log2(baseMean), y=layer2[[var1]]), colour="red2", size=2) +
-        geom_point(data=layer3, aes(x=log2(baseMean), y=layer3[[var1]]), colour="#1515ff", size=2) +
-        geom_point(data=layer4, aes(x=log2(baseMean), y=layer4[[var1]]), colour="springgreen", size=2) +
-        geom_point(data=layer5, aes(x=log2(baseMean), y=layer5[[var1]]), colour="violetred1", size=2) +
-        geom_point(data=layer6, aes(x=log2(baseMean), y=layer6[[var1]]), colour="gray50", size=2)+
-        theme_bw() + ylab(var2) + xlab(var3) +
-        theme(legend.position = "top") +
-        geom_hline(yintercept = lfc, linetype = "dashed", color = "black") +
-        geom_hline(yintercept = -lfc, linetype = "dashed", color = "black") +
-        labs(colour = "")
-
-=======
-        dt <- tab %>% mutate(Type = ifelse(tab[[var1]] > lfc & padj < padjust, 
-            conditions[1], ifelse(tab[[var1]] < -lfc & padj < padjust, 
-                conditions[2], "Not Different")))
-        dt <- dt %>% mutate(Type = ifelse((genes %in% getTF(object) & tab[[var1]] > 
-            lfc & padj < padjust), paste("TF", conditions[1]), ifelse((genes %in% 
-            getTF(object) & tab[[var1]] < -lfc & padj < padjust), paste("TF", 
-            conditions[2]), ifelse((genes %in% getTF(object) & (tab[[var1]] > 
-            -lfc & tab[[var1]] < lfc) & padj < padjust), "Not Different TF", 
-            Type))))
-    }
-    
-    dt$Type <- factor(dt$Type, levels = c(conditions[1], conditions[2], 
-        "Not Different", paste("TF", conditions[2]), paste("TF", conditions[1]), 
+    dt$Type <- factor(dt$Type, levels = c(conditions[1], conditions[2],
+        "Not Different", paste("TF", conditions[2]), paste("TF", conditions[1]),
         "Not Different TF"))
     dt <- na.omit(dt)
-    
-    pt <- ggplot(dt) + geom_point(aes(x = log2(baseMean), y = dt[[var1]], 
-        color = "Not Different")) + geom_point(data = subset(dt, Type == 
-        conditions[1]), aes(x = log2(baseMean), y = subset(dt, Type == 
-        conditions[1])[[var1]], colour = conditions[1]), size = 2) + geom_point(data = subset(dt, 
-        Type == conditions[2]), aes(x = log2(baseMean), y = subset(dt, 
-        Type == conditions[2])[[var1]], colour = conditions[2]), size = 2) + 
-        geom_point(data = subset(dt, Type == paste("TF", conditions[1])), 
-            aes(x = log2(baseMean), y = subset(dt, Type == paste("TF", 
-                conditions[1]))[[var1]], colour = paste("TF", conditions[1])), 
-            size = 2) + geom_point(data = subset(dt, Type == paste("TF", 
-        conditions[2])), aes(x = log2(baseMean), y = subset(dt, Type == 
-        paste("TF", conditions[2]))[[var1]], colour = paste("TF", conditions[2])), 
-        size = 2) + geom_point(data = subset(dt, Type == "Not Different TF"), 
-        aes(x = log2(baseMean), y = subset(dt, Type == "Not Different TF")[[var1]], 
-            colour = "Not Different TF"), size = 2) + scale_colour_manual(values = c("black", 
-        "gray50", "violetred1", "springgreen", "#1515ff", "red2")) + theme_bw() + 
-        ylab(var2) + xlab(var3) + theme(legend.position = "top") + geom_hline(yintercept = lfc, 
-        linetype = "dashed", color = "black") + geom_hline(yintercept = -lfc, 
+
+    pt <- ggplot(dt) + geom_point(aes(x = log2(baseMean), y = dt[[var1]],
+        color = "Not Different")) + geom_point(data = subset(dt, Type ==
+        conditions[1]), aes(x = log2(baseMean), y = subset(dt, Type ==
+        conditions[1])[[var1]], colour = conditions[1]), size = 2) + geom_point(data = subset(dt,
+        Type == conditions[2]), aes(x = log2(baseMean), y = subset(dt,
+        Type == conditions[2])[[var1]], colour = conditions[2]), size = 2) +
+        geom_point(data = subset(dt, Type == paste("TF", conditions[1])),
+            aes(x = log2(baseMean), y = subset(dt, Type == paste("TF",
+                conditions[1]))[[var1]], colour = paste("TF", conditions[1])),
+            size = 2) + geom_point(data = subset(dt, Type == paste("TF",
+        conditions[2])), aes(x = log2(baseMean), y = subset(dt, Type ==
+        paste("TF", conditions[2]))[[var1]], colour = paste("TF", conditions[2])),
+        size = 2) + geom_point(data = subset(dt, Type == "Not Different TF"),
+        aes(x = log2(baseMean), y = subset(dt, Type == "Not Different TF")[[var1]],
+            colour = "Not Different TF"), size = 2) + scale_colour_manual(values = c("black",
+        "gray50", "violetred1", "springgreen", "#1515ff", "red2")) + theme_bw() +
+        ylab(var2) + xlab(var3) + theme(legend.position = "top") + geom_hline(yintercept = lfc,
+        linetype = "dashed", color = "black") + geom_hline(yintercept = -lfc,
         linetype = "dashed", color = "black") + labs(colour = "")
-    
->>>>>>> 6b9b74b0088b4aa76bc6865b7f81fa04cf3c4461
+
     return(pt)
 }
