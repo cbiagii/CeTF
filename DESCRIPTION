@@ -1,15 +1,15 @@
 Package: pcitRif
 Type: Package
 Title: Regulatory Impact Factors and Partial Correlation and Information Theory analysis
-Version: 0.99.2
+Version: 0.99.3
 Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = "cbiagijr@gmail.com", role = c("aut", "cre")),
-        person("Ricardo", "Perecin Nociti", email = "rnociti@gmail.com", role = c("aut", "ctb")),
-        person("Breno", "Osvaldo Funicheli", email = "osvaldobreno99@gmail.com ", role = c("aut", "ctb")),
+        person("Ricardo", "Perecin Nociti", email = "rnociti@gmail.com", role = c("aut")),
+        person("Breno", "Osvaldo Funicheli", email = "osvaldobreno99@gmail.com ", role = c("aut")),
         person("João Paulo", "Bianchi Ximenez", email = "joaopaulo.ximenez@me.com", role = c("ctb")),
         person("Patrícia", "de Cássia Ruy", email = "patiruy@gmail.com", role = c("ctb")),
         person("Marcelo", "Gomes de Paula", email = "marcelogomesrp@gmail.com", role = c("ctb")),
         person("Rafael", "dos Santos Bezerra", email = "rafaelbezerra50@yahoo.com", role = c("ctb")),
-        person("Wilson", "Araújo da Silva Junior", email = "wilsonjr@usp.br", role = c("aut", "ctb", "ths")))
+        person("Wilson", "Araújo da Silva Junior", email = "wilsonjr@usp.br", role = c("aut", "ths")))
 Description: This vignette provides the necessary instructions for performing the Partial 
   Correlation coefficient with Information Theory (PCIT) (Reverter and Chan 2008) 
   and Regulatory Impact Factors (RIF) (Reverter et al. 2010) algorithm. The PCIT 
@@ -23,7 +23,7 @@ Imports: crayon, clusterProfiler, DESeq2, geomnet, GGally, ggplot2, ggpubr, grap
     network, pbapply, reshape2, scales, stats, SummarizedExperiment, utils, dplyr, tidyr, 
     ggrepel
 Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown, testthat
-Depends: R (>= 3.6), methods
+Depends: R (>= 4.0), methods
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -32,4 +32,3 @@ biocViews: Sequencing, RNASeq, Microarray, GeneExpression, Transcription,
         Normalization, DifferentialExpression, SingleCell, Network, 
         Regression, ChIPSeq, ImmunoOncology, Coverage
 VignetteBuilder: knitr
-Maintainer: Carlos Alberto Oliveira de Biagi Junior <cbiagijr@gmail.com>
