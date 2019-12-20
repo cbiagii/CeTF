@@ -38,7 +38,7 @@
 #'
 #'
 #' @export
-SmearPlotTF <- function(object, diffMethod, lfc = 1.5, conditions, TF, 
+SmearPlotTF <- function(object, diffMethod, lfc = 1.5, conditions, TF,
     label = FALSE) {
     if (!is(object, "pcitrif")) {
         stop("the input must be a pcitrif class object")
@@ -61,58 +61,58 @@ SmearPlotTF <- function(object, diffMethod, lfc = 1.5, conditions, TF,
     if (length(TF) != 1 | !is.character(TF)) {
         stop("the transcript factor must be a single character")
     }
-    
+
     var1 <- switch(diffMethod, Reverter = "diff", DESeq2 = "log2FoldChange")
     var2 <- switch(diffMethod, Reverter = "Difference of Expression", DESeq2 = "log2FoldChange")
     var3 <- switch(diffMethod, Reverter = "Average Expression", DESeq2 = "log2(baseMean)")
-    
-    c1 <- c(as.character(getNet1(object)[getNet1(object)[, 1] %in% TF, 
-        2]), as.character(getNet1(object)[getNet1(object)[, 2] %in% TF, 
+
+    c1 <- c(as.character(getNet1(object)[getNet1(object)[, 1] %in% TF,
+        2]), as.character(getNet1(object)[getNet1(object)[, 2] %in% TF,
         1]))
-    c2 <- c(as.character(getNet2(object)[getNet2(object)[, 1] %in% TF, 
-        2]), as.character(getNet2(object)[getNet2(object)[, 2] %in% TF, 
+    c2 <- c(as.character(getNet2(object)[getNet2(object)[, 1] %in% TF,
+        2]), as.character(getNet2(object)[getNet2(object)[, 2] %in% TF,
         1]))
-    
+
     if ((length(c1) & length(c2)) == 0) {
         stop("No targets were identified for this TF")
     }
-    
+
     tab <- getDE(object)$DE
     tab$genes <- rownames(tab)
-    dt <- tab %>% mutate(Type = ifelse(genes %in% c1, paste("Target", conditions[1]), 
+    dt <- tab %>% mutate(Type = ifelse(genes %in% c1, paste("Target", conditions[1]),
         ifelse(genes %in% c2, paste("Target", conditions[2]), "None")))
     dt[which(dt$genes == TF), "Type"] <- "TF"
     if (diffMethod == "Reverter") {
         dt$baseMean <- rowMeans(dt[, c(1, 2)])
     }
-    dt$Type <- factor(dt$Type, levels = c("TF", paste("Target", conditions[1]), 
+    dt$Type <- factor(dt$Type, levels = c("TF", paste("Target", conditions[1]),
         paste("Target", conditions[2]), "None"))
-    
-    pt <- ggplot(subset(dt, Type != "TF")) + geom_point(aes(x = log2(baseMean), 
-        y = subset(dt, Type != "TF")[[var1]], color = "None")) + geom_point(data = subset(dt, 
-        Type == paste("Target", conditions[1])), aes(x = log2(baseMean), 
-        y = subset(dt, Type == paste("Target", conditions[1]))[[var1]], 
-        colour = paste("Target", conditions[1])), size = 2) + geom_point(data = subset(dt, 
-        Type == paste("Target", conditions[2])), aes(x = log2(baseMean), 
-        y = subset(dt, Type == paste("Target", conditions[2]))[[var1]], 
-        colour = paste("Target", conditions[2])), size = 2) + geom_point(data = subset(dt, 
-        Type == "TF"), aes(x = log2(baseMean), y = subset(dt, Type == "TF")[[var1]], 
-        colour = "TF"), size = 2) + theme_bw() + ylab(var2) + xlab(var3) + 
-        ggtitle(paste0("Smear Plot for ", TF, " and its targets")) + theme(legend.position = "top") + 
-        labs(colour = "") + scale_colour_manual(values = c("gray80", "goldenrod3", 
-        "forestgreen", "red")) + geom_hline(yintercept = lfc, linetype = "dashed", 
-        color = "black") + geom_hline(yintercept = -lfc, linetype = "dashed", 
+
+    pt <- ggplot(dt) + geom_point(aes(x = log2(baseMean),
+        y = dt[[var1]], color = Type)) + geom_point(data = subset(dt,
+        Type == paste("Target", conditions[1])), aes(x = log2(baseMean),
+        y = subset(dt, Type == paste("Target", conditions[1]))[[var1]],
+        colour = paste("Target", conditions[1])), size = 2) + geom_point(data = subset(dt,
+        Type == paste("Target", conditions[2])), aes(x = log2(baseMean),
+        y = subset(dt, Type == paste("Target", conditions[2]))[[var1]],
+        colour = paste("Target", conditions[2])), size = 2) + geom_point(data = subset(dt,
+        Type == "TF"), aes(x = log2(baseMean), y = subset(dt, Type == "TF")[[var1]],
+        colour = "TF"), size = 2) + theme_bw() + ylab(var2) + xlab(var3) +
+        ggtitle(paste0("Smear Plot for ", TF, " and its targets")) + theme(legend.position = "top") +
+        labs(colour = "") + scale_colour_manual(values = c("red", "goldenrod3",
+        "forestgreen", "gray80")) + geom_hline(yintercept = lfc, linetype = "dashed",
+        color = "black") + geom_hline(yintercept = -lfc, linetype = "dashed",
         color = "black")
-    
-    
+
+
     if (label) {
-        idx <- c(which(dt$Type == paste("Target", conditions[1])), which(dt$Type == 
+        idx <- c(which(dt$Type == paste("Target", conditions[1])), which(dt$Type ==
             paste("Target", conditions[2])), which(dt$Type == "TF"))
         dtsub <- dt[idx, ]
-        
-        return(pt + geom_label_repel(data = dtsub, aes(x = log2(baseMean), 
-            y = dtsub[[var1]], color = Type, alpha = 0.3, label = genes), 
-            nudge_y = 1, segment.size = 0.2, segment.color = "grey50", 
+
+        return(pt + geom_label_repel(data = dtsub, aes(x = log2(baseMean),
+            y = dtsub[[var1]], color = Type, alpha = 0.3, label = genes),
+            nudge_y = 1, segment.size = 0.2, segment.color = "grey50",
             direction = "x", show.legend = FALSE))
     } else {
         return(pt)

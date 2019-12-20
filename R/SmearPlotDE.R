@@ -83,7 +83,7 @@ SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05,
     dt <- na.omit(dt)
 
     pt <- ggplot(dt) + geom_point(aes(x = log2(baseMean), y = dt[[var1]],
-        color = "Not Different")) + geom_point(data = subset(dt, Type ==
+        color = Type)) + geom_point(data = subset(dt, Type ==
         conditions[1]), aes(x = log2(baseMean), y = subset(dt, Type ==
         conditions[1])[[var1]], colour = conditions[1]), size = 2) + geom_point(data = subset(dt,
         Type == conditions[2]), aes(x = log2(baseMean), y = subset(dt,
@@ -96,8 +96,8 @@ SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05,
         paste("TF", conditions[2]))[[var1]], colour = paste("TF", conditions[2])),
         size = 2) + geom_point(data = subset(dt, Type == "Not Different TF"),
         aes(x = log2(baseMean), y = subset(dt, Type == "Not Different TF")[[var1]],
-            colour = "Not Different TF"), size = 2) + scale_colour_manual(values = c("black",
-        "gray50", "violetred1", "springgreen", "#1515ff", "red2")) + theme_bw() +
+            colour = "Not Different TF"), size = 2) + scale_colour_manual(values = c("red2",
+        "#1515ff", "black", "violetred1", "springgreen", "gray50")) + theme_bw() +
         ylab(var2) + xlab(var3) + theme(legend.position = "top") + geom_hline(yintercept = lfc,
         linetype = "dashed", color = "black") + geom_hline(yintercept = -lfc,
         linetype = "dashed", color = "black") + labs(colour = "")
