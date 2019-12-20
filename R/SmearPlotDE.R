@@ -89,10 +89,10 @@ SmearPlotDE <- function(object, diffMethod, lfc = 1.5, padjust = 0.05,
         Type == conditions[2])[[var1]], colour = conditions[2]), size = 2) + 
         geom_point(data = subset(dt, Type == paste("TF", conditions[1])), 
             aes(x = log2(baseMean), y = subset(dt, Type == paste("TF", 
-                conditions[1]))[[var1]], colour = paste("Target", conditions[1])), 
+                conditions[1]))[[var1]], colour = paste("TF", conditions[1])), 
             size = 2) + geom_point(data = subset(dt, Type == paste("TF", 
         conditions[2])), aes(x = log2(baseMean), y = subset(dt, Type == 
-        paste("TF", conditions[2]))[[var1]], colour = paste("Target", conditions[2])), 
+        paste("TF", conditions[2]))[[var1]], colour = paste("TF", conditions[2])), 
         size = 2) + geom_point(data = subset(dt, Type == "Not Different TF"), 
         aes(x = log2(baseMean), y = subset(dt, Type == "Not Different TF")[[var1]], 
             colour = "Not Different TF"), size = 2) + scale_colour_manual(values = c("black", 
