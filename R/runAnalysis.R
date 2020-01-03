@@ -200,14 +200,19 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     
     
     # storing the results in CeTF class object
-    output <- new("CeTF")
-    output@Data$data <- SimpleList(raw = mat, tpm = tpm.j, norm = Clean_Dat)
-    output@DE$data <- SimpleList(DE = Target)
-    output@Input$data <- SimpleList(RIF_input = RIF_input, PCIT_input_cond1 = PCIT_input_cond1, 
-        PCIT_input_cond2 = PCIT_input_cond2)
-    output@Output$data <- SimpleList(RIF_out = RIF_out, PCIT_out_cond1 = PCIT_out_cond1, 
-        PCIT_out_cond2 = PCIT_out_cond2)
-    output@Network$data <- SimpleList(net_cond1 = Network_cond1, net_cond2 = Network_cond2, 
-        keyTF = KeyTF_Conn_cond1_cond2, tfs = TF_unique, anno = anno)
+    output <- new("CeTF", 
+                  Data = Assays(SimpleList(raw = mat, tpm = tpm.j, norm = 
+                                               Clean_Dat)), 
+                  DE = Assays(SimpleList(DE = Target)), 
+                  Input = Assays(SimpleList(RIF_out = RIF_out, PCIT_out_cond1 = 
+                                                PCIT_out_cond1, PCIT_out_cond2 = 
+                                                PCIT_out_cond2)), 
+                  Output = Assays(SimpleList(RIF_out = RIF_out, PCIT_out_cond1 = 
+                                                 PCIT_out_cond1, PCIT_out_cond2 = 
+                                                 PCIT_out_cond2)), 
+                  Network = Assays(SimpleList(net_cond1 = Network_cond1, net_cond2 
+                                              = Network_cond2, keyTF = 
+                                                  KeyTF_Conn_cond1_cond2, tfs = 
+                                                  TF_unique, anno = anno)))
     return(output)
 }
