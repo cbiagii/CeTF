@@ -1,5 +1,6 @@
 ###################### CeTF class
 
+##### setClass
 #' @title
 #' The CeTF Class
 #'
@@ -210,11 +211,11 @@ setGeneric(name = "NetworkData", def = function(x, type = "network1") {
 #' 
 setMethod(f = "getData", signature = "CeTF", definition = function(x, type = "raw") {
     if (type == "raw") {
-        x@Data$data@listData$raw
+        x@Data$data$raw
     } else if (type == "tpm") {
-        x@Data$data@listData$tpm
+        x@Data$data$tpm
     } else if (type == "norm") {
-        x@Data$data@listData$norm
+        x@Data$data$norm
     }
 })
 
@@ -226,9 +227,9 @@ setMethod(f = "getData", signature = "CeTF", definition = function(x, type = "ra
 #' 
 setMethod(f = "getDE", signature = "CeTF", definition = function(x, type = "unique") {
     if (type == "unique") {
-        x@DE$data@listData$DE_unique
+        x@DE$data$DE_unique
     } else if (type == "all") {
-        x@DE$data@listData$DE
+        x@DE$data$DE
     }
 })
 
@@ -241,11 +242,11 @@ setMethod(f = "getDE", signature = "CeTF", definition = function(x, type = "uniq
 setMethod(f = "InputData", signature = "CeTF", definition = function(x, 
     analysis = "rif") {
     if (analysis == "rif") {
-        x@Input$data@listData$RIF_input
+        x@Input$data$RIF_input
     } else if (analysis == "pcit1") {
-        x@Input$data@listData$PCIT_input_cond1
+        x@Input$data$PCIT_input_cond1
     } else if (analysis == "pcit2") {
-        x@Input$data@listData$PCIT_input_cond2
+        x@Input$data$PCIT_input_cond2
     }
 })
 
@@ -258,19 +259,19 @@ setMethod(f = "InputData", signature = "CeTF", definition = function(x,
 setMethod(f = "OutputData", signature = "CeTF", definition = function(x, 
     analysis = "rif", type = "tab") {
     if (analysis == "rif") {
-        x@Output$data@listData$RIF_out
+        x@Output$data$RIF_out
     } else if (analysis == "pcit1" & type == "tab") {
-        x@Output$data@listData$PCIT_out_cond1$tab
+        x@Output$data$PCIT_out_cond1$tab
     } else if (analysis == "pcit1" & type == "adj_raw") {
-        x@Output$data@listData$PCIT_out_cond1$adj_raw
+        x@Output$data$PCIT_out_cond1$adj_raw
     } else if (analysis == "pcit1" & type == "adj_sig") {
-        x@Output$data@listData$PCIT_out_cond1$adj_sig
+        x@Output$data$PCIT_out_cond1$adj_sig
     } else if (analysis == "pcit2" & type == "tab") {
-        x@Output$data@listData$PCIT_out_cond2$tab
+        x@Output$data$PCIT_out_cond2$tab
     } else if (analysis == "pcit2" & type == "adj_raw") {
-        x@Output$data@listData$PCIT_out_cond2$adj_raw
+        x@Output$data$PCIT_out_cond2$adj_raw
     } else if (analysis == "pcit2" & type == "adj_sig") {
-        x@Output$data@listData$PCIT_out_cond2$adj_sig
+        x@Output$data$PCIT_out_cond2$adj_sig
     }
 })
 
@@ -283,14 +284,30 @@ setMethod(f = "OutputData", signature = "CeTF", definition = function(x,
 setMethod(f = "NetworkData", signature = "CeTF", definition = function(x, 
     type = "network1") {
     if (type == "network1") {
-        x@Network$data@listData$net_cond1
+        x@Network$data$net_cond1
     } else if (type == "network2") {
-        x@Network$data@listData$net_cond2
+        x@Network$data$net_cond2
     } else if (type == "keytfs") {
-        x@Network$data@listData$keyTF
+        x@Network$data$keyTF
     } else if (type == "tfs") {
-        x@Network$data@listData$tfs
+        x@Network$data$tfs
     } else if (type == "annotation") {
-        x@Network$data@listData$anno
+        x@Network$data$anno
     }
 })
+
+
+### Changing Validity Assays to accept objects of different dims
+#' @export
+#' @importFrom  S4Vectors setValidity2
+.valid.Assays <- function(x)
+{
+    assays <- as(x, "SimpleList", strict=FALSE)
+    if (!is(assays, "SimpleList"))
+        return("'assays' must be a SimpleList object")
+    if (length(assays) == 0L)
+        return(NULL)
+    
+    NULL
+}
+setValidity2("Assays", .valid.Assays)
