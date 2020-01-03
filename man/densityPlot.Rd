@@ -26,7 +26,7 @@ matrix resulted from \code{\link{PCIT}} function.
 data('simNorm')
 
 # getting the PCIT results
-results <- PCIT(simNorm)
+results <- PCIT(simNorm[1:20, ])
 
 # using the PCIT results to get density distribution of correlation coefficients
 densityPlot(mat1 = results$adj_raw,
