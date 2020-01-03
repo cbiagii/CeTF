@@ -28,7 +28,7 @@ Imports: crayon, clusterProfiler, DESeq2, dplyr, geomnet, GGally, ggplot2,
   ggpubr, ggrepel, graphics, network, pbapply, reshape2, S4Vectors, scales, 
   stats, SummarizedExperiment, tidyr, utils
 Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown, testthat
-Depends: R (>= 3.6), methods
+Depends: R (>= 4.0), methods
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
