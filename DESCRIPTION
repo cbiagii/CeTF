@@ -1,4 +1,4 @@
-Package: ceTF
+Package: CeTF
 Type: Package
 Title: Coexpression for Transcription Factors using Regulatory Impact Factors 
   and Partial Correlation and Information Theory analysis
