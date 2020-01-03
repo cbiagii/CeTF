@@ -49,7 +49,7 @@ getGroupGO <- function(genes, ont = "BP", keyType, annoPkg) {
     ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg, ont = ont, 
         readable = FALSE, keyType = keyType, level = 3)
     
-    results <- ggo@result
+    results <- as.data.frame(ggo)
     results <- results[order(results$Count, decreasing = TRUE), ]
     results <- results[results$Count > 0, ]
     
