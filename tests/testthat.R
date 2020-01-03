@@ -1,3 +1,3 @@
 library("testthat")
-library("pcitRif")
-test_check("pcitRif")
+library("ceTF")
+test_check("ceTF")

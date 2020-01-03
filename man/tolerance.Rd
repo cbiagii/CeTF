@@ -7,11 +7,11 @@
 tolerance(a, b, c, tolType = "mean")
 }
 \arguments{
-\item{a}{Interactor 1.}
+\item{a}{Correlation value between the genes A and B.}
 
-\item{b}{Interactor 2.}
+\item{b}{Correlation value between the genes B and C.}
 
-\item{c}{Interactor 3.}
+\item{c}{Correlation value between the genes A and C.}
 
 \item{tolType}{Calculation type for tolerance (mean, min, max, median) (default: 'mean').}
 }
@@ -27,4 +27,7 @@ tolerance(0.5, -0.65, 0.23, tolType = 'max')
 tolerance(0.5, -0.65, 0.23, tolType = 'min')
 tolerance(0.5, -0.65, 0.23, tolType = 'median')
 
+}
+\seealso{
+See vignette for more details about the pairwise correlations.
 }

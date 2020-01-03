@@ -2,12 +2,14 @@
 #'
 #' @description Calculates the local tolerance for every trio of genes.
 #'
-#' @param a Interactor 1.
-#' @param b Interactor 2.
-#' @param c Interactor 3.
+#' @param a Correlation value between the genes A and B.
+#' @param b Correlation value between the genes B and C.
+#' @param c Correlation value between the genes A and C.
 #' @param tolType Calculation type for tolerance (mean, min, max, median) (default: 'mean').
 #'
 #' @return Returns the value of tolerance.
+#' 
+#' @seealso See vignette for more details about the pairwise correlations.
 #'
 #' @examples
 #' tolerance(0.5, -0.65, 0.23, tolType = 'mean')
@@ -28,6 +30,8 @@ tolerance <- function(a, b, c, tolType = "mean") {
     if (missing(c)) {
         stop("No \"c\" parameter provided")
     }
+    
+    "/" <- function(x, y) ifelse(y == 0, 0, base::"/"(x, y))
     
     a_z = (a - b * c)/sqrt((1 - b^2) * (1 - c^2))
     b_y = (b - a * c)/sqrt((1 - a^2) * (1 - c^2))

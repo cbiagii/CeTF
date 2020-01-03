@@ -6,9 +6,9 @@ anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)),
 colnames(simCounts) <- paste(colnames(simCounts), anno$cond, sep = "_")
 
 
-test_that('expDiff throws an error when there are no anno parameter', {
+test_that('expDiff throws an error when there is no anno parameter', {
   expect_error(expDiff(exp = simCounts,
-                       anno = data.frame(),
+                       anno = NULL,
                        conditions = c('cond1', 'cond2'),
                        lfc = 2,
                        padj = 0.05,

@@ -26,7 +26,7 @@ bivar.awk <- function(x) {
         stop("x must be a dataframe or a matrix")
     }
     
-    cat(green(paste0("## '", colnames(x)[1], "' Column ##") %+% "\n" %+% 
+    message(green(paste0("## '", colnames(x)[1], "' Column ##") %+% "\n" %+% 
         sprintf("N     =  %s", length(x[, 1])) %+% "\n" %+% sprintf("Mean  =  %s", 
         format(round(mean(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Std   =  %s", 
         format(round(sd(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Min   =  %s", 
@@ -34,7 +34,7 @@ bivar.awk <- function(x) {
         format(round(max(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% "################################" %+% 
         "\n"))
     
-    cat(red(paste0("## '", colnames(x)[2], "' Column ##") %+% "\n" %+% 
+    message(red(paste0("## '", colnames(x)[2], "' Column ##") %+% "\n" %+% 
         sprintf("N     =  %s", length(x[, 2])) %+% "\n" %+% sprintf("Mean  =  %s", 
         format(round(mean(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Std   =  %s", 
         format(round(sd(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Min   =  %s", 
@@ -42,7 +42,7 @@ bivar.awk <- function(x) {
         format(round(max(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% "################################" %+% 
         "\n"))
     
-    cat(blue(sprintf("###" %+% "\n" %+% "Correlation  =  %s", format(round(cor(x[, 
+    message(blue(sprintf("###" %+% "\n" %+% "Correlation  =  %s", format(round(cor(x[, 
         1], x[, 2]), 7), nsmall = 7)) %+% "\n" %+% sprintf("Regression   =  %s", 
         format(round(lm(x[, 2] ~ x[, 1], data = x)[[1]][[2]], 7), nsmall = 7)) %+% 
         "\n" %+% "###" %+% "\n"))

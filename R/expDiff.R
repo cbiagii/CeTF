@@ -39,11 +39,13 @@
 #' data('simCounts')
 #'
 #' # creating the dataframe with annotation for each sample
-#' anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)),
-#'                    row.names = colnames(simCounts))
-#'
+#' anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)))
+#' 
 #' # renaming colums of simulated counts data
 #' colnames(simCounts) <- paste(colnames(simCounts), anno$cond, sep = '_')
+#'
+#' # renaming anno rows
+#' rownames(anno) <- colnames(simCounts)
 #'
 #' # performing differential expression analysis using Reverter method
 #' out <- expDiff(exp = simCounts,
@@ -67,16 +69,10 @@
 expDiff <- function(exp, anno = NULL, conditions = NULL, lfc = 1.5, padj = 0.05, 
     diffMethod = "Reverter") {
     
-    if (missing(anno)) {
-        stop("No \"anno\" parameter provided")
-    }
-    if (nrow(anno) == 0) {
+    if (is.null(anno)) {
         stop("anno must have some conditions to compare")
     }
-    if (missing(conditions)) {
-        stop("No \"conditions\" parameter provided")
-    }
-    if (!is.character(conditions) & length(conditions) != 2) {
+    if (is.null(conditions)) {
         stop("you must input 2 conditions")
     }
     if (!is.data.frame(exp) & !is.matrix(exp)) {
@@ -87,7 +83,7 @@ expDiff <- function(exp, anno = NULL, conditions = NULL, lfc = 1.5, padj = 0.05,
         de.j <- data.frame(cond1 = apply(exp[, grep(paste0("_", conditions[1]), 
             colnames(exp))], 1, mean), cond2 = apply(exp[, grep(paste0("_", 
             conditions[2]), colnames(exp))], 1, mean))
-        tmp1 <- de.j[, 1] - de.j[, 2]
+        tmp1 <- de.j[, "cond1"] - de.j[, "cond2"]
         var = (sum(tmp1^2) - (sum(tmp1) * sum(tmp1))/(length(tmp1)))/(length(tmp1) - 
             1)
         de.j <- cbind(de.j, diff = (tmp1 - (sum(tmp1)/length(tmp1)))/sqrt(var))
@@ -96,7 +92,9 @@ expDiff <- function(exp, anno = NULL, conditions = NULL, lfc = 1.5, padj = 0.05,
     } else if (diffMethod == "DESeq2") {
         ddsHTSeq <- DESeqDataSetFromMatrix(countData = exp, colData = anno, 
             design = ~cond)
-        colData(ddsHTSeq)[, 1] <- relevel(colData(ddsHTSeq)[, 1], ref = conditions[1])
+        ddsHTSeq[["cond"]] <- relevel(ddsHTSeq[["cond"]], ref = conditions[1])
+        
+        
         dds <- DESeq(ddsHTSeq)
         res <- results(dds, contrast = c("cond", conditions[1], conditions[2]))
         DE <- as.data.frame(res)

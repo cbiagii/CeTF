@@ -60,11 +60,13 @@ on the negative binomial distribution (see \code{\link[DESeq2]{DESeq}}).
 data('simCounts')
 
 # creating the dataframe with annotation for each sample
-anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)),
-                   row.names = colnames(simCounts))
+anno <- data.frame(cond = c(rep('cond1', 10), rep('cond2', 10)))
 
 # renaming colums of simulated counts data
 colnames(simCounts) <- paste(colnames(simCounts), anno$cond, sep = '_')
+
+# renaming anno rows
+rownames(anno) <- colnames(simCounts)
 
 # performing differential expression analysis using Reverter method
 out <- expDiff(exp = simCounts,

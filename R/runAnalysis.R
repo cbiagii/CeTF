@@ -20,13 +20,13 @@
 #' @param diffMethod Method to calculate Differentially Expressed (DE) genes (see \code{\link{expDiff}}) (default: 'Reverter')
 #' @param data.type Type of input data. If is \emph{expression} (FPKM, TPM, etc) or \emph{counts.}
 #'
-#' @return Returns an pcitRif object with output variables of each step of analysis.
+#' @return Returns an CeTF class object with output variables of each step of analysis.
 #'
 #' @examples
 #' data('simCounts')
 #' out <- runAnalysis(mat = simCounts,
 #'                    conditions=c('cond1', 'cond2'),
-#'                    lfc = 2.57,
+#'                    lfc = 3,
 #'                    padj = 0.05,
 #'                    TFs = paste0('TF_', 1:1000),
 #'                    nSamples1 = 10,
@@ -35,11 +35,12 @@
 #'                    diffMethod = 'Reverter',
 #'                    data.type = 'counts')
 #'
-#' @seealso \code{\link{pcitrif-class}}
+#' @seealso \code{\link{CeTF-class}}
 #'
 #' @importFrom reshape2 melt
 #' @importFrom stats cor
 #' @importFrom crayon green
+#' @importFrom S4Vectors SimpleList
 #'
 #' @export
 runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05, 
@@ -58,26 +59,18 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     if (length(conditions) != 2) {
         stop("you must input two conditions")
     }
-    if (missing(TFs)) {
-        stop("No \"TFs\" parameter provided")
-    }
-    if (length(TFs) == 0 | !is.character(TFs)) {
+    if (is.null(TFs)) {
         stop("the transcript factors must be a character")
     }
-    if (missing(nSamples1)) {
-        stop("No \"nSamples1\" parameter provided")
-    }
-    if (missing(nSamples2)) {
-        stop("No \"nSamples2\" parameter provided")
-    }
-    if (!is.numeric(nSamples1) | !is.numeric(nSamples2)) {
+    if (is.null(nSamples1) | is.null(nSamples2)) {
         stop("the number of conditions must be a numeric greater than zero")
     }
-    if (missing(data.type)) {
-        stop("No \"data.type\" parameter provided")
+    if (is.null(data.type)) {
+        stop("the data type muste be counts or expression")
     }
     
-    cat(green("##### STEP 1: Data adjustment #####" %+% "\n"))
+    message(green("##### STEP 1: Data adjustment #####" %+% "\n"))
+    mat <- as.matrix(mat)
     colnames(mat)[seq_len(nSamples1)] <- paste0(colnames(mat)[seq_len(nSamples1)], 
         "_", conditions[1])
     colnames(mat)[(nSamples1 + 1):(nSamples1 + nSamples2)] <- paste0(colnames(mat)[(nSamples1 + 
@@ -85,7 +78,9 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     
     if (data.type == "counts") {
         # Convert counts to TPM
-        tpm.j <- countsToTPM(mat)
+        tpm.j <- apply(mat, 2, function(x) {
+            (1e+06 * x)/sum(x)
+        })
         tmp1 <- apply(tpm.j != 0, 1, sum)
         tmp2 <- apply(tpm.j, 1, sum)
         
@@ -124,10 +119,8 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
             ]
     }
     
-    # storing the results of step1 in a list
-    list1 <- list(raw = mat, tpm = tpm.j, selected_genes = genesok.j, norm = Clean_Dat)
     
-    cat(green("##### STEP 2: Differential Expression #####" %+% "\n"))
+    message(green("##### STEP 2: Differential Expression #####" %+% "\n"))
     anno <- data.frame(cond = c(rep(conditions[1], nSamples1), rep(conditions[2], 
         nSamples2)), row.names = colnames(mat))
     if (diffMethod == "Reverter") {
@@ -144,10 +137,8 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     # Get a list of TFs
     TF_unique <- sort(intersect(TFs, Background))
     
-    # storing the results of step2 in a list
-    list2 <- list(de_genes = Target, tf = TF_unique)
     
-    cat(green("##### STEP 3: Regulatory Impact Factors analysis #####" %+% 
+    message(green("##### STEP 3: Regulatory Impact Factors analysis #####" %+% 
         "\n"))
     RIF_input <- Clean_Dat[c(rownames(Target$DE_unique), TF_unique), c(grep(paste0("_", 
         conditions[1]), colnames(Clean_Dat), fixed = TRUE), grep(paste0("_", 
@@ -160,10 +151,8 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     KeyTF <- subset(RIF_out, sqrt(RIF_out$RIF1^2) > 1.96 | sqrt(RIF_out$RIF2^2) > 
         1.96)
     
-    # storing the results of step3 in a list
-    list3 <- list(input = RIF_input, out = RIF_out)
     
-    cat(green("##### STEP 4: Partial Correlation and Information Theory analysis #####" %+% 
+    message(green("##### STEP 4: Partial Correlation and Information Theory analysis #####" %+% 
         "\n"))
     net.j <- sort(unique(c(as.character(KeyTF$TF), rownames(Target$DE_unique))))
     
@@ -186,12 +175,12 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     # Count connections for each gene in cond1 and in cond2, focussing on
     # Key TFs
     id.j <- c(as.character(subset(PCIT_out_cond1[[1]], PCIT_out_cond1[[1]]$corr2 != 
-        0)[, 1]), as.character(subset(PCIT_out_cond1[[1]], PCIT_out_cond1[[1]]$corr2 != 
-        0)[, 2]))
+        0)[, "gene1"]), as.character(subset(PCIT_out_cond1[[1]], PCIT_out_cond1[[1]]$corr2 != 
+        0)[, "gene2"]))
     cond1.j <- as.data.frame(table(id.j))
     id.j <- c(as.character(subset(PCIT_out_cond2[[1]], PCIT_out_cond2[[1]]$corr2 != 
-        0)[, 1]), as.character(subset(PCIT_out_cond2[[1]], PCIT_out_cond2[[1]]$corr2 != 
-        0)[, 2]))
+        0)[, "gene1"]), as.character(subset(PCIT_out_cond2[[1]], PCIT_out_cond2[[1]]$corr2 != 
+        0)[, "gene2"]))
     cond2.j <- as.data.frame(table(id.j))
     
     KeyTF_Conn_cond1_cond2 <- merge(KeyTF, merge(cond1.j, cond2.j, by = "id.j"), 
@@ -209,12 +198,16 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     anno <- data.frame(genes = genes, class = ifelse(genes %in% KeyTF$TF, 
         "TF", "gene"))
     
-    # storing the results of step4 in a list
-    list4 <- list(genes = net.j, input_cond1 = PCIT_input_cond1, input_cond2 = PCIT_input_cond2, 
-        out_cond1 = PCIT_out_cond1, out_cond2 = PCIT_out_cond2, network_cond1 = Network_cond1, 
-        network_cond2 = Network_cond2, keytf = KeyTF_Conn_cond1_cond2, 
-        anno = anno)
     
-    return(new("pcitrif", step1 = list1, step2 = list2, step3 = list3, 
-        step4 = list4))
+    # storing the results in CeTF class object
+    output <- new("CeTF")
+    output@Data$data <- SimpleList(raw = mat, tpm = tpm.j, norm = Clean_Dat)
+    output@DE$data <- SimpleList(DE = Target)
+    output@Input$data <- SimpleList(RIF_input = RIF_input, PCIT_input_cond1 = PCIT_input_cond1, 
+        PCIT_input_cond2 = PCIT_input_cond2)
+    output@Output$data <- SimpleList(RIF_out = RIF_out, PCIT_out_cond1 = PCIT_out_cond1, 
+        PCIT_out_cond2 = PCIT_out_cond2)
+    output@Network$data <- SimpleList(net_cond1 = Network_cond1, net_cond2 = Network_cond2, 
+        keyTF = KeyTF_Conn_cond1_cond2, tfs = TF_unique, anno = anno)
+    return(output)
 }

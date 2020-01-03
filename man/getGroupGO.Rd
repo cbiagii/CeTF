@@ -30,12 +30,12 @@ a specific level.
 # load the annotation package
 library(org.Hs.eg.db)
 
-# load the pcitrif class object resulted from runAnalysis function
-data(pcitrifExample)
+# load the CeTF class object resulted from runAnalysis function
+data(CeTFdemo)
 
 # getting the genes in network of condition 1
-genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
-                 as.character(getNet1(pcitrifExample)[,2])))
+genes <- unique(c(as.character(NetworkData(CeTFdemo, 'network1')[, 'gene1']),
+                 as.character(NetworkData(CeTFdemo, 'network1')[, 'gene2'])))
 
 # performing getGroupGO analysis
 cond1 <- getGroupGO(genes = genes,

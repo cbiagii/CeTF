@@ -21,7 +21,9 @@ by columns, applying log(x + 1)/log(2).
 data('simCounts')
 
 # getting the TPM matrix from counts
-tpm <- countsToTPM(simCounts)
+tpm <- apply(simCounts, 2, function(x) {
+            (1e+06 * x)/sum(x)
+            })
 
 # normalizing TPM data
 norm <- normExp(tpm)

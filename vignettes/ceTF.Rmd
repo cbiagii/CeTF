@@ -1,0 +1,479 @@
+---
+title: "Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory"
+author: "Carlos Alberto Oliveira de Biagi Junior, Ricardo Perecin Nociti, Breno Osvaldo Funicheli, João Paulo Bianchi Ximenez, Patrícia de Cássia Ruy, Marcelo Gomes de Paula, Rafael dos Santos Bezerra and Wilson Araújo da Silva Junior"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+output:
+  rmarkdown::html_document:
+    highlight: pygments
+    toc: true
+    fig_width: 8
+    fig_height: 6
+    fig_retina: NULL
+bibliography: library.bib
+vignette: >
+  %\VignetteIndexEntry{Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(tidy = FALSE,
+                      cache = FALSE,
+                      dev = "png",
+                      message = FALSE, error = FALSE, warning = TRUE)
+```
+
+# Introduction
+This vignette provides the necessary instructions for performing the Partial 
+Correlation coefficient with Information Theory (PCIT) [@reverter2008combining] 
+and Regulatory Impact Factors (RIF) [@reverter2010regulatory] algorithm.
+
+The PCIT algorithm identifies meaningful correlations to define edges in a 
+weighted network and can be applied to any correlation-based network including 
+but not limited to gene co-expression networks, while the RIF algorithm identify 
+critical transcript factors (TF) from gene expression data. 
+
+These two algorithms when combined provide a very relevant layer of information 
+for gene expression studies (Microarray, RNA-seq and single-cell RNA-seq data).
+
+
+## Regulatory Information Factors (RIF)
+A gene expression data from microarray, RNA-seq or single-cell RNA-seq spanning 
+two biological conditions of interest (e.g. normal/tumor, healthy/disease, 
+malignant/nonmalignant) is subjected to standard normalization techniques and 
+significance analysis to identify the target genes whose expression is 
+differentially expressed (DE) between the two conditions. Then, the regulators 
+(e.g. Transcript Factors genes) are identified in the data. The TF genes can be 
+obtained from the literature [@wang2015regulator][@vaquerizas2009census].
+Next, the co-expression correlation between each TF and the DE genes is computed 
+for each of the two conditions. This allows for the computation of the 
+differential wiring (DW) from the difference in co-expression correlation 
+existing between a TF and a DE genes in the two conditions. As a result, RIF 
+analysis assigns an extreme score to those TF that are consistently most 
+differentially co-expressed with the highly abundant and highly DE genes (case 
+of RIF1 score), and to those TF with the most altered ability to act as 
+predictors of the abundance of DE genes (case of RIF2 score). A given TF may not 
+show a change in expression profile between the two conditions to score highly 
+by RIF as long as it shows a big change in co-expression with the DE genes. To 
+this particular, the profile of the TF gene (triangle, solid line) is identical 
+in both conditions (slightly downwards). Instead, the DE gene (circle, dashed 
+line) is clearly over-expressed in condition B. Importantly, the expression of 
+the TF and the DE gene shows a strong positive correlation in condition A, and a 
+strong negative correlation in condition B.
+
+![A schematic diagram of the RIF analysis. (A) Gene expression data is 
+normalized and statistically assessed to identify differentially expressed (DE) 
+genes and differentially PIF genes (represented by circles) which together are 
+deemed as the Target genes; Simultaneously, (B) transcription factors (TF, 
+represented by triangles) included in the microarray are collected and (C) their 
+co-expression correlation with the target genes computed for each of the two 
+conditions of interest; Finally, (D) the way in which TF and target genes are 
+differentially co-expressed between the two conditions is used to compute the 
+relevance of each TF according to RIF1 and RIF2 (Reverter et al. 2010).](fig1.jpg){width=50%}
+
+## Partial Correlation with Information Theory (PCIT)
+The proposed PCIT algorithm contains two distinct steps as follows:
+
+#### **Step 1 - Partial correlations**
+For every trio of genes in x, y and z, the three first-order partial correlation 
+coefficients are computed by:
+
+$$r_{xy.z} = \frac{r_{xy} - r_{xz} r_{yz}}{\sqrt{(1-r^{2}_{xz})(1-r^{2}_{yz})}}$$, 
+and similarly for $r_{xz.y}$ and $r_{yz.x}$.
+
+The partial correlation coefficient between *x* and *y* given *z* (here denoted 
+by $r_{xy.z}$) indicates the strength of the linear relationship between *x* and 
+*y* that is independent of (uncorrelated with) *z*. Calculating the ordinary (or 
+unconditional or zero-order) correlation coefficient and comparing it with the 
+partial correlation, we might see that the association between the two variables 
+has been sharply reduced after eliminating the effect of the third variable.
+
+#### **Step 2 - Information theory**
+We invoke the Data Processing Inequality (DPI) theorem of Information Theory 
+which states that 'no clever manipulation of the data can improve the inference 
+that can be made from the data' [@cover2012elements]. For every trio of genes, 
+and in order to obtain the tolerance level ($\varepsilon$) to be used as the 
+local threshold for capturing significant associations, the average ratio of 
+partial to direct correlation is computed as follows:
+
+$$\varepsilon = (\frac{r_{xy.z}}{r_{xy}} + \frac{r_{xz.y}}{r_{xz}} + \frac{r_{yz.x}}{r_{yz}})$$
+In the context of our network reconstruction, a connection between genes *x* 
+and *y* is discarded if:
+
+$$|r_{xy}| \le |\varepsilon r_{xz}| and |r_{xy}| \le |\varepsilon r_{yz}|$$
+Otherwise, the association is defined as significant, and a connection between 
+the pair of genes is established in the reconstruction of the GCN. To ascertain 
+the significance of the association between genes *x* and *y*, the above 
+mentioned Steps 1 and 2 are repeated for each of the remaining *n−2* genes 
+(denoted here by *z*).
+
+
+# Installation
+To install, just type:
+```{r install, eval=FALSE}
+BiocManager::install("cbiagii/ceTF")
+```
+for Linux users is necessary to install **libcurl4-openssl-dev**, 
+**libxml2-dev** and **libssl-dev** dependencies.
+
+
+# Workflow
+There are many ways to perform the analysis. The following sections will be 
+splited by steps, and finishing with the complete analysis with visualization. 
+We will use the **airway** [@himes2014rna] dataset in the following sections. 
+This dataset provides a RNA-seq count data from four human ASM cell lines that 
+were treated with dexamenthasone - a potent synthetic glucocorticoid. Briefly, 
+this dataset has 4 samples untreated and other 4 samples with the treatment.
+
+## PCIT
+The first option is to perform the PCIT analysis. The output will be a list with 
+3 elements. The first one contains a dataframe with the pairwise correlation 
+between genes (corr1) and the significant pairwise correlation (corr2 $\neq$ 0). 
+The second element of the list stores the adjacency matrix with all correlation. 
+And the last element contains the adjacency matrix with only the significant 
+values:
+```{r PCIT, eval=TRUE, warning=FALSE, message=FALSE}
+# Loading packages
+library(ceTF)
+library(airway)
+library(kableExtra)
+library(knitr)
+
+# Loading airway data
+data("airway")
+
+# Creating a variable with annotation data
+anno <- as.data.frame(colData(airway))
+anno <- anno[order(anno$dex, decreasing = TRUE), ]
+anno <- data.frame(cond = anno$dex, 
+                   row.names = rownames(anno))
+
+# Creating a variable with count data
+counts <- assay(airway)
+
+# Sorting count data samples by conditions (untrt and trt)
+counts <- counts[, rownames(anno)]
+colnames(counts) <- paste0(colnames(counts), c(rep("_untrt", 4), rep("_trt", 4)))
+
+# Differential Expression analysis to use only informative genes
+DEGenes <- expDiff(exp = counts,
+                   anno = anno,
+                   conditions = c('untrt', 'trt'),
+                   lfc = 4.5,
+                   padj = 0.05, 
+                   diffMethod = "Reverter")
+
+# Selecting only DE genes from counts data
+counts <- counts[rownames(DEGenes$DE_unique), ]
+
+# Converting count data to TPM
+tpm <- apply(counts, 2, function(x) {
+            (1e+06 * x)/sum(x)
+        })
+
+# Count normalization
+PCIT_input <- normExp(tpm)
+
+# PCIT input for untrt
+PCIT_input_untrt <- PCIT_input[,grep("_untrt", colnames(PCIT_input))]
+
+# PCIT input for trt
+PCIT_input_trt <- PCIT_input[,grep("_trt", colnames(PCIT_input))]
+
+# Performing PCIT analysis for untrt condition
+PCIT_out_untrt <- PCIT(PCIT_input_untrt, tolType = "mean")
+
+# Performing PCIT analysis for trt condition
+PCIT_out_trt <- PCIT(PCIT_input_trt, tolType = "mean")
+
+# Printing first 10 rows for untrt condition
+kable(PCIT_out_untrt$tab[1:10, ]) %>% 
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+
+# Printing first 10 rows for trt condition
+kable(PCIT_out_trt$tab[1:10, ]) %>% 
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+
+# Adjacency matrix: PCIT_out_untrt$adj_raw or PCIT_out_trt$adj_raw
+# Adjacency matrix only with the significant values: PCIT_out_untrt$adj_sig or PCIT_out_trt$adj_sig
+```
+
+
+## Histogram of connectivity distribution
+After performing the PCIT analysis, it is possible to verify the histogram 
+distribution of the clustering coefficient of the adjacency matrix with the 
+significant values:
+```{r hist, eval=TRUE, fig.align="center"}
+# Example for trt condition
+histPlot(PCIT_out_trt$adj_sig)
+```
+
+## Density Plot of raw correlation and significant PCIT
+It's possible to generate the density plot with the significance values of 
+correlation. We'll use the raw adjacency matrix and the adjacency matrix with 
+significant values. It is necessary to define a cutoff of the correlation module 
+(values between -1 and 1) that will be considered as significant:
+```{r densitySig, eval=TRUE, fig.align="center"}
+# Example for trt condition
+densityPlot(mat1 = PCIT_out_trt$adj_raw, 
+           mat2 = PCIT_out_trt$adj_sig, 
+           threshold = 0.5)
+```
+
+## RIF
+To perform the RIF analysis we will need the count data, an annotation table and 
+a list with the Transcript Factors of specific organism (*Homo sapiens* in this 
+case) and follow the following steps in order to get the output (dataframe with 
+the average expression, RIF1 and RIF2 metrics for each TF):
+```{r RIF, eval=TRUE, warning=FALSE, message=FALSE}
+# Loading packages
+library(ceTF)
+library(airway)
+library(kableExtra)
+library(knitr)
+
+# Loading airway data
+data("airway")
+
+# Creating a variable with annotation data
+anno <- as.data.frame(colData(airway))
+anno <- anno[order(anno$dex, decreasing = TRUE), ]
+anno <- data.frame(cond = anno$dex, 
+                   row.names = rownames(anno))
+
+# Creating a variable with count data
+counts <- assay(airway)
+
+# Sorting count data samples by conditions (untrt and trt)
+counts <- counts[, rownames(anno)]
+colnames(counts) <- paste0(colnames(counts), c(rep("_untrt", 4), rep("_trt", 4)))
+
+# Differential Expression analysis to use only informative genes
+DEGenes <- expDiff(exp = counts,
+                   anno = anno,
+                   conditions = c('untrt', 'trt'),
+                   lfc = 2,
+                   padj = 0.05, 
+                   diffMethod = "Reverter")
+
+# Selecting only DE genes from counts data
+counts <- counts[rownames(DEGenes$DE_unique), ]
+
+# Converting count data to TPM
+tpm <- apply(counts, 2, function(x) {
+            (1e+06 * x)/sum(x)
+        })
+
+# Count normalization
+Clean_Dat <- normExp(tpm)
+
+# Loading the Transcript Factors (TFs) character
+data("TFs")
+
+# Verifying which TFs are in the subsetted normalized data
+TFs <- rownames(Clean_Dat)[rownames(Clean_Dat) %in% TFs]
+
+# Selecting the Target genes
+Target <- setdiff(rownames(Clean_Dat), TFs)
+
+# Ordering rows of normalized count data
+RIF_input <- Clean_Dat[c(Target, TFs), ]
+
+# Performing RIF analysis
+RIF_out <- RIF(input = RIF_input,
+               nta = length(Target),
+               ntf = length(TFs),
+               nSamples1 = 4,
+               nSamples2 = 4)
+
+# Printing first 10 rows
+kable(RIF_out[1:10, ]) %>% 
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
+
+## Whole analysis of Regulatory Impact Factors (RIF) and Partial Correlation and Information Theory analysis (PCIT)
+Finally, it is possible to run the entire analysis all at once. The output will 
+be a CeTF object with all results generated between the different steps. To 
+access the CeTF object is recommended to use the accessors from **CeTF** 
+class:
+```{r all, eval=TRUE}
+# Loading packages
+library(airway)
+library(ceTF)
+
+# Loading airway data
+data("airway")
+
+# Creating a variable with annotation data
+anno <- as.data.frame(colData(airway))
+
+# Creating a variable with count data
+counts <- assay(airway)
+
+# Sorting count data samples by conditions (untrt and trt)
+counts <- counts[, order(anno$dex, decreasing = TRUE)]
+
+# Loading the Transcript Factors (TFs) character
+data("TFs")
+
+# Performing the complete analysis
+out <- runAnalysis(mat = counts, 
+                   conditions=c("untrt", "trt"),
+                   lfc = 5,
+                   padj = 0.05,
+                   TFs = TFs,
+                   nSamples1 = 4,
+                   nSamples2= 4,
+                   tolType = "mean",
+                   diffMethod = "Reverter", 
+                   data.type = "counts")
+```
+
+
+## Getting some graphical outputs
+Based on CeTF class object resulted from **runAnalysis** function is possible 
+to get a plot for Differentially Expressed (DE) genes that shows the relationship 
+between log(baseMean) and Difference of Expression or log2FoldChange, enabling 
+the visualization of the distribution of DE genes and TF in both conditions. 
+These two first plot provides a initial graphical visualization of results:
+```{r SmearPlotDE, eval=TRUE, fig.align="center"}
+# Using the runAnalysis output (CeTF class object)
+SmearPlot(object = out, 
+          diffMethod = 'Reverter', 
+          lfc = 1.5, 
+          conditions = c('untrt', 'trt'), 
+          type = "DE")
+```
+
+Then is possible to generate the same previous plot but now for a single TF. So, 
+if you have a specific TF that you want to visualize, this is the recommended 
+plot:
+```{r SmearPlotTF, eval=TRUE, fig.align="center"}
+# Using the runAnalysis output (CeTF class object)
+SmearPlot(object = out,
+          diffMethod = 'Reverter',
+          lfc = 1.5,
+          conditions = c('untrt', 'trt'),
+          TF = 'ENSG00000185917',
+          label = TRUE, 
+          type = "TF")
+```
+
+The next output is a network for both conditions resulted from \emph{runAnalysis}:
+```{r netConditionsPlot, eval=TRUE, fig.align="center"}
+# Using the runAnalysis output (CeTF class object)
+netConditionsPlot(out)
+```
+
+Then we will associate the genes in both conditions with Gene Ontology (GO). 
+GroupGO analysis will be performed where a set of genes are counted within all 
+possible ontologies, without statistical power. This function is capable of 
+perform groupGO for any organism as long as it's annotation package exists (i.e. 
+org.Hs.eg.db, org.Bt.eg.db, org.Rn.eg.db, etc). In this example we will perform 
+only for first condition:
+```{r getGroupGO, eval=TRUE, fig.align="center"}
+# Loading Homo sapiens annotation package
+library(org.Hs.eg.db)
+
+# Accessing the network for condition 1
+genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]), 
+                  as.character(NetworkData(out, "network1")[, "gene2"])))
+
+# Performing getGroupGO analysis
+cond1 <- getGroupGO(genes = genes, 
+                    ont = "BP", 
+                    keyType = "ENSEMBL", 
+                    annoPkg = org.Hs.eg.db)
+```
+
+After the association of GOs and genes, we are able to plot the network of 
+previously results. It's possible to choose which variables ("pathways", "TFs" 
+or "genes") we want to group. All these variables are inputted by the user, i.e. 
+the user can choose the pathways, TFs or genes returned from analysis from the 
+runAnalysis function and CeTF class object, or can also choose by specific 
+pathways, TFs or genes of interest. The table used to plot the networks are 
+stored in a list resulted from netGOTFPlot function. To get access is needed to 
+use the *object$tab*. The list will be splitted by groupBy argument choice:
+```{r netGOTFPlot1, eval=TRUE, fig.align="center"}
+# Subsetting only the first 12 Ontologies with more counts
+t1 <- head(cond1$results, 12)
+
+# Subsetting the network for the conditions to make available only the 12 nodes subsetted
+t2 <- subset(cond1$netGO, cond1$netGO$gene1 %in% as.character(t1[, "ID"]))
+
+# generating the GO plot grouping by pathways
+pt <- netGOTFPlot(netCond = NetworkData(out, "network1"),
+                  resultsGO = t1,
+                  netGO = t2,
+                  anno = NetworkData(out, "annotation"),
+                  groupBy = 'pathways',
+                  label = FALSE, 
+                  type = 'GO')
+pt$plot
+head(pt$tab$`GO:0006807`)
+
+# generating the GO plot grouping by TFs
+TFs <- NetworkData(out, "keytfs")$TF[1:4]
+pt <- netGOTFPlot(netCond = NetworkData(out, "network1"),
+                  resultsGO = t1,
+                  netGO = t2,
+                  anno = NetworkData(out, "annotation"),
+                  groupBy = 'TFs',
+                  TFs = TFs, 
+                  label = FALSE, 
+                  type = 'GO')
+pt$plot
+head(pt$tab$ENSG00000011465)
+
+# generating the GO plot grouping by specifics genes
+genes <- c('ENSG00000011465', 'ENSG00000026025', 'ENSG00000075624', 'ENSG00000077942')
+pt <- netGOTFPlot(netCond = NetworkData(out, "network1"),
+                  resultsGO = t1,
+                  netGO = t2,
+                  anno = NetworkData(out, "annotation"),
+                  groupBy = 'genes',
+                  genes = genes,
+                  label = FALSE, 
+                  type = 'GO')
+pt$plot
+head(pt$tab$ENSG00000011465)
+```
+
+Finally, we will merge the results from the network of condition 1 (Gene-Gene 
+and TF-Gene interaction) with groupGO results (GO-Gene or GO-TF interaction). 
+The final results has the objective to integrate all these data in order to 
+results in a complete view of the data:
+```{r netGOTFPlot2, eval=TRUE, fig.align="center"}
+pt <- netGOTFPlot(netCond = NetworkData(out, "network1"),
+                  netGO = t2,
+                  keyTFs = NetworkData(out, "keytfs"), 
+                  type = 'Integrated')
+
+pt$plot
+head(pt$tab)
+```
+
+
+## Using accessors to access results
+Is possible to use the accessors from CeTF class object to access the 
+outputs generated by the *runAnalysis* function. These outputs can be used as 
+input in **Cytoscape** [@shannon2003cytoscape]. The accessors are:
+
+* **getData**: returns the raw, tpm and normalized data;
+* **getDE**: returns the DE genes and TFs;
+* **InputData** returns the input matrices used to perform RIF and PCIT in *runAnalysis* function;
+* **OutputData** returns the output matrices and lists that output from RIF and PCIT in *runAnalysis* function;
+* **NetworkData** returns the network of interactions between gene and key TFs for both conditions, the keyTFs and the annotation for each gene and TF.
+
+All accessors can be further explored by looking in more detail at the documentation.
+
+
+# Session info
+
+```{r sessionInfo}
+sessionInfo()
+```
+
+
+# References

@@ -39,10 +39,10 @@ PCIT <- function(input, tolType = "mean") {
     }
     "/" <- function(x, y) ifelse(y == 0, 0, base::"/"(x, y))
     
-    cat(green("######################################" %+% "\n" %+% sprintf("Number of genes                 =  %s", 
-        nrow(input)) %+% "\n" %+% sprintf("Number of samples in condition  =  %s", 
-        ncol(input)) %+% "\n" %+% "######################################" %+% 
-        "\n"))
+    message(green("######################################" %+% "\n" %+% 
+        sprintf("Number of genes                 =  %s", nrow(input)) %+% 
+        "\n" %+% sprintf("Number of samples in condition  =  %s", ncol(input)) %+% 
+        "\n" %+% "######################################" %+% "\n"))
     
     suppressWarnings(gene_corr <- cor(t(input)))
     gene_corr[is.na(gene_corr)] <- 0

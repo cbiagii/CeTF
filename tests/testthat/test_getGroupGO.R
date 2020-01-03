@@ -1,9 +1,9 @@
 context("getGroupGO")
 
 library(org.Hs.eg.db)
-data(pcitrifExample)
-genes <- unique(c(as.character(getNet1(pcitrifExample)[,1]),
-                  as.character(getNet1(pcitrifExample)[,2])))
+data(CeTFdemo)
+genes <- unique(c(as.character(NetworkData(CeTFdemo, "network1")[["gene1"]]),
+                  as.character(NetworkData(CeTFdemo, "network1")[["gene2"]])))
 
 
 

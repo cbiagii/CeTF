@@ -49,26 +49,15 @@ RIF <- function(input, nta = NULL, ntf = NULL, nSamples1 = NULL, nSamples2 = NUL
     if (!is.data.frame(input) & !is.matrix(input)) {
         stop("input must be a dataframe or a matrix")
     }
-    if (!is.numeric(nta) | !is.numeric(ntf)) {
+    if (is.null(nta) | is.null(ntf)) {
         stop("nta and ntf variables must be a numeric greater than zero")
     }
-    if (!is.numeric(nSamples1) | !is.numeric(nSamples2)) {
+    if (is.null(nSamples1) | is.null(nSamples2)) {
         stop("the number of conditions must be a numeric greater than zero")
     }
-    if (missing(nta)) {
-        stop("No \"nta\" parameter provided")
-    }
-    if (missing(ntf)) {
-        stop("No \"ntf\" parameter provided")
-    }
-    if (missing(nSamples1)) {
-        stop("No \"nSamples1\" parameter provided")
-    }
-    if (missing(nSamples2)) {
-        stop("No \"nSamples2\" parameter provided")
-    }
     
-    cat(green("## Starting Regulatory Impact Factors analysis ##" %+% "\n"))
+    message(green("## Starting Regulatory Impact Factors analysis ##" %+% 
+        "\n"))
     
     ta <- input[seq_len(nta), ]
     tf <- input[(nta + 1):nrow(input), ]
@@ -110,8 +99,8 @@ RIF <- function(input, nta = NULL, ntf = NULL, nSamples1 = NULL, nSamples2 = NUL
     df <- data.frame(matrix(unlist(tmp), nrow = length(tmp), byrow = TRUE))
     
     out <- data.frame(TF = rownames(tf), avgexpr = rowMeans(tf), RIF1 = (df$X1 - 
-        mean(df[, 1]))/sd(df[, 1]), RIF2 = (df$X2 - mean(df[, 2]))/sd(df[, 
-        2]), row.names = NULL, stringsAsFactors = FALSE)
+        mean(df[, "X1"]))/sd(df[, "X1"]), RIF2 = (df$X2 - mean(df[, "X2"]))/sd(df[, 
+        "X2"]), row.names = NULL, stringsAsFactors = FALSE)
     
     return(out)
 }

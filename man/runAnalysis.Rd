@@ -39,7 +39,7 @@ runAnalysis(
 \item{data.type}{Type of input data. If is \emph{expression} (FPKM, TPM, etc) or \emph{counts.}}
 }
 \value{
-Returns an pcitRif object with output variables of each step of analysis.
+Returns an CeTF class object with output variables of each step of analysis.
 }
 \description{
 This function uses RIF and PCIT algorithms to run the whole pipeline analysis.
@@ -55,7 +55,7 @@ The pipeline is composed by 4 steps:
 data('simCounts')
 out <- runAnalysis(mat = simCounts,
                    conditions=c('cond1', 'cond2'),
-                   lfc = 2.57,
+                   lfc = 3,
                    padj = 0.05,
                    TFs = paste0('TF_', 1:1000),
                    nSamples1 = 10,
@@ -66,5 +66,5 @@ out <- runAnalysis(mat = simCounts,
 
 }
 \seealso{
-\code{\link{pcitrif-class}}
+\code{\link{CeTF-class}}
 }
