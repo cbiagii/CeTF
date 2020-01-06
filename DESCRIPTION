@@ -2,7 +2,7 @@ Package: CeTF
 Type: Package
 Title: Coexpression for Transcription Factors using Regulatory Impact Factors 
   and Partial Correlation and Information Theory analysis
-Version: 0.99.9
+Version: 0.99.10
 Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = 
   "cbiagijr@gmail.com", role = c("aut", "cre")), person("Ricardo", "Perecin 
   Nociti", email = "rnociti@gmail.com", role = c("aut")), person("Breno", 
