@@ -204,9 +204,9 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
                   Data = Assays(SimpleList(raw = mat, tpm = tpm.j, norm = 
                                                Clean_Dat)), 
                   DE = Assays(SimpleList(DE = Target)), 
-                  Input = Assays(SimpleList(RIF_out = RIF_out, PCIT_out_cond1 = 
-                                                PCIT_out_cond1, PCIT_out_cond2 = 
-                                                PCIT_out_cond2)), 
+                  Input = Assays(SimpleList(RIF_input = RIF_input, 
+                                            PCIT_input_cond1=PCIT_input_cond1, 
+                                            PCIT_input_cond2=PCIT_input_cond2)), 
                   Output = Assays(SimpleList(RIF_out = RIF_out, PCIT_out_cond1 = 
                                                  PCIT_out_cond1, PCIT_out_cond2 = 
                                                  PCIT_out_cond2)), 
