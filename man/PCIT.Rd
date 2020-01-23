@@ -26,8 +26,8 @@ defining edges in the reconstruction of GCN.
 # loading a simulated normalized data
 data('simNorm')
 
-# getting the PCIT results
-results <- PCIT(simNorm)
+# getting the PCIT results for first 30 genes
+results <- PCIT(simNorm[1:30, ])
 
 # printing PCIT output first 15 rows
 head(results$tab, 15)

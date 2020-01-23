@@ -74,7 +74,8 @@ genes <- unique(c(as.character(NetworkData(CeTFdemo, 'network1')[, 'gene1']),
 cond1 <- getGroupGO(genes = genes,
                     ont = 'BP',
                     keyType = 'ENSEMBL',
-                    annoPkg = org.Hs.eg.db)
+                    annoPkg = org.Hs.eg.db, 
+                    level = 3)
 
 # selecting only first 12 pathways
 t1 <- head(cond1$results, 12)
