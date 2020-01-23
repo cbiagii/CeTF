@@ -51,7 +51,8 @@
 #' cond1 <- getGroupGO(genes = genes,
 #'                     ont = 'BP',
 #'                     keyType = 'ENSEMBL',
-#'                     annoPkg = org.Hs.eg.db)
+#'                     annoPkg = org.Hs.eg.db, 
+#'                     level = 3)
 #'
 #' # selecting only first 12 pathways
 #' t1 <- head(cond1$results, 12)
@@ -107,7 +108,9 @@ netGOTFPlot <- function(netCond, resultsGO, netGO, anno, groupBy = "pathways",
                   "gene2"])
                 tmp1 <- netCond[which(netCond$gene1 %in% gns & netCond$gene2 %in% 
                   gns), ]
-                tmp1$pathway <- as.character(x[["ID"]])
+                if (nrow(tmp1) != 0) {
+                    tmp1$pathway <- as.character(x[["ID"]])
+                }
                 return(tmp1)
             })
             tmp <- do.call(rbind, tmp)
@@ -115,12 +118,20 @@ netGOTFPlot <- function(netCond, resultsGO, netGO, anno, groupBy = "pathways",
             suppressMessages(tab <- fortify(as.edgedf(tmp), anno, group = "pathway"))
             pt <- ggplot(tab, aes(from_id = tab[["from"]], to_id = tab[["to_id"]])) + 
                 geom_net(aes(colour = class, group = class, linewidth = 0.5), 
-                  layout.alg = "fruchtermanreingold", ealpha = 0.5, size = 3, 
-                  curvature = 0.05, directed = FALSE, arrowsize = 0.5, 
-                  na.rm = TRUE, show.legend = TRUE, fiteach = TRUE, labelon = label, 
-                  fontsize = 0.5, alpha = 0.25, labelcolour = "black", 
-                  singletons = FALSE) + ggtitle("Network for Pathways") + 
-                facet_wrap(~pathway) + theme_net() + theme(panel.background = element_rect(colour = "black"))
+                         layout.alg = "fruchtermanreingold", ealpha = 0.5, 
+                         size = 3, curvature = 0.05, directed = FALSE, 
+                         arrowsize = 0.5, na.rm = TRUE, show.legend = TRUE, 
+                         fiteach = TRUE, labelon = label, fontsize = 0.5, 
+                         alpha = 0.25, labelcolour = "black", singletons = FALSE) + 
+                theme_net()
+            
+            if (length(unique(tab[["pathway"]])) == 1) {
+                pt <- pt + ggtitle(paste("Network for", unique(tab[["pathway"]])))
+            } else {
+                pt <- pt + facet_wrap(~pathway) + 
+                    theme(panel.background = element_rect(colour = "black")) + 
+                    ggtitle("Network for Pathways")
+            }
             out <- list(plot = pt, tab = split(tab, f = tab$pathway))
         } else if (groupBy == "TFs") {
             tmp1 <- apply(resultsGO, 1, function(x) {
@@ -153,12 +164,19 @@ netGOTFPlot <- function(netCond, resultsGO, netGO, anno, groupBy = "pathways",
             suppressMessages(tab <- fortify(as.edgedf(tmp2), anno, group = "TF"))
             pt <- ggplot(tab, aes(from_id = tab[["from"]], to_id = tab[["to_id"]])) + 
                 geom_net(aes(colour = class, group = class, linewidth = 0.5), 
-                  layout.alg = "fruchtermanreingold", ealpha = 0.5, size = 3, 
-                  curvature = 0.05, directed = FALSE, arrowsize = 0.5, 
-                  na.rm = TRUE, show.legend = TRUE, fiteach = TRUE, labelon = label, 
-                  fontsize = 0.5, alpha = 0.25, labelcolour = "black", 
-                  singletons = FALSE) + ggtitle("Network for TFs") + facet_wrap(~TF) + 
-                theme_net() + theme(panel.background = element_rect(colour = "black"))
+                         layout.alg = "fruchtermanreingold", ealpha = 0.5, size = 3, 
+                         curvature = 0.05, directed = FALSE, arrowsize = 0.5, 
+                         na.rm = TRUE, show.legend = TRUE, fiteach = TRUE, labelon = label, 
+                         fontsize = 0.5, alpha = 0.25, labelcolour = "black", 
+                         singletons = FALSE) + theme_net()
+            
+            if (length(unique(tab[["TF"]])) == 1) {
+                pt <- pt + ggtitle(paste("Network for", unique(tab[["TF"]])))
+            } else {
+                pt <- pt + facet_wrap(~TF) + 
+                    theme(panel.background = element_rect(colour = "black")) + 
+                    ggtitle("Network for Pathways")
+            }
             out <- list(plot = pt, tab = split(tab, f = tab$TF))
         } else if (groupBy == "genes") {
             tmp1 <- apply(resultsGO, 1, function(x) {
@@ -187,8 +205,14 @@ netGOTFPlot <- function(netCond, resultsGO, netGO, anno, groupBy = "pathways",
                   curvature = 0.05, directed = FALSE, arrowsize = 0.5, 
                   na.rm = TRUE, show.legend = TRUE, fiteach = TRUE, labelon = label, 
                   fontsize = 0.5, alpha = 0.25, labelcolour = "black", 
-                  singletons = FALSE) + ggtitle("Network for Genes") + 
-                facet_wrap(~genes) + theme_net() + theme(panel.background = element_rect(colour = "black"))
+                  singletons = FALSE) + theme_net()
+            if (length(unique(tab[["genes"]])) == 1) {
+                pt <- pt + ggtitle(paste("Network for", unique(tab[["genes"]])))
+            } else {
+                pt <- pt + facet_wrap(~genes) + 
+                    theme(panel.background = element_rect(colour = "black")) + 
+                    ggtitle("Network for Genes")
+            }
             out <- list(plot = pt, tab = split(tab, f = tab$genes))
         }
     } else if (type == "Integrated") {
@@ -198,7 +222,11 @@ netGOTFPlot <- function(netCond, resultsGO, netGO, anno, groupBy = "pathways",
         values <- unique(c(as.character(network$gene1), as.character(network$gene2)))
         pathways <- unique(as.character(netGO$gene1))
         
-        TFs <- as.character(keyTFs$TF)
+        if (is.character(keyTFs)) {
+            TFs <- as.character(keyTFs)
+        } else {
+            TFs <- as.character(keyTFs$TF)
+        }
         gns <- setdiff(values, c(TFs, pathways))
         
         map <- data.frame(pattern = c(TFs, gns, pathways), sb = c(rep("TFs", 
@@ -212,13 +240,12 @@ netGOTFPlot <- function(netCond, resultsGO, netGO, anno, groupBy = "pathways",
         net %v% "color" = as.character(x)
         y <- c("#4DAF4A", "#E41A1C", "#377EB8")
         names(y) = levels(x)
-        labels = c(pathways, as.character(head(keyTFs, 2)[, "TF"]), as.character(tail(keyTFs, 
-            2)[, "TF"]))
         
         pt <- ggnet2(net, color = "color", color.legend = "", palette = y, 
             edge.size = 0.5, edge.color = "gray70", label.size = 1, alpha = 0.75, 
-            size = "degree", edge.alpha = 0.5, label = labels, legend.position = "bottom", 
-            mode = "spring") + coord_equal() + guides(size = FALSE)
+            size = "degree", edge.alpha = 0.5, label = label, 
+            legend.position = "bottom", mode = "spring") + coord_equal() + 
+            guides(size = FALSE)
         
         out <- list(plot = pt, tab = network)
     }

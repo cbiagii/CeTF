@@ -27,19 +27,29 @@ bivar.awk <- function(x) {
     }
     
     message(green(paste0("## '", colnames(x)[1], "' Column ##") %+% "\n" %+% 
-        sprintf("N     =  %s", length(x[, 1])) %+% "\n" %+% sprintf("Mean  =  %s", 
-        format(round(mean(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Std   =  %s", 
-        format(round(sd(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Min   =  %s", 
-        format(round(min(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Max   =  %s", 
-        format(round(max(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% "################################" %+% 
+        sprintf("N     =  %s", length(x[, 1])) %+% "\n" %+% sprintf("Mean = 
+                                                                    %s", 
+        format(round(mean(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Std 
+                                                                         =  %s", 
+        format(round(sd(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Min 
+                                                                       =  %s", 
+        format(round(min(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Max = 
+                                                                        %s", 
+        format(round(max(x[, 1]), 4), nsmall = 4)) %+% "\n" %+% "###########
+        #####################" %+% 
         "\n"))
     
     message(red(paste0("## '", colnames(x)[2], "' Column ##") %+% "\n" %+% 
-        sprintf("N     =  %s", length(x[, 2])) %+% "\n" %+% sprintf("Mean  =  %s", 
-        format(round(mean(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Std   =  %s", 
-        format(round(sd(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Min   =  %s", 
-        format(round(min(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Max   =  %s", 
-        format(round(max(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% "################################" %+% 
+        sprintf("N     =  %s", length(x[, 2])) %+% "\n" %+% sprintf("Mean = 
+                                                                    %s", 
+        format(round(mean(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Std = 
+                                                                         %s", 
+        format(round(sd(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Min = 
+                                                                       %s", 
+        format(round(min(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% sprintf("Max = 
+                                                                        %s", 
+        format(round(max(x[, 2]), 4), nsmall = 4)) %+% "\n" %+% "###########
+        #####################" %+% 
         "\n"))
     
     message(blue(sprintf("###" %+% "\n" %+% "Correlation  =  %s", format(round(cor(x[, 
