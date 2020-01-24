@@ -21,8 +21,8 @@ show the clustering coefficient distribution.
 # loading a simulated normalized data
 data(simNorm)
 
-# getting the PCIT results
-results <- PCIT(simNorm)
+# getting the PCIT results for first 30 genes
+results <- PCIT(simNorm[1:30, ])
 
 # plotting the histogram for PCIT significance results
 histPlot(results$adj_sig)

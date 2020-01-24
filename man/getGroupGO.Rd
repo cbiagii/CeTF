@@ -4,7 +4,7 @@
 \alias{getGroupGO}
 \title{Functional Profile of a gene set at specific GO level}
 \usage{
-getGroupGO(genes, ont = "BP", keyType, annoPkg)
+getGroupGO(genes, ont = "BP", keyType, annoPkg, level = 3)
 }
 \arguments{
 \item{genes}{Character vector with the genes to perform the functional profile.}
@@ -14,6 +14,8 @@ getGroupGO(genes, ont = "BP", keyType, annoPkg)
 \item{keyType}{Key type of inputted genes (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').}
 
 \item{annoPkg}{Package of annotation of specific organism (i.e. org.Hs.eg.db, org.Bt.eg.db, org.Rn.eg.db, etc).}
+
+\item{level}{Specific GO Level (default: 3).}
 }
 \value{
 Returns an list with the results of the functional profile of the genes and a
@@ -41,7 +43,8 @@ genes <- unique(c(as.character(NetworkData(CeTFdemo, 'network1')[, 'gene1']),
 cond1 <- getGroupGO(genes = genes,
                     ont = 'BP',
                     keyType = 'ENSEMBL',
-                    annoPkg = org.Hs.eg.db)
+                    annoPkg = org.Hs.eg.db, 
+                    level = 3)
 }
 
 
