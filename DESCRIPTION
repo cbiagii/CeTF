@@ -2,7 +2,7 @@ Package: CeTF
 Type: Package
 Title: Coexpression for Transcription Factors using Regulatory Impact Factors 
   and Partial Correlation and Information Theory analysis
-Version: 0.99.12
+Version: 0.99.14
 Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = 
   "cbiagijr@gmail.com", role = c("aut", "cre")), person("Ricardo", "Perecin 
   Nociti", email = "rnociti@gmail.com", role = c("aut")), person("Breno", 
@@ -24,9 +24,11 @@ Description: This package provides the necessary functions for performing the
   expression data. These two algorithms when combined provide a very relevant 
   layer of information for gene expression studies (Microarray, RNA-seq and 
   single-cell RNA-seq data).
-Imports: crayon, clusterProfiler, DESeq2, dplyr, geomnet, GGally, ggplot2, 
-  ggpubr, ggrepel, graphics, network, pbapply, reshape2, S4Vectors, scales, 
-  stats, SummarizedExperiment, tidyr, utils
+Imports: circlize, ComplexHeatmap, crayon, clusterProfiler, DESeq2, dplyr, 
+  GenomicTools, GenomicTools.fileHandler, geomnet, GGally, ggplot2, ggpubr, 
+  ggrepel, graphics, grDevices, grid, igraph, network, pbapply, RColorBrewer, 
+  RCy3, reshape2, S4Vectors, scales, stats, SummarizedExperiment, tidyr, utils, 
+  WebGestaltR
 Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown, testthat
 Depends: R (>= 4.0), methods
 License: GPL-3
