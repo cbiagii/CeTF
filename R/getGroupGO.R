@@ -8,6 +8,7 @@
 #' @param ont One of 'MF', 'BP', and 'CC' subontologies (default: 'BP').
 #' @param keyType Key type of inputted genes (i.e. 'ENSEMBL', 'SYMBOL', 'ENTREZID').
 #' @param annoPkg Package of annotation of specific organism (i.e. org.Hs.eg.db, org.Bt.eg.db, org.Rn.eg.db, etc).
+#' @param level Specific GO Level (default: 3).
 #'
 #' @return
 #' Returns an list with the results of the functional profile of the genes and a
@@ -33,12 +34,13 @@
 #' cond1 <- getGroupGO(genes = genes,
 #'                     ont = 'BP',
 #'                     keyType = 'ENSEMBL',
-#'                     annoPkg = org.Hs.eg.db)
+#'                     annoPkg = org.Hs.eg.db, 
+#'                     level = 3)
 #' }
 #'
 #'
 #' @export
-getGroupGO <- function(genes, ont = "BP", keyType, annoPkg) {
+getGroupGO <- function(genes, ont = "BP", keyType, annoPkg, level = 3) {
     if (missing(keyType)) {
         stop("No \"keyType\" parameter provided")
     }
@@ -47,7 +49,7 @@ getGroupGO <- function(genes, ont = "BP", keyType, annoPkg) {
     }
     
     ggo <- groupGO(gene = as.character(genes), OrgDb = annoPkg, ont = ont, 
-        readable = FALSE, keyType = keyType, level = 3)
+        readable = FALSE, keyType = keyType, level = level)
     
     results <- as.data.frame(ggo)
     results <- results[order(results$Count, decreasing = TRUE), ]
