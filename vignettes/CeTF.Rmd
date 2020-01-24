@@ -62,6 +62,7 @@ line) is clearly over-expressed in condition B. Importantly, the expression of
 the TF and the DE gene shows a strong positive correlation in condition A, and a 
 strong negative correlation in condition B.
 
+<center>
 ![A schematic diagram of the RIF analysis. (A) Gene expression data is 
 normalized and statistically assessed to identify differentially expressed (DE) 
 genes and differentially PIF genes (represented by circles) which together are 
@@ -71,6 +72,7 @@ co-expression correlation with the target genes computed for each of the two
 conditions of interest; Finally, (D) the way in which TF and target genes are 
 differentially co-expressed between the two conditions is used to compute the 
 relevance of each TF according to RIF1 and RIF2 (Reverter et al. 2010).](fig1.jpg){width=50%}
+</center>
 
 ## Partial Correlation with Information Theory (PCIT)
 The proposed PCIT algorithm contains two distinct steps as follows:
@@ -366,12 +368,12 @@ The next output is a network for both conditions resulted from \emph{runAnalysis
 netConditionsPlot(out)
 ```
 
-Then we will associate the genes in both conditions with Gene Ontology (GO). 
-GroupGO analysis will be performed where a set of genes are counted within all 
-possible ontologies, without statistical power. This function is capable of 
-perform groupGO for any organism as long as it's annotation package exists (i.e. 
-org.Hs.eg.db, org.Bt.eg.db, org.Rn.eg.db, etc). In this example we will perform 
-only for first condition:
+Then we will associate the genes in both conditions with Gene Ontology (GO) and 
+other databases. *getGroupGO* function will be performed where a set of genes 
+are counted within all possible ontologies, without statistical power. 
+This function is capable of perform groupGO for any organism as long as it's 
+annotation package exists (i.e. org.Hs.eg.db, org.Bt.eg.db, org.Rn.eg.db, etc). 
+In this example we will perform only for first condition:
 ```{r getGroupGO, eval=TRUE, fig.align="center"}
 # Loading Homo sapiens annotation package
 library(org.Hs.eg.db)
@@ -384,8 +386,38 @@ genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]),
 cond1 <- getGroupGO(genes = genes, 
                     ont = "BP", 
                     keyType = "ENSEMBL", 
-                    annoPkg = org.Hs.eg.db)
+                    annoPkg = org.Hs.eg.db, 
+                    level = 3)
 ```
+
+Alternatively, it is possible to perform the enrichment analysis with a 
+statistical power. In this case, there are many databases options to perform 
+this analysis (i.e. GO, KEGG, REACTOME, etc). The *getEnrich* function will
+perform the enrichment analysis and returns which pathways are enriched in 
+a given set of genes. This analysis requires a reference list of genes with 
+all genes that will be considered to enrich. In this package there is a function, 
+*refGenes* that has these references genes for ENSEMBL and SYMBOL nomenclatures 
+for 5 organisms: Human (**Homo sapiens**), Mouse (**Mus musculus**), Zebrafish 
+(**Danio rerio**), Cow (**Bos taurus**) and Rat (**Rattus norvegicus**). If the 
+user wants to use a different reference set, simply inputs a character vector 
+with the genes.
+```{r getEnrich, eval=FALSE, fig.align="center"}
+# Accessing the network for condition 1
+genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]), 
+                  as.character(NetworkData(out, "network1")[, "gene2"])))
+
+# Performing getEnrich analysis
+enrich <- getEnrich(organism='hsapiens', database='geneontology_Biological_Process', 
+                   genes=genes, GeneType='ensembl_gene_id', 
+                   refGene=refGenes$Homo_sapiens$ENSEMBL, 
+                   fdrMethod = "BH", fdrThr = 0.05, minNum = 5, maxNum = 500)
+```
+
+In the next steps we will use the *getGroupGO* results, but it is worth 
+mentioning that you can use the results of the *getEnrich* function. To run 
+the following steps with the *getEnrich* results is recommended to change the 
+*lfc* parameter in aboce *runAnalysis* function by 3. That way there will be 
+more pathways to enrich. Remembering that this will require more processing time.
 
 After the association of GOs and genes, we are able to plot the network of 
 previously results. It's possible to choose which variables ("pathways", "TFs" 
@@ -462,11 +494,116 @@ input in **Cytoscape** [@shannon2003cytoscape]. The accessors are:
 
 * **getData**: returns the raw, tpm and normalized data;
 * **getDE**: returns the DE genes and TFs;
-* **InputData** returns the input matrices used to perform RIF and PCIT in *runAnalysis* function;
-* **OutputData** returns the output matrices and lists that output from RIF and PCIT in *runAnalysis* function;
-* **NetworkData** returns the network of interactions between gene and key TFs for both conditions, the keyTFs and the annotation for each gene and TF.
+* **InputData** returns the input matrices used to perform RIF and PCIT in 
+*runAnalysis* function;
+* **OutputData** returns the output matrices and lists that output from RIF and 
+PCIT in *runAnalysis* function;
+* **NetworkData** returns the network of interactions between gene and key TFs 
+for both conditions, the keyTFs and the annotation for each gene and TF.
 
 All accessors can be further explored by looking in more detail at the documentation.
+
+
+# Additional Features
+This package has some additional features to plot the results. Let's use the
+gene set from *airway* data previously used. The features are:
+
+## Network diffusion analysis
+Network propagation is an important and widely used algorithm in systems biology, 
+with applications in protein function prediction, disease gene prioritization, 
+and patient stratification. Propagation provides a robust estimate of network 
+distance between sets of nodes. Network propagation uses the network of 
+interactions to find new genes that are most relevant to a set of well 
+understood genes. To perform this analysis is necessary to install the latest
+Cytoscape software version and know the path that will be installed the 
+software. After running the diffusion analysis is possible to perform the enrichment for
+the subnetwork resulted. Finally, ih this vignette we'll not perform the 
+diffusion analysis because this requires Cytoscape to be installed.
+```{r diffusion, eval=FALSE, fig.align="center"}
+result <- diffusion(object = out,
+                    cond = "network1",
+                    genes = c("ENSG00000185591", "ENSG00000179094"),
+                    cyPath = "C:/Program Files/Cytoscape_v3.7.2/Cytoscape.exe",
+                    name = "top_diffusion", 
+                    label = T)
+```
+
+## Circos plot
+This plot makes it possible to visualize the targets of specific TFs or genes.
+The main idea is to identify which chromosomes are linked to the targets of a 
+given gene or TF to infer whether there are cis (same chromosome) or trans 
+(different chromosomes) links between them. The black links are between different
+chromosomes while the red links are between the same chromosome.
+```{r circos, eval=FALSE, fig.align="center"}
+# Loading the CeTF object class demo
+data("CeTFdemo")
+
+CircosTargets(object = CeTFdemo, 
+              file = "/path/to/gtf/file/specie.gtf", 
+              nomenclature = "ENSEMBL", 
+              selection = "ENSG00000185591", 
+              cond = "condition1")
+```
+<center>
+![](fig2.png){width=50%}
+</center>
+
+## RIF relationships plots
+To visualize the relationship between RIF results (RIF1 and RIF2) is possible 
+to generate the following plot:
+```{r RIFPlot1, eval=TRUE, fig.align="center"}
+RIFPlot(object = out,
+        color  = "darkblue",
+        type   = "RIF")
+```
+
+Then to get the relationship between RIF1/RIF2 and differential expressed genes:
+```{r RIFPlot2, eval=TRUE, fig.align="center"}
+RIFPlot(object = out,
+        color  = "darkblue",
+        type   = "DE")
+```
+
+## Enrichment plots
+We provide some option to plot the results from **getEnrich** function. First of 
+all we need to perform the enrichment analysis for a set of genes:
+```{r enrichment, eval=TRUE, fig.align="center"}
+# Selecting the genes related to the network for condition 1
+genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]), 
+                  as.character(NetworkData(out, "network1")[, "gene2"])))
+
+# Performing enrichment analysis
+cond1 <- getEnrich(organism='hsapiens', database='geneontology_Biological_Process', 
+                   genes=genes, GeneType='ensembl_gene_id',
+                   refGene=refGenes$Homo_sapiens$ENSEMBL,
+                   fdrMethod = "BH", fdrThr = 0.05, minNum = 5, maxNum = 500)
+```
+
+After performing the enrichment analysis we have 4 options for viewing this data:
+
+### Heatmap-like functional classification
+```{r heatplot, eval=TRUE, fig.align="center"}
+heatPlot(res = cond1$results,
+         diff = getDE(out, "all"))
+```
+
+### Circle Barplot
+```{r circle, eval=TRUE, fig.align="center"}
+enrichPlot(res = cond1$results,
+           type = "circle")
+```
+
+### Barplot
+```{r barplot, eval=TRUE, fig.align="center"}
+enrichPlot(res = cond1$results,
+           type = "bar")
+```
+
+### Dotplot
+```{r dotplot, eval=TRUE, fig.align="center"}
+enrichPlot(res = cond1$results,
+           type = "dot")
+```
 
 
 # Session info
