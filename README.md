@@ -37,7 +37,6 @@ packagesCRAN <- c('circlize', 'GenomicTools', 'WebGestaltR')
 install.packages(packagesCRAN[!packagesCRAN %in% installed.packages()[,1]])
 ```
 
-
 ## Docker
 To install docker follow the instructions in the links below depending on your operating system
 * CentOS: https://docs.docker.com/install/linux/docker-ce/centos/
@@ -59,6 +58,11 @@ There are several differents parameters to run the downloaded image. The most co
 docker run --rm -d -p PORT:PORT -e PASSWORD=password --name [ANY_NAME] -v /server/path/:/docker/path/ -e USERID=$UID biagii/cetf
 ```
 Once the docker image is running, the Rstudio interface with all the necessary dependencies will be made available, and of course the CeTF package, installed ready for use.
+
+## Tutorials
+In this section we have some tutorials available to help the user adapt their own data to run the CeTF package 
+- [Vignette](./docs/vignette.html);
+
 
 ## Help
 <p>Any questions contact the developer by email: <a href="#">cbiagijr@gmail.com</a></p>
