@@ -17,7 +17,16 @@ To properly run <b>ceTF</b> package is necessary to install some dependencies. F
 * libfontconfig1-dev
 * libcairo2-dev
 
-To install R packages dependencies:
+To install CeTF package:
+```R
+BiocManager::install("CeTF")
+```
+or
+```R
+devtools::install_github("cbiagii/CeTF")
+```
+
+To install the remaining dependencies:
 ```R
 #Bioconductor dependencies
 packagesBioc <- c('snpStats', 'airway', 'ComplexHeatmap', 'org.Hs.eg.db', 'RCy3')
@@ -28,14 +37,6 @@ packagesCRAN <- c('circlize', 'GenomicTools', 'WebGestaltR')
 install.packages(packagesCRAN[!packagesCRAN %in% installed.packages()[,1]])
 ```
 
-To install CeTF package:
-```R
-BiocManager::install("CeTF")
-```
-or
-```R
-devtools::install_github("cbiagii/CeTF")
-```
 
 ## Docker
 To install docker follow the instructions in the links below depending on your operating system
@@ -47,7 +48,7 @@ To install docker follow the instructions in the links below depending on your o
 * Windows: https://docs.docker.com/docker-for-windows/install/
 
 #### Docker pull
-Once docker is installed, the next step is pull the **CeTF** image from dockerhub using the following command:
+Once docker is installed, the next step is pull the **CeTF** image from dockerhub (https://hub.docker.com/r/biagii/cetf) using the following command:
 ```docker
 docker pull biagii/cetf
 ```
@@ -60,4 +61,4 @@ docker run --rm -d -p PORT:PORT -e PASSWORD=password --name [ANY_NAME] -v /serve
 Once the docker image is running, the Rstudio interface with all the necessary dependencies will be made available, and of course the CeTF package, installed ready for use.
 
 ## Help
-<p>Any questions contact the developer by email: <a href="#">biagi@usp.br</a></p>
+<p>Any questions contact the developer by email: <a href="#">cbiagijr@gmail.com</a></p>
