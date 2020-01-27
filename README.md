@@ -62,6 +62,7 @@ Once the docker image is running, the Rstudio interface with all the necessary d
 ## Tutorials
 In this section we have some tutorials available to help the user adapt their own data to run the CeTF package 
 - [Vignette](./docs/vignette.html);
+- [TCGA-STAD example](./docs/TCGA-STAD.html)
 
 
 ## Help
