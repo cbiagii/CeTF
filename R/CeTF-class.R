@@ -300,12 +300,11 @@ setMethod(f = "NetworkData", signature = "CeTF", definition = function(x,
 ### Changing Validity Assays to accept objects of different dims
 #' @export
 #' @importFrom  S4Vectors setValidity2
-.valid.Assays <- function(x)
-{
-    assays <- as(x, "SimpleList", strict=FALSE)
-    if (!is(assays, "SimpleList"))
+.valid.Assays <- function(x) {
+    assays <- as(x, "SimpleList", strict = FALSE)
+    if (!is(assays, "SimpleList")) 
         return("'assays' must be a SimpleList object")
-    if (length(assays) == 0L)
+    if (length(assays) == 0L) 
         return(NULL)
     
     NULL

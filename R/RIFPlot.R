@@ -55,12 +55,12 @@ RIFPlot <- function(object, color = "darkblue", type = "RIF") {
         tb <- data.frame(RIF1 = tmp1$RIF1, RIF2 = tmp1$RIF2, DE = tmp2$diff)
         
         pt1 <- ggplot(data = tb, aes(x = tb[["RIF1"]], y = tb[["DE"]])) + 
-            geom_point(color = color, size = 1.5) + 
-            xlab("RIF1") + ylab("Expression Difference") + theme_bw()
+            geom_point(color = color, size = 1.5) + xlab("RIF1") + ylab("Expression Difference") + 
+            theme_bw()
         
         pt2 <- ggplot(data = tb, aes(x = tb[["RIF2"]], y = tb[["DE"]])) + 
-            geom_point(color = color, size = 1.5) + 
-            xlab("RIF2") + ylab("Expression Difference") + theme_bw()
+            geom_point(color = color, size = 1.5) + xlab("RIF2") + ylab("Expression Difference") + 
+            theme_bw()
         
         return(ggarrange(pt1, pt2, nrow = 2, ncol = 1))
     }

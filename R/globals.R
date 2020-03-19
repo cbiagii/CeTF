@@ -1,3 +1,3 @@
-# utils::globalVariables(c('corr', 'sig', 'clustcoef', 'expDiff',
-# 'runAnalysis', 'colData<-', 'from', 'to_id', 'genes', 'Type',
-# 'baseMean', 'log2FoldChange', 'padj'))
+utils::globalVariables(c("TF", "pathway", "vertex.names", "xend", "y", 
+    "yend"))
+

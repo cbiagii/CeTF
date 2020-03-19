@@ -44,12 +44,13 @@
 #'                     cond = 'network1', 
 #'                     genes = c('ENSG00000185591', 'ENSG00000179094'), 
 #'                     cyPath = 'C:/Program Files/Cytoscape_v3.7.2/Cytoscape.exe', 
-#'                     name = "top_diffusion",
+#'                     name = 'top_diffusion',
 #'                     label = TRUE)
 #' }
 #'
 #' @export
-diffusion <- function(object, cond, genes, cyPath, name = "top_diffusion", label = TRUE) {
+diffusion <- function(object, cond, genes, cyPath, name = "top_diffusion", 
+    label = TRUE) {
     if (!is(object, "CeTF")) {
         stop("the input must be a CeTF class object")
     }
