@@ -1,15 +1,17 @@
-CHANGES IN VERSION 0.9.XX
+CHANGES IN VERSION 0.99.15
 --------------------------
     - Development version.
-	
-
-CHANGES IN VERSION 1.0.0
---------------------------
 	- Adding 'level' parameter to perform groupGO analysis in getGroupGO function.
-	- Adding getEnrich() function.
+	- Adding getEnrich function.
 	- Adding enrichPlot and heatPlot function.
 	- Adding RIFPlot function.
 	- Adding diffusion function.
 	- Adding CircosTargets function.
 	- Fix netGOTFPlot function bugs.
 	- Updated vignette.
+	
+CHANGES IN VERSION 0.99.16
+--------------------------
+    - Development version.
+	- Fix netGOTFPlot dependencies and add the label size parameter.
+	- Update vignette.
