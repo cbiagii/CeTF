@@ -13,7 +13,7 @@ netGOTFPlot(
   TFs = NULL,
   genes = NULL,
   keyTFs = NULL,
-  label = FALSE,
+  size = 0.5,
   type = NULL
 )
 }
@@ -43,7 +43,7 @@ are: 'pathways', 'TFs' and 'genes' (default: 'pathways').}
 (see \code{\link{NetworkData}}). This argument is used only if the type argument
 equals Integrated.}
 
-\item{label}{If label is TRUE, shows the names of nodes (default: FALSE).}
+\item{size}{Size of nodes labels (default: 0.5).}
 
 \item{type}{Type of plot selected (GO or Integrated). If GO will plot the 
 associated GO grouped by some variable, and if Integrated will plot a 
@@ -89,7 +89,6 @@ pt <- netGOTFPlot(netCond = NetworkData(CeTFdemo, 'network1'),
               netGO = t2,
               anno = NetworkData(CeTFdemo, 'annotation'),
               groupBy = 'pathways',
-              label = TRUE, 
               keyTFs = NetworkData(CeTFdemo, 'keytfs'), 
               type = 'GO')
 pt$plot
@@ -101,7 +100,6 @@ pt <- netGOTFPlot(netCond = NetworkData(CeTFdemo, 'network1'),
               netGO = t2,
               anno = NetworkData(CeTFdemo, 'annotation'),
               groupBy = 'pathways',
-              label = TRUE, 
               keyTFs = NetworkData(CeTFdemo, 'keytfs'), 
               type = 'Integrated')
 pt$plot
