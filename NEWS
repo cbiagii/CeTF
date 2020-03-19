@@ -1,4 +1,4 @@
-CHANGES IN VERSION 0.1.0
+CHANGES IN VERSION 0.99.15
 --------------------------
     - Development version.
 	- Adding 'level' parameter to perform groupGO analysis in getGroupGO function.
@@ -9,3 +9,9 @@ CHANGES IN VERSION 0.1.0
 	- Adding CircosTargets function.
 	- Fix netGOTFPlot function bugs.
 	- Updated vignette.
+	
+CHANGES IN VERSION 0.99.16
+--------------------------
+    - Development version.
+	- Fix netGOTFPlot dependencies and add the label size parameter.
+	- Update vignette.
