@@ -38,10 +38,10 @@ links are between the same chromosome.
 \examples{
 \dontrun{
 CircosTargets(object = out, 
-file = "/path/to/gtf/specie.gtf", 
-nomenclature = "SYMBOL", 
-selection = "TCF4", 
-cond = "condition1")
+file = '/path/to/gtf/specie.gtf', 
+nomenclature = 'SYMBOL', 
+selection = 'TCF4', 
+cond = 'condition1')
 }
 
 }

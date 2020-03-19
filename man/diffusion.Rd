@@ -51,7 +51,7 @@ result <- diffusion(object = CeTFdemo,
                     cond = 'network1', 
                     genes = c('ENSG00000185591', 'ENSG00000179094'), 
                     cyPath = 'C:/Program Files/Cytoscape_v3.7.2/Cytoscape.exe', 
-                    name = "top_diffusion",
+                    name = 'top_diffusion',
                     label = TRUE)
 }
 
