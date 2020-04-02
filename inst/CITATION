@@ -1,0 +1,22 @@
+citHeader("To cite CeTF in publications use:")
+
+citEntry(entry = "Article",
+  title        = "CeTF: an R package to Coexpression for Transcription Factors using Regulatory Impact Factors (RIF) and Partial Correlation and Information (PCIT) analysis",
+  author       = personList(as.person("Carlos Alberto Oliveira de Biagi Junior"),
+							as.person("Ricardo Perecin Nociti"),
+							as.person("Breno Osvaldo Funicheli"),
+							as.person("Patricia de Cassia Ruy"),
+							as.person("Joao Paulo Bianchi Ximenez"),
+							as.person("Wilson A Silva Jr")
+                            ),
+  journal      = "bioRxiv",
+  year         = "2020",
+  doi          = "10.1101/2020.03.30.015784",
+  url          = "https://www.biorxiv.org/content/early/2020/04/01/2020.03.30.015784",
+
+  textVersion  =
+  paste("Carlos Alberto Oliveira de Biagi Junior, Ricardo Perecin Nociti,",
+		"Breno Osvaldo Funicheli, Patricia de Cassia Ruy, Joao Paulo Bianchi Ximenez,",
+		"Wilson A Silva Jr",
+		"https://www.biorxiv.org/content/early/2020/04/01/2020.03.30.015784")
+)
