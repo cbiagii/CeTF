@@ -15,3 +15,8 @@ CHANGES IN VERSION 0.99.16
     - Development version.
 	- Fix netGOTFPlot dependencies and add the label size parameter.
 	- Update vignette.
+	
+CHANGES IN VERSION 0.99.17
+--------------------------
+    - Updating citation.
+	- Adding CITATION file.
