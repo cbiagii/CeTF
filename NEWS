@@ -1,6 +1,6 @@
 CHANGES IN VERSION 0.99.15
 --------------------------
-    - Development version.
+	- Development version.
 	- Adding 'level' parameter to perform groupGO analysis in getGroupGO function.
 	- Adding getEnrich function.
 	- Adding enrichPlot and heatPlot function.
@@ -12,11 +12,16 @@ CHANGES IN VERSION 0.99.15
 	
 CHANGES IN VERSION 0.99.16
 --------------------------
-    - Development version.
+	- Development version.
 	- Fix netGOTFPlot dependencies and add the label size parameter.
 	- Update vignette.
 	
 CHANGES IN VERSION 0.99.17
 --------------------------
-    - Updating citation.
+	- Updating citation.
 	- Adding CITATION file.
+	
+	
+CHANGES IN VERSION 0.99.18
+--------------------------
+	- Fix SmearPlot bugs.
