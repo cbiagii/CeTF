@@ -4,7 +4,9 @@
 \name{RIF_input}
 \alias{RIF_input}
 \title{Regulatory Impact Factors (RIF) input}
-\format{An dataframe.}
+\format{
+An dataframe.
+}
 \usage{
 data(RIF_input)
 }

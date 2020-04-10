@@ -4,7 +4,9 @@
 \name{refGenes}
 \alias{refGenes}
 \title{List of reference genes for 5 different organisms to perform enrichment}
-\format{An list.}
+\format{
+An list.
+}
 \usage{
 data(refGenes)
 }

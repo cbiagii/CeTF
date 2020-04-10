@@ -4,7 +4,9 @@
 \name{simNorm}
 \alias{simNorm}
 \title{Simulated normalized data}
-\format{An dataframe.}
+\format{
+An dataframe.
+}
 \usage{
 data(simNorm)
 }
