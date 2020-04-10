@@ -1,10 +1,10 @@
 #' @importFrom utils packageDescription
 .onAttach = function(libname, pkgname) {
-  version = packageDescription(pkgname, fields = "Version")
-  
-  msg = paste0("========================================
+    version = packageDescription(pkgname, fields = "Version")
+    
+    msg = paste0("========================================
 ", pkgname, 
-               " version ", version, "
+        " version ", version, "
 Bioconductor page: http://bioconductor.org/packages/CeTF/
 Github page: https://github.com/cbiagii/CeTF or https://cbiagii.github.io/CeTF/
 Documentation: http://bioconductor.org/packages/CeTF/
@@ -17,6 +17,6 @@ Impact Factors (RIF) and Partial Correlation and Information (PCIT) analysis.
 bioRxiv. 2020, DOI: 10.1101/2020.03.30.015784
 ========================================
 ")
-  
-  packageStartupMessage(msg)
+    
+    packageStartupMessage(msg)
 }

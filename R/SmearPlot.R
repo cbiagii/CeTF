@@ -113,14 +113,22 @@ SmearPlot <- function(object, diffMethod, lfc = 1.5, conditions, TF = NULL,
         tab <- na.omit(tab)
         
         pt <- ggplot(tab) + geom_point(aes(x = log2(tab[["baseMean"]]), 
-            y = tab[[var1]], color = tab[["Type"]])) + geom_point(data = subset(tab, 
-            tab[["Type"]] == conditions[1]), aes(x = log2(subset(tab, tab[["Type"]] == 
-            conditions[1])[["baseMean"]]), y = subset(tab, tab[["Type"]] == 
-            conditions[1])[[var1]], colour = conditions[1]), size = 2) + 
-            geom_point(data = subset(tab, tab[["Type"]] == conditions[2]), 
+            y = tab[[var1]], color = tab[["Type"]]))
+        
+        if (nrow(subset(tab, tab[["Type"]] == conditions[1])) != 0) {
+            pt <- pt + geom_point(data = subset(tab, tab[["Type"]] == conditions[1]), 
+                aes(x = log2(subset(tab, tab[["Type"]] == conditions[1])[["baseMean"]]), 
+                  y = subset(tab, tab[["Type"]] == conditions[1])[[var1]], 
+                  colour = conditions[1]), size = 2)
+        }
+        
+        if (nrow(subset(tab, tab[["Type"]] == conditions[2])) != 0) {
+            pt <- pt + geom_point(data = subset(tab, tab[["Type"]] == conditions[2]), 
                 aes(x = log2(subset(tab, tab[["Type"]] == conditions[2])[["baseMean"]]), 
                   y = subset(tab, tab[["Type"]] == conditions[2])[[var1]], 
                   colour = conditions[2]), size = 2)
+        }
+        
         if (nrow(subset(tab, tab[["Type"]] == paste("TF", conditions[1]))) != 
             0) {
             pt <- pt + geom_point(data = subset(tab, tab[["Type"]] == paste("TF", 
