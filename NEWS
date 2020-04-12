@@ -21,7 +21,11 @@ CHANGES IN VERSION 0.99.17
 	- Updating citation.
 	- Adding CITATION file.
 	
-	
 CHANGES IN VERSION 0.99.18
 --------------------------
 	- Fix SmearPlot bugs.
+	
+CHANGES IN VERSION 0.99.19
+--------------------------
+	- Fix netGOTFPlot, RIFPlot and densityPlot functions
+	- Fix warning messages when ploting with ggplot2 package (densityPlot, enrichPlot, histPlot, RIFPlot, SmearPlot)
