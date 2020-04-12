@@ -30,7 +30,7 @@ results <- PCIT(simNorm[1:20, ])
 
 # using the PCIT results to get density distribution of correlation coefficients
 densityPlot(mat1 = results$adj_raw,
-           mat2 = results$adj_sig,
-           threshold = 0.5)
+            mat2 = results$adj_sig,
+            threshold = 0.5)
 
 }
