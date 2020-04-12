@@ -112,8 +112,8 @@ SmearPlot <- function(object, diffMethod, lfc = 1.5, conditions, TF = NULL,
             paste("TF", conditions[1]), "Not Different TF"))
         tab <- na.omit(tab)
         
-        pt <- ggplot(tab) + geom_point(aes(x = log2(tab[["baseMean"]]), 
-            y = tab[[var1]], color = tab[["Type"]]))
+        pt <- ggplot(tab) + geom_point(aes(x = log2(.data[["baseMean"]]), 
+            y = .data[[var1]], color = .data[["Type"]]))
         
         if (nrow(subset(tab, tab[["Type"]] == conditions[1])) != 0) {
             pt <- pt + geom_point(data = subset(tab, tab[["Type"]] == conditions[1]), 
@@ -186,8 +186,8 @@ SmearPlot <- function(object, diffMethod, lfc = 1.5, conditions, TF = NULL,
         tab[["Type"]] <- factor(tab[["Type"]], levels = c("TF", paste("Target", 
             conditions[1]), paste("Target", conditions[2]), "None"))
         
-        pt <- ggplot(tab) + geom_point(aes(x = log2(tab[["baseMean"]]), 
-            y = tab[[var1]], color = tab[["Type"]])) + geom_point(data = subset(tab, 
+        pt <- ggplot(tab) + geom_point(aes(x = log2(.data[["baseMean"]]), 
+            y = .data[[var1]], color = .data[["Type"]])) + geom_point(data = subset(tab, 
             tab[["Type"]] == paste("Target", conditions[1])), aes(x = log2(subset(tab, 
             tab[["Type"]] == paste("Target", conditions[1]))[["baseMean"]]), 
             y = subset(tab, tab[["Type"]] == paste("Target", conditions[1]))[[var1]], 
@@ -211,9 +211,9 @@ SmearPlot <- function(object, diffMethod, lfc = 1.5, conditions, TF = NULL,
                 which(tab[["Type"]] == "TF"))
             dtsub <- tab[idx, ]
             
-            return(pt + geom_label_repel(data = dtsub, aes(x = log2(dtsub[["baseMean"]]), 
-                y = dtsub[[var1]], color = dtsub[["Type"]], alpha = 0.3, 
-                label = dtsub[["genes"]]), nudge_y = 1, segment.size = 0.2, 
+            return(pt + geom_label_repel(data = dtsub, aes(x = log2(.data[["baseMean"]]), 
+                y = .data[[var1]], color = .data[["Type"]], alpha = 0.3, 
+                label = .data[["genes"]]), nudge_y = 1, segment.size = 0.2, 
                 segment.color = "grey50", direction = "x", show.legend = FALSE))
         } else {
             return(pt)

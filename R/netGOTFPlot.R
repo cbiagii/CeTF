@@ -128,6 +128,20 @@ netGOTFPlot <- function(netCond, resultsGO, netGO, anno, groupBy = "pathways",
             
             em.path <- lapply(unique(tab1[["pathway"]]), function(x) subset(tab1, 
                 pathway == x)[, c(1, 3)])
+            
+            del <- NULL
+            for (z in seq_along(em.path)) {
+                if (nrow(em.path[[z]]) != 1 & (length(unique(as.character(em.path[[z]][[1]]))) == 
+                  1 | length(unique(as.character(em.path[[z]][[2]]))) == 
+                  1)) {
+                  del <- rbind(del, z)
+                }
+            }
+            
+            if (!is.null(del)) {
+                em.path <- em.path[-del[[1]]]
+            }
+            
             em.pathway <- lapply(em.path, network, directed = FALSE)
             em.tmp <- lapply(unique(tab[["pathway"]]), function(x) subset(tab, 
                 pathway == x))

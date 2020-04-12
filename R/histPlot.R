@@ -34,7 +34,7 @@ histPlot <- function(mat) {
     cc <- clustCoef(mat)
     
     df1 <- data.frame(clustcoef = cc)
-    pt1 <- ggplot(df1, aes(df1[["clustcoef"]])) + geom_histogram(breaks = seq(0, 
+    pt1 <- ggplot(df1, aes(.data[["clustcoef"]])) + geom_histogram(breaks = seq(0, 
         0.6, by = 0.05), col = "black", fill = "#1F3552") + ggtitle("Connectivity Distribution") + 
         xlab("Proportion of Connections") + ylab("Number of Genes") + scale_y_continuous(expand = c(0, 
         0)) + scale_x_continuous(labels = percent) + theme_bw() + theme(axis.line = element_line(size = 1, 
@@ -46,7 +46,7 @@ histPlot <- function(mat) {
     
     
     df2 <- data.frame(clustcoef = cc * length(cc))
-    pt2 <- ggplot(df2, aes(x = df2[["clustcoef"]])) + geom_step(stat = "ecdf", 
+    pt2 <- ggplot(df2, aes(x = .data[["clustcoef"]])) + geom_step(stat = "ecdf", 
         col = "red", size = 1) + scale_y_continuous(labels = percent) + 
         ggtitle("Connectivity Distribution") + xlab("Number of Genes") + 
         ylab("Cumulative Proportion") + theme_bw() + theme(axis.line = element_line(size = 1, 
