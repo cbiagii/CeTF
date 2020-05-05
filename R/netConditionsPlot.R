@@ -58,8 +58,14 @@ netConditionsPlot <- function(x) {
     x1 <- factor(og$Category)
     
     nt1 %v% "color" <- as.character(x1)
-    y <- c("#4DAF4A", "#E41A1C")
-    names(y) = levels(x1)
+    
+    if (length(levels(x1)) == 1) {
+        y = "Set1"
+    } else {
+        y <- c("#4DAF4A", "#E41A1C")
+        names(y) = levels(x1)
+    }
+    
     labels <- c(as.character(head(mainTFs, 2)[, "TF"]), as.character(tail(mainTFs, 
         2)[, "TF"]))
     pt1 <- ggnet2(nt1, color = "color", color.legend = "", palette = y, 
@@ -83,8 +89,14 @@ netConditionsPlot <- function(x) {
     x2 <- factor(og$Category)
     
     nt2 %v% "color" <- as.character(x2)
-    y <- c("#4DAF4A", "#E41A1C")
-    names(y) = levels(x2)
+    
+    if (length(levels(x1)) == 1) {
+        y = "Set1"
+    } else {
+        y <- c("#4DAF4A", "#E41A1C")
+        names(y) = levels(x2)
+    }
+    
     labels <- c(as.character(head(mainTFs, 2)[, "TF"]), as.character(tail(mainTFs, 
         2)[, "TF"]))
     pt2 <- ggnet2(nt2, color = "color", color.legend = "", palette = y, 
