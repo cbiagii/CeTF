@@ -26,6 +26,7 @@
 #' RIFPlot(object = CeTFdemo, 
 #'         color  = 'darkblue', 
 #'         type   = 'RIF')
+#' 
 #'         
 #' # performing RIFPlot for DE
 #' RIFPlot(object = CeTFdemo, 
@@ -41,11 +42,11 @@ RIFPlot <- function(object, color = "darkblue", type = "RIF") {
     if (type == "RIF") {
         tmp <- OutputData(object, analysis = "rif")
         
-        pt <- ggplot(data = tmp, aes(x = tmp[["RIF1"]], y = tmp[["RIF2"]])) + 
+        pt <- ggplot(data = tmp, aes(x = .data[["RIF1"]], y = .data[["RIF2"]])) + 
             geom_point(color = color, size = 1.5) + xlim(-6, 6) + ylim(-6, 
             6) + xlab("RIF1") + ylab("RIF2") + theme_bw()
         
-        return(print(pt))
+        return(pt)
     } else if (type == "DE") {
         tmp1 <- OutputData(object, analysis = "rif")
         
@@ -54,14 +55,16 @@ RIFPlot <- function(object, color = "darkblue", type = "RIF") {
         
         tb <- data.frame(RIF1 = tmp1$RIF1, RIF2 = tmp1$RIF2, DE = tmp2$diff)
         
-        pt1 <- ggplot(data = tb, aes(x = tb[["RIF1"]], y = tb[["DE"]])) + 
+        pt1 <- ggplot(data = tb, aes(x = .data[["RIF1"]], y = .data[["DE"]])) + 
             geom_point(color = color, size = 1.5) + xlab("RIF1") + ylab("Expression Difference") + 
             theme_bw()
         
-        pt2 <- ggplot(data = tb, aes(x = tb[["RIF2"]], y = tb[["DE"]])) + 
+        pt2 <- ggplot(data = tb, aes(x = .data[["RIF2"]], y = .data[["DE"]])) + 
             geom_point(color = color, size = 1.5) + xlab("RIF2") + ylab("Expression Difference") + 
             theme_bw()
         
-        return(ggarrange(pt1, pt2, nrow = 2, ncol = 1))
+        pt3 <- ggarrange(pt1, pt2, nrow = 2, ncol = 1)
+        
+        return(pt3)
     }
 }

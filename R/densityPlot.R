@@ -12,6 +12,7 @@
 #'
 #' @importFrom ggplot2 geom_histogram scale_fill_manual xlab ylab element_line element_blank geom_density geom_vline aes_string
 #' @importFrom ggpubr ggarrange
+#' @importFrom stats density
 #'
 #' @examples
 #' # loading a simulated normalized data
@@ -22,8 +23,8 @@
 #'
 #' # using the PCIT results to get density distribution of correlation coefficients
 #' densityPlot(mat1 = results$adj_raw,
-#'            mat2 = results$adj_sig,
-#'            threshold = 0.5)
+#'             mat2 = results$adj_sig,
+#'             threshold = 0.5)
 #'
 #' @export
 densityPlot <- function(mat1, mat2, threshold = 0.5) {
@@ -41,10 +42,11 @@ densityPlot <- function(mat1, mat2, threshold = 0.5) {
     df4 <- data.frame(corr = mat1[intersect(which(abs(mat1) > threshold), 
         which(upper.tri(mat1)))], sig = paste0("abs. cor. > ", threshold))
     
-    pt1 <- ggplot(df1, aes(x = df1[["corr"]])) + geom_density(colour = "black", 
+    dn <- density(df1[["corr"]])
+    pt1 <- ggplot(df1, aes(x = .data[["corr"]])) + geom_density(colour = "black", 
         fill = "#a0b8d6", size = 1) + scale_x_continuous(name = "Correlation Coefficient", 
-        breaks = seq(-1, 1, 0.2), limits = c(-1.15, 1.15)) + scale_y_continuous(name = "Density", 
-        expand = c(0, 0), limits = c(0, 1.1)) + ggtitle("Density Plot of Raw Correlation Coefficients") + 
+        breaks = seq(-1, 1, 0.2), limits = c(-1, 1)) + scale_y_continuous(name = "Density", 
+        expand = c(0, 0), limits = c(0, range(dn[["y"]] + 0.1)[2])) + ggtitle("Density Plot of Raw Correlation Coefficients") + 
         theme_bw() + theme(axis.line = element_line(size = 1, colour = "black"), 
         panel.grid.major = element_line(colour = "#d3d3d3"), panel.grid.minor = element_blank(), 
         panel.border = element_blank(), panel.background = element_blank(), 
@@ -109,6 +111,8 @@ densityPlot <- function(mat1, mat2, threshold = 0.5) {
                 size = 9), axis.text.y = element_text(colour = "black", 
                 size = 9), legend.position = "top")
     
-    return(ggarrange(plotlist = list(pt1, pt2, pt3, pt4), widths = c(2, 
-        2)))
+    pt <- ggarrange(plotlist = list(pt1, pt2, pt3, pt4), widths = c(2, 
+        2))
+    
+    return(pt)
 }
