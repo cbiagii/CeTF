@@ -4,7 +4,9 @@
 \name{simCounts}
 \alias{simCounts}
 \title{Simulated counts data}
-\format{An dataframe.}
+\format{
+An dataframe.
+}
 \usage{
 data(simCounts)
 }

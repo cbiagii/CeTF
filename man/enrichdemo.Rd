@@ -4,7 +4,9 @@
 \name{enrichdemo}
 \alias{enrichdemo}
 \title{Enrichment data}
-\format{An list}
+\format{
+An list
+}
 \usage{
 data(enrichdemo)
 }

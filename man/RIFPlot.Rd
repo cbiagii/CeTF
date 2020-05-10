@@ -34,6 +34,7 @@ data(CeTFdemo)
 RIFPlot(object = CeTFdemo, 
         color  = 'darkblue', 
         type   = 'RIF')
+
         
 # performing RIFPlot for DE
 RIFPlot(object = CeTFdemo, 

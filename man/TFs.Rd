@@ -4,7 +4,9 @@
 \name{TFs}
 \alias{TFs}
 \title{Transcripition Factors data}
-\format{An character vector with TFs for \emph{Homo sapiens}.}
+\format{
+An character vector with TFs for \emph{Homo sapiens}.
+}
 \usage{
 data(TFs)
 }

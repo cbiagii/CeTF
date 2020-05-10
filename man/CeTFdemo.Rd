@@ -4,7 +4,9 @@
 \name{CeTFdemo}
 \alias{CeTFdemo}
 \title{CeTFdemo class object example}
-\format{An CeTF class object}
+\format{
+An CeTF class object
+}
 \usage{
 data(CeTFdemo)
 }
