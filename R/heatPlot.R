@@ -46,14 +46,14 @@ heatPlot <- function(res, diff, showCategory = 10) {
     res <- head(res, showCategory)
     
     pathways <- res[["description"]]
-    genes <- unique(unlist(strsplit(res[["geneID"]], ";")))
+    genes <- sort(unique(unlist(strsplit(res[["geneID"]], ";"))))
     
     mat <- matrix(0, nrow = length(pathways), ncol = length(genes))
     rownames(mat) <- pathways
     colnames(mat) <- genes
     
     for (i in seq_along(pathways)) {
-        gns <- unique(unlist(strsplit(res[i, "geneID"], ";")))
+        gns <- sort(unique(unlist(strsplit(res[i, "geneID"], ";"))))
         mat[i, which(colnames(mat) %in% gns)] <- diff[gns, 3]
     }
     
