@@ -10,7 +10,7 @@ PCIT(input, tolType = "mean")
 \item{input}{A correlation matrix.}
 
 \item{tolType}{Type of tolerance (default: 'mean') given the 3 pairwise correlations
-(see \code{\link{tolerance}})}
+(see \code{\link{tolerance}}).}
 }
 \value{
 Returns an list with the significant correlations, raw adjacency matrix
