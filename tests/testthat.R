@@ -1,3 +1,3 @@
 library("testthat")
-library("CeTF")
-test_check("CeTF")
+library("CeTF2")
+test_check("CeTF2")
