@@ -10,6 +10,7 @@
 #' from \code{\link{runAnalysis}} function. For better understanding, simply
 #' use the \code{\link{getDE}} accessor with 'all' option.
 #' @param showCategory Number of enriched terms to display (default: 10).
+#' @param font_size Size of gene row names (default: 6).
 #'
 #' @return Returns a Heatmap-like functional classification
 #'
@@ -18,9 +19,7 @@
 #' @importFrom stats dist hclust
 #' @importFrom ComplexHeatmap Heatmap HeatmapAnnotation rowAnnotation Legend 
 #' draw max_text_width anno_text anno_barplot anno_simple
-#' @importFrom RColorBrewer brewer.pal
 #' @importFrom grid gpar unit
-#' @importFrom grDevices colorRampPalette
 #'
 #' @examples
 #' # loading enrichdemo and CeTFdemo object
@@ -32,7 +31,7 @@
 #'          showCategory = 10)
 #'
 #' @export
-heatPlot <- function(res, diff, showCategory = 10) {
+heatPlot <- function(res, diff, showCategory = 10, font_size = 6) {
     if (missing(res)) {
         stop("res must be a dataframe with enrichment results")
     }
@@ -46,14 +45,14 @@ heatPlot <- function(res, diff, showCategory = 10) {
     res <- head(res, showCategory)
     
     pathways <- res[["description"]]
-    genes <- unique(unlist(strsplit(res[["geneID"]], ";")))
+    genes <- sort(unique(unlist(strsplit(res[["geneID"]], ";"))))
     
     mat <- matrix(0, nrow = length(pathways), ncol = length(genes))
     rownames(mat) <- pathways
     colnames(mat) <- genes
     
     for (i in seq_along(pathways)) {
-        gns <- unique(unlist(strsplit(res[i, "geneID"], ";")))
+        gns <- sort(unique(unlist(strsplit(res[i, "geneID"], ";"))))
         mat[i, which(colnames(mat) %in% gns)] <- diff[gns, 3]
     }
     
@@ -70,15 +69,14 @@ heatPlot <- function(res, diff, showCategory = 10) {
     
     breaks <- seq(-4, 4, by = 0.1)
     ht <- Heatmap(mat, show_column_names = FALSE, bottom_annotation = HeatmapAnnotation(text = anno_text(cn, 
-        rot = 45, location = unit(1, "npc"), just = "right", gp = gpar(fontsize = 10)), 
+        rot = 45, location = unit(1, "npc"), just = "right", gp = gpar(fontsize = font_size)), 
         annotation_height = max_text_width(cn)), cluster_rows = clust1, 
-        cluster_columns = clust2, rect_gp = gpar(col = "darkgrey"), col = colorRamp2(breaks, 
-            colorRampPalette(rev(brewer.pal(n = 10, name = "RdBu")))(81)), 
-        heatmap_legend_param = list(nrow = 1, title = "Diff"), show_column_dend = FALSE, 
-        show_row_dend = FALSE, row_names_gp = gpar(fontsize = 8))
+        cluster_columns = clust2, rect_gp = gpar(col = "darkgrey"), heatmap_legend_param = list(nrow = 1, 
+            title = "Diff"), show_column_dend = FALSE, show_row_dend = FALSE, 
+        row_names_gp = gpar(fontsize = 10))
     
     ann1 <- rowAnnotation(enrichmentRatio = anno_barplot(res[["enrichmentRatio"]], 
-        width = unit(4, "cm"), axis_param = list(direction = "reverse")))
+        width = unit(3, "cm"), axis_param = list(direction = "reverse")))
     ann2 <- rowAnnotation(FDR = anno_simple(-log10(res[["FDR"]]), col = pvalue_col_fun, 
         pch = pch))
     

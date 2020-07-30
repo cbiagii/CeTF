@@ -13,7 +13,7 @@
 #' @importFrom ggplot2 geom_histogram scale_fill_manual xlab ylab element_line element_blank geom_density geom_vline aes_string
 #' @importFrom ggpubr ggarrange
 #' @importFrom stats density
-#'
+#' 
 #' @examples
 #' # loading a simulated normalized data
 #' data('simNorm')

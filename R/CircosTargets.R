@@ -56,9 +56,8 @@ CircosTargets <- function(object, file, nomenclature, selection, cond) {
         stop("Input a valid condition: condition1 or condition2")
     }
     
-    genes <- unique(c(as.character(net[["gene1"]][net[which(net[["gene1"]] %in% 
-        selection), 2]]), as.character(net[["gene2"]][net[which(net[["gene2"]] %in% 
-        selection), 1]])))
+    genes <- unique(c(as.character(net[which(net[["gene1"]] %in% selection), 
+        2]), as.character(net[which(net[["gene2"]] %in% selection), 1])))
     
     if (length(genes) == 0) {
         stop("This/These gene(s) are not on the network.")

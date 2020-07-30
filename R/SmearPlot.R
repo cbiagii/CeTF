@@ -27,8 +27,6 @@
 #' expression for genes and TFs differentially expressed or for a single TF and
 #' its targets for both conditions.
 #'
-#' @importFrom tidyr %>%
-#' @importFrom dplyr mutate
 #' @importFrom ggplot2 ggplot geom_point theme_bw ylab ggtitle theme geom_hline scale_colour_manual labs
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom stats na.omit

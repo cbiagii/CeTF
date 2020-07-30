@@ -29,7 +29,6 @@
 #'     \item \strong{For macOS users:} 
 #' }
 #' 
-#' @importFrom crayon green
 #' @importFrom RCy3 cytoscapePing createNetworkFromIgraph selectNodes commandsPOST createSubnetwork createIgraphFromNetwork
 #' @importFrom igraph graph_from_data_frame as_long_data_frame
 #' @importFrom network network
@@ -68,7 +67,7 @@ diffusion <- function(object, cond, genes, cyPath, name = "top_diffusion",
         "wait"
     }) != "You are connected to Cytoscape!") {
         # Openign Cytoscape software
-        message(green("Opening Cytoscape..."))
+        message("Opening Cytoscape...")
         system2(cyPath, wait = FALSE)
         while (TRUE) {
             if (invisible(tryCatch(cytoscapePing(), error = function(e) {
@@ -79,7 +78,7 @@ diffusion <- function(object, cond, genes, cyPath, name = "top_diffusion",
                 (break)()
             }
         }
-        message(green("Cytoscape opened!!"))
+        message("Cytoscape opened!!")
     }
     
     ig <- graph_from_data_frame(NetworkData(object, cond), directed = FALSE)

@@ -29,7 +29,6 @@
 #' genes (column 2).
 #'
 #' @importFrom WebGestaltR WebGestaltR listOrganism listGeneSet listIdType
-#' @importFrom pbapply pbapply
 #'
 #' @examples
 #' \dontrun{
@@ -82,7 +81,7 @@ getEnrich <- function(organism, database, genes, refGene, GeneType, fdrMethod = 
     colnames(res)[1] <- "ID"
     colnames(res)[11] <- "geneID"
     
-    tmp <- pbapply(res, 1, function(x) {
+    tmp <- apply(res, 1, function(x) {
         temp <- NULL
         pathways1 <- NULL
         temp <- strsplit(x[["geneID"]], ";")
