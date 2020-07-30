@@ -6,9 +6,10 @@ output:
   rmarkdown::html_document:
     highlight: pygments
     toc: true
-    fig_width: 8
-    fig_height: 6
+    fig_width: 6
+    fig_height: 5
     fig_retina: NULL
+    fig_caption: yes
 bibliography: library.bib
 vignette: >
   %\VignetteIndexEntry{Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory}
@@ -71,8 +72,11 @@ represented by triangles) included in the microarray are collected and (C) their
 co-expression correlation with the target genes computed for each of the two 
 conditions of interest; Finally, (D) the way in which TF and target genes are 
 differentially co-expressed between the two conditions is used to compute the 
-relevance of each TF according to RIF1 and RIF2 (Reverter et al. 2010).](fig1.jpg){width=50%}
-</center>
+relevance of each TF according to RIF1 and RIF2. 
+
+```{r fig1, fig.align = 'center', out.width = "50%", fig.cap = "Reverter et al. 2010", echo = F}
+knitr::include_graphics("fig1.jpg")
+```
 
 ## Partial Correlation with Information Theory (PCIT)
 The proposed PCIT algorithm contains two distinct steps as follows:
@@ -581,7 +585,8 @@ After performing the enrichment analysis we have 4 options for viewing this data
 ### Heatmap-like functional classification
 ```{r heatplot, eval=TRUE, fig.align="center"}
 heatPlot(res = cond1$results,
-         diff = getDE(out, "all"))
+         diff = getDE(out, "all"), 
+         font_size = 4)
 ```
 
 ### Circle Barplot
