@@ -2,7 +2,7 @@ Package: CeTF
 Type: Package
 Title: Coexpression for Transcription Factors using Regulatory Impact Factors 
   and Partial Correlation and Information Theory analysis
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = 
   "cbiagijr@gmail.com", role = c("aut", "cre")), person("Ricardo", "Perecin 
   Nociti", email = "rnociti@gmail.com", role = c("aut")), person("Breno", 
@@ -24,18 +24,18 @@ Description: This package provides the necessary functions for performing the
   expression data. These two algorithms when combined provide a very relevant 
   layer of information for gene expression studies (Microarray, RNA-seq and 
   single-cell RNA-seq data).
-Imports: circlize, ComplexHeatmap, crayon, clusterProfiler, DESeq2, dplyr, 
-  GenomicTools, GenomicTools.fileHandler, ggnetwork, GGally, ggplot2, ggpubr, 
-  ggrepel, graphics, grDevices, grid, igraph, network, pbapply, RColorBrewer, 
-  RCy3, reshape2, S4Vectors, scales, stats, SummarizedExperiment, tidyr, utils, 
-  WebGestaltR
+Imports: circlize, ComplexHeatmap, clusterProfiler, DESeq2, GenomicTools, 
+  GenomicTools.fileHandler, ggnetwork, GGally, ggplot2, ggpubr, 
+  ggrepel, graphics, grid, igraph, Matrix, network, Rcpp, RCy3, S4Vectors, 
+  stats, SummarizedExperiment, utils, WebGestaltR
 Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown, testthat
 Depends: R (>= 4.0), methods
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 biocViews: Sequencing, RNASeq, Microarray, GeneExpression, Transcription,
         Normalization, DifferentialExpression, SingleCell, Network, 
         Regression, ChIPSeq, ImmunoOncology, Coverage
 VignetteBuilder: knitr
+LinkingTo: Rcpp, RcppArmadillo
