@@ -1,4 +1,4 @@
-# ceTF <img src="vignettes/logo.png" align="right" width="300" />
+# CeTF <img src="vignettes/logo.png" align="right" width="300" />
 An implementation of PCIT and RIF analysis in R
 
 ## Overview
@@ -13,21 +13,28 @@ To properly run <b>ceTF</b> package is necessary to install some dependencies. F
 * build-essential
 * libz-dev 
 * zlib1g-dev
+* libpng-dev
+* libfontconfig1-dev
+* libcairo2-dev
 
-To install R packages dependencies, run:
+To install CeTF package:
 ```R
-#CRAN dependencies
-packagesCRAN <- c('BiocManager', 'crayon', 'dplyr', 'geomnet', 'GGally', 'ggplot2', 'ggpubr', 'ggrepel', 'kableExtra', 'knitr', 'network', 'pbapply', 'reshape2', 'rmarkdown', 'scales', 'testthat', 'tidyr')
-install.packages(packagesCRAN[!packagesCRAN %in% installed.packages()[,1]])
-
-#Bioconductor dependencies
-packagesBioc <- c('airway', 'clusterProfiler', 'DESeq2', 'org.Hs.eg.db', 'SummarizedExperiment')
-BiocManager::install(packagesBioc[!packagesBioc %in% installed.packages()[,1]])
+BiocManager::install("CeTF")
+```
+or
+```R
+devtools::install_github("cbiagii/CeTF")
 ```
 
-Finally, to install ceTF package:
+To install the remaining dependencies:
 ```R
-devtools::install_github("cbiagii/ceTF")
+#Bioconductor dependencies
+packagesBioc <- c('snpStats', 'airway', 'ComplexHeatmap', 'org.Hs.eg.db', 'RCy3')
+BiocManager::install(packagesBioc[!packagesBioc %in% installed.packages()[,1]])
+
+#CRAN dependencies
+packagesCRAN <- c('circlize', 'GenomicTools', 'WebGestaltR')
+install.packages(packagesCRAN[!packagesCRAN %in% installed.packages()[,1]])
 ```
 
 ## Docker
@@ -40,17 +47,23 @@ To install docker follow the instructions in the links below depending on your o
 * Windows: https://docs.docker.com/docker-for-windows/install/
 
 #### Docker pull
-Once docker is installed, the next step is pull the **ceTF** image from dockerhub using the following command:
+Once docker is installed, the next step is pull the **CeTF** image from dockerhub (https://hub.docker.com/r/biagii/cetf) using the following command:
 ```docker
-docker pull biagii/ceTF:0.99.0
+docker pull biagii/cetf
 ```
 
 #### Running image
 There are several differents parameters to run the downloaded image. The most commom way is executing the following command:
 ```docker
-docker run --rm -d -p PORT:PORT -e PASSWORD=password --name [ANY_NAME] -v /server/path/:/docker/path/ -e USERID=$UID biagii/ceTF:0.99.0
+docker run --rm -d -p PORT:PORT -e PASSWORD=password --name [ANY_NAME] -v /server/path/:/docker/path/ -e USERID=$UID biagii/cetf
 ```
-Once the docker image is running, the Rstudio interface with all the necessary dependencies will be made available, and of course the ceTF package, installed ready for use.
+Once the docker image is running, the Rstudio interface with all the necessary dependencies will be made available, and of course the CeTF package, installed ready for use.
+
+## Tutorials
+In this section we have some tutorials available to help the user adapt their own data to run the CeTF package 
+- [Vignette](./docs/vignette.html);
+- [TCGA-STAD example](./docs/TCGA-STAD.html).
+
 
 ## Help
-<p>Any questions contact the developer by email: <a href="#">biagi@usp.br</a></p>
+<p>Any questions contact the developer by email: <a href="#">cbiagijr@gmail.com</a></p>
