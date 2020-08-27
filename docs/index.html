@@ -87,7 +87,7 @@
   <div class="contents col-md-9">
 <div id="cetf-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#cetf-" class="anchor"></a>ceTF <img src="articles/logo.png" align="right" width="300">
+<a href="#cetf-" class="anchor"></a>CeTF <img src="articles/hex.png" align="right" width="300">
 </h1></div>
 <p>An implementation of PCIT and RIF analysis in R</p>
 <div id="overview" class="section level2">
@@ -107,17 +107,22 @@
 <li>build-essential</li>
 <li>libz-dev</li>
 <li>zlib1g-dev</li>
+<li>libpng-dev</li>
+<li>libfontconfig1-dev</li>
+<li>libcairo2-dev</li>
 </ul>
-<p>To install R packages dependencies, run:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co">#CRAN dependencies</span>
-<span class="no">packagesCRAN</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'BiocManager'</span>, <span class="st">'crayon'</span>, <span class="st">'dplyr'</span>, <span class="st">'geomnet'</span>, <span class="st">'GGally'</span>, <span class="st">'ggplot2'</span>, <span class="st">'ggpubr'</span>, <span class="st">'ggrepel'</span>, <span class="st">'kableExtra'</span>, <span class="st">'knitr'</span>, <span class="st">'network'</span>, <span class="st">'pbapply'</span>, <span class="st">'reshape2'</span>, <span class="st">'rmarkdown'</span>, <span class="st">'scales'</span>, <span class="st">'testthat'</span>, <span class="st">'tidyr'</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="no">packagesCRAN</span>[!<span class="no">packagesCRAN</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span>()[,<span class="fl">1</span>]])
+<p>To install CeTF package:</p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"CeTF"</span>)</pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"cbiagii/CeTF"</span>)</pre></div>
+<p>To install the remaining dependencies:</p>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="co">#Bioconductor dependencies</span>
+<span class="no">packagesBioc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'snpStats'</span>, <span class="st">'airway'</span>, <span class="st">'ComplexHeatmap'</span>, <span class="st">'org.Hs.eg.db'</span>, <span class="st">'RCy3'</span>)
+<span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="no">packagesBioc</span>[!<span class="no">packagesBioc</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span>()[,<span class="fl">1</span>]])
 
-<span class="co">#Bioconductor dependencies</span>
-<span class="no">packagesBioc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'airway'</span>, <span class="st">'clusterProfiler'</span>, <span class="st">'DESeq2'</span>, <span class="st">'org.Hs.eg.db'</span>, <span class="st">'SummarizedExperiment'</span>)
-<span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="no">packagesBioc</span>[!<span class="no">packagesBioc</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span>()[,<span class="fl">1</span>]])</pre></div>
-<p>Finally, to install ceTF package:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"cbiagii/ceTF"</span>)</pre></div>
+<span class="co">#CRAN dependencies</span>
+<span class="no">packagesCRAN</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'circlize'</span>, <span class="st">'GenomicTools'</span>, <span class="st">'WebGestaltR'</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="no">packagesCRAN</span>[!<span class="no">packagesCRAN</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span>()[,<span class="fl">1</span>]])</pre></div>
 </div>
 <div id="docker" class="section level2">
 <h2 class="hasAnchor">
@@ -140,22 +145,33 @@
 <div id="docker-pull" class="section level4">
 <h4 class="hasAnchor">
 <a href="#docker-pull" class="anchor"></a>Docker pull</h4>
-<p>Once docker is installed, the next step is pull the <strong>ceTF</strong> image from dockerhub using the following command:</p>
-<pre class="docker"><code>docker pull biagii/ceTF:0.99.0</code></pre>
+<p>Once docker is installed, the next step is pull the <strong>CeTF</strong> image from dockerhub (<a href="https://hub.docker.com/r/biagii/cetf" class="uri">https://hub.docker.com/r/biagii/cetf</a>) using the following command:</p>
+<pre class="docker"><code>docker pull biagii/cetf</code></pre>
 </div>
 <div id="running-image" class="section level4">
 <h4 class="hasAnchor">
 <a href="#running-image" class="anchor"></a>Running image</h4>
 <p>There are several differents parameters to run the downloaded image. The most commom way is executing the following command:</p>
-<pre class="docker"><code>docker run --rm -d -p PORT:PORT -e PASSWORD=password --name [ANY_NAME] -v /server/path/:/docker/path/ -e USERID=$UID biagii/ceTF:0.99.0</code></pre>
-<p>Once the docker image is running, the Rstudio interface with all the necessary dependencies will be made available, and of course the ceTF package, installed ready for use.</p>
+<pre class="docker"><code>docker run --rm -d -p PORT:PORT -e PASSWORD=password --name [ANY_NAME] -v /server/path/:/docker/path/ -e USERID=$UID biagii/cetf</code></pre>
+<p>Once the docker image is running, the Rstudio interface with all the necessary dependencies will be made available, and of course the CeTF package, installed ready for use.</p>
 </div>
+</div>
+<div id="tutorials" class="section level2">
+<h2 class="hasAnchor">
+<a href="#tutorials" class="anchor"></a>Tutorials</h2>
+<p>In this section we have some tutorials available to help the user adapt their own data to run the CeTF package</p>
+<ul>
+<li>
+<a href="./docs/vignette.html">Vignette</a>;</li>
+<li>
+<a href="./docs/TCGA-STAD.html">TCGA-STAD example</a>.</li>
+</ul>
 </div>
 <div id="help" class="section level2">
 <h2 class="hasAnchor">
 <a href="#help" class="anchor"></a>Help</h2>
 <p>
-Any questions contact the developer by email: <a href="#">biagi@usp.br</a>
+Any questions contact the developer by email: <a href="#">cbiagijr@gmail.com</a>
 </p>
 </div>
 </div>
