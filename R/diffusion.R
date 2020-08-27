@@ -24,9 +24,9 @@
 #' The \emph{cyPath} argument varies depending on the operating system used, for
 #' example:
 #' \enumerate{
-#'     \item \strong{For Windows users:} C:/Program Files/Cytoscape_v3.7.2/Cytoscape.exe
-#'     \item \strong{For Linux users:} /home/user/Cytoscape_v3.7.2/Cytoscape
-#'     \item \strong{For macOS users:} 
+#'     \item \strong{For Windows users:} C:/Program Files/Cytoscape_v3.8.0/Cytoscape.exe
+#'     \item \strong{For Linux users:} /home/user/Cytoscape_v3.8.0/Cytoscape
+#'     \item \strong{For macOS users:} /Applications/Cytoscape_v3.8.0/cytoscape.sh
 #' }
 #' 
 #' @importFrom RCy3 cytoscapePing createNetworkFromIgraph selectNodes commandsPOST createSubnetwork createIgraphFromNetwork
@@ -86,6 +86,7 @@ diffusion <- function(object, cond, genes, cyPath, name = "top_diffusion",
     
     selectNodes(nodes = genes, by.col = "name")
     commandsPOST("diffusion diffuse")
+    selectNodes(nodes = genes, by.col = "name")
     
     createSubnetwork("selected", subnetwork.name = name)
     
@@ -107,16 +108,14 @@ diffusion <- function(object, cond, genes, cyPath, name = "top_diffusion",
     x1 <- factor(og$Category)
     
     nt1 %v% "color" <- as.character(x1)
-    y <- c("#4DAF4A", "#E41A1C")
-    names(y) = levels(x1)
     
     if (label) {
-        label <- genes1
+        label <- network.vertex.names(nt1)
     } else {
         label <- c()
     }
     
-    pt <- ggnet2(nt1, color = "color", color.legend = "", palette = y, 
+    pt <- ggnet2(nt1, color = "color", color.legend = "", palette = 'Set2', 
         edge.size = 0.5, edge.color = "gray70", label.size = 1, alpha = 0.75, 
         size = "degree", edge.alpha = 0.5, label = label, legend.position = "bottom") + 
         coord_equal() + guides(size = FALSE) + ggtitle("Diffusion Network")
