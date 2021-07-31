@@ -41,8 +41,6 @@
 #'
 #' @importFrom utils txtProgressBar
 #' @importFrom stats cor
-#' @importFrom crayon green %+%
-#' @import pbapply pbapply
 #'
 #' @export
 RIF <- function(input, nta = NULL, ntf = NULL, nSamples1 = NULL, nSamples2 = NULL) {
@@ -56,51 +54,50 @@ RIF <- function(input, nta = NULL, ntf = NULL, nSamples1 = NULL, nSamples2 = NUL
         stop("the number of conditions must be a numeric greater than zero")
     }
     
-    message(green("## Starting Regulatory Impact Factors analysis ##" %+% 
-        "\n"))
-    
     ta <- input[seq_len(nta), ]
     tf <- input[(nta + 1):nrow(input), ]
     
-    tmp <- pbapply(tf, 1, function(i) {
-        rif1 <- 0
-        rif2 <- 0
-        tmp1 <- apply(ta, 1, function(j) {
-            gene_ccorr <- cor(i[seq_len(nSamples1)], j[seq_len(nSamples1)])  #cond1
-            if (is.na(gene_ccorr)) {
-                gene_ccorr <- 0
-            }
-            gene_ncorr <- cor(i[(nSamples1 + 1):(nSamples1 + nSamples2)], 
-                j[(nSamples1 + 1):(nSamples1 + nSamples2)])  #cond2
-            if (is.na(gene_ncorr)) {
-                gene_ncorr <- 0
-            }
-            ave <- (sum(j[seq_len(nSamples1)])/nSamples1 + sum(j[(nSamples1 + 
-                1):(nSamples1 + nSamples2)])/nSamples2)/2
-            de <- sum(j[seq_len(nSamples1)])/nSamples1 - sum(j[(nSamples1 + 
-                1):(nSamples1 + nSamples2)])/nSamples2
-            dw <- gene_ccorr - gene_ncorr
-            rif1 = rif1 + ave * de * (dw^2)
-            er1 <- sum(j[seq_len(nSamples1)]/nSamples1 * gene_ccorr)
-            er2 <- sum(j[(nSamples1 + 1):(nSamples1 + nSamples2)]/nSamples2 * 
-                gene_ncorr)
-            rif2 = rif2 + er1^2 - er2^2
-            list((c(rif1 = rif1, rif2 = rif2)))
-        })
-        
-        rif1 <- sum(vapply(lapply(lapply(tmp1, `[[`, 1), `[[`, 1), sum, 
-            FUN.VALUE = 0))/nta
-        rif2 <- sum(vapply(lapply(lapply(tmp1, `[[`, 1), `[[`, 2), sum, 
-            FUN.VALUE = 0))/nta
-        
-        list((c(rif1 = rif1, rif2 = rif2)))
+    mat_ccorr_i <- tf[, seq_len(nSamples1)]
+    mat_ccorr_j <- ta[, seq_len(nSamples1)]
+    suppressWarnings(mat1 <- cor(t(mat_ccorr_i), t(mat_ccorr_j)))
+    mat1[is.na(mat1)] <- 0
+    
+    mat_ncorr_i <- tf[, (nSamples1 + 1):(nSamples1 + nSamples2)]
+    mat_ncorr_j <- ta[, (nSamples1 + 1):(nSamples1 + nSamples2)]
+    suppressWarnings(mat2 <- cor(t(mat_ncorr_i), t(mat_ncorr_j)))
+    mat2[is.na(mat2)] <- 0
+    
+    ave <- (rowSums(ta[, seq_len(nSamples1)])/nSamples1 + rowSums(ta[, 
+        (nSamples1 + 1):(nSamples1 + nSamples2)])/nSamples2)/2
+    
+    de <- rowSums(ta[, seq_len(nSamples1)])/nSamples1 - rowSums(ta[, (nSamples1 + 
+        1):(nSamples1 + nSamples2)])/nSamples2
+    
+    tmp <- (mat1 - mat2)
+    rif1 <- apply(tmp, 1, function(x) {
+        var1 <- sum(ave * de * x^2)
     })
     
-    df <- data.frame(matrix(unlist(tmp), nrow = length(tmp), byrow = TRUE))
+    part1 <- rowSums(ta[, seq_len(nSamples1)]/nSamples1)
+    er1 <- apply(mat1, 1, function(x) {
+        var1 <- part1 * x
+    })
     
-    out <- data.frame(TF = rownames(tf), avgexpr = rowMeans(tf), RIF1 = (df$X1 - 
-        mean(df[, "X1"]))/sd(df[, "X1"]), RIF2 = (df$X2 - mean(df[, "X2"]))/sd(df[, 
-        "X2"]), row.names = NULL, stringsAsFactors = FALSE)
+    part2 <- rowSums(ta[, (nSamples1 + 1):(nSamples1 + nSamples2)]/nSamples2)
+    er2 <- apply(mat2, 1, function(x) {
+        var1 <- part2 * x
+    })
+    
+    tmp <- er1^2 - er2^2
+    
+    rif2 <- colSums(tmp)
+    
+    rif1 <- rif1/nta
+    rif2 <- rif2/nta
+    
+    out <- data.frame(TF = rownames(tf), avgexpr = rowMeans(tf), RIF1 = (rif1 - 
+        mean(rif1))/sd(rif1), RIF2 = (rif2 - mean(rif2))/sd(rif2), row.names = NULL, 
+        stringsAsFactors = FALSE)
     
     return(out)
 }

@@ -7,7 +7,7 @@
 #'
 #' @param input A correlation matrix.
 #' @param tolType Type of tolerance (default: 'mean') given the 3 pairwise correlations
-#' (see \code{\link{tolerance}})
+#' (see \code{\link{tolerance}}).
 #'
 #' @return Returns an list with the significant correlations, raw adjacency matrix
 #' and significant adjacency matrix.
@@ -28,63 +28,48 @@
 #' co-expression networks. Bioinformatics, v. 24, n. 21, p. 2491-2497, 2008.
 #' \url{https://academic.oup.com/bioinformatics/article/24/21/2491/192682}
 #'
-#' @importFrom reshape2 melt
 #' @importFrom stats cor
-#' @importFrom crayon green
+#' @importFrom Matrix Matrix
 #'
 #' @export
 PCIT <- function(input, tolType = "mean") {
     if (!is.data.frame(input) & !is.matrix(input)) {
         stop("input must be a dataframe or a matrix")
     }
-    "/" <- function(x, y) ifelse(y == 0, 0, base::"/"(x, y))
     
-    message(green("######################################" %+% "\n" %+% 
-        sprintf("Number of genes                 =  %s", nrow(input)) %+% 
-        "\n" %+% sprintf("Number of samples in condition  =  %s", ncol(input)) %+% 
-        "\n" %+% "######################################" %+% "\n"))
+    "/" <- function(x, y) ifelse(y == 0, 0, base::"/"(x, y))
     
     suppressWarnings(gene_corr <- cor(t(input)))
     gene_corr[is.na(gene_corr)] <- 0
     
-    gene_pcorr <- gene_corr
-    gene_pcorr2 <- gene_corr
-    for (i in seq_len(nrow(gene_pcorr) - 2)) {
-        if (i%%10 == 0) {
-            message(paste("Trios for gene", i, sep = "    "))
-        }
-        for (j in (i + 1):(nrow(gene_pcorr) - 1)) {
-            for (k in (j + 1):nrow(gene_pcorr)) {
-                rxy <- gene_pcorr[i, j]
-                rxz <- gene_pcorr[i, k]
-                ryz <- gene_pcorr[j, k]
-                
-                tol <- tolerance(rxy, rxz, ryz, tolType = tolType)
-                
-                if (abs(rxy) < abs(rxz * tol) & abs(rxy) < abs(ryz * tol)) {
-                  gene_pcorr2[i, j] <- gene_pcorr2[j, i] <- 0
-                }
-                if (abs(rxz) < abs(rxy * tol) & abs(rxz) < abs(ryz * tol)) {
-                  gene_pcorr2[i, k] <- gene_pcorr2[k, i] <- 0
-                }
-                if (abs(ryz) < abs(rxy * tol) & abs(ryz) < abs(rxz * tol)) {
-                  gene_pcorr2[j, k] <- gene_pcorr2[k, j] <- 0
-                }
-            }
-        }
-    }
+    raw_corr <- gene_corr
     
-    gene_corr <- melt(gene_corr)
-    gene_corr <- gene_corr[duplicated(t(apply(gene_corr, 1, sort))), ]
-    rownames(gene_corr) <- paste(gene_corr$Var1, gene_corr$Var2, sep = "_")
-    gene_corr <- gene_corr[order(gene_corr$Var1), ]
+    tt <- switch(tolType, mean = 1, min = 2, max = 3, 1)
     
-    tmp1 <- melt(gene_pcorr2)
-    rownames(tmp1) <- paste(tmp1$Var1, tmp1$Var2, sep = "_")
+    mat1 <- Matrix(gene_corr, sparse = TRUE)
+    result <- pcitC(cor = mat1, tolType = tt)
+    rownames(result) <- colnames(result) <- rownames(mat1)
+    
+    gene_corr[lower.tri(gene_corr)] = NA
+    gene_corr <- data.frame(Var1 = rownames(gene_corr)[row(gene_corr)], 
+        Var2 = colnames(gene_corr)[col(gene_corr)], value = c(gene_corr))
+    gene_corr <- gene_corr[-which(is.na(gene_corr[["value"]])), ]
+    gene_corr <- gene_corr[gene_corr[["value"]] != 1, ]
+    rownames(gene_corr) <- paste(gene_corr[["Var1"]], gene_corr[["Var2"]], 
+        sep = "_")
+    gene_corr <- gene_corr[order(gene_corr[["Var1"]]), ]
+    
+    tmp1 <- as.matrix(result)
+    tmp1[lower.tri(tmp1)] = NA
+    tmp1 <- data.frame(Var1 = rownames(tmp1)[row(tmp1)], Var2 = colnames(tmp1)[col(tmp1)], 
+        value = c(tmp1))
+    tmp1 <- tmp1[-which(is.na(tmp1[["value"]])), ]
+    rownames(tmp1) <- paste(tmp1[["Var1"]], tmp1[["Var2"]], sep = "_")
     tmp1 <- tmp1[rownames(gene_corr), ]
     
-    out <- data.frame(gene1 = gene_corr$Var1, gene2 = gene_corr$Var2, corr1 = round(gene_corr$value, 
-        5), corr2 = round(tmp1$value, 5), stringsAsFactors = FALSE)
+    out <- data.frame(gene1 = gene_corr[["Var1"]], gene2 = gene_corr[["Var2"]], 
+        corr1 = round(gene_corr[["value"]], 5), corr2 = round(tmp1[["value"]], 
+            5), stringsAsFactors = FALSE)
     
-    return(list(tab = out, adj_raw = gene_pcorr, adj_sig = gene_pcorr2))
+    return(list(tab = out, adj_raw = raw_corr, adj_sig = as.matrix(result)))
 }
