@@ -42,12 +42,12 @@
 #' # performing getEnrich analysis
 #' cond1 <- getEnrich(genes = genes, organismDB = org.Hs.eg.db, keyType = 'ENSEMBL', 
 #'                    ont = 'BP', fdrMethod = "BH", fdrThr = 0.05, minGSSize = 5, 
-#'                    maxGSSize = 500, readable = T)
+#'                    maxGSSize = 500)
 #' }
 #'
 #' @export
 getEnrich <- function(genes, organismDB, keyType, ont, fdrMethod = "BH", fdrThr = 0.05, 
-                      minGSSize = 5, maxGSSize = 500, readable = T) {
+                      minGSSize = 5, maxGSSize = 500) {
     if (missing(genes)) {
         stop("No genes provided")
     }
@@ -59,7 +59,7 @@ getEnrich <- function(genes, organismDB, keyType, ont, fdrMethod = "BH", fdrThr 
         stop("Select a valid subontologie: BP, MF or CC")
     }
     
-    res <- enrichGO(gene = genes, OrgDb = org.Hs.eg.db, keyType = keyType, 
+    res <- enrichGO(gene = genes, OrgDb = organismDB, keyType = keyType, 
                     ont = ont, pvalueCutoff = fdrThr, pAdjustMethod = fdrMethod, 
                     minGSSize = minGSSize, maxGSSize = maxGSSize) %>% 
         as.data.frame()

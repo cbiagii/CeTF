@@ -14,6 +14,7 @@
 #' @importFrom ggplot2 ggplot aes geom_bar coord_polar theme_minimal theme 
 #' element_blank labs coord_flip theme_bw scale_x_discrete scale_fill_gradient 
 #' geom_point scale_color_gradient scale_size_continuous scale_fill_continuous
+#' @importFrom utils read.table
 #'
 #' @examples
 #' # loading enrichdemo
@@ -44,7 +45,7 @@ enrichPlot <- function(res, showCategory = 10, type = "circle") {
     }
     
     res <- head(res, showCategory)
-    res$enrichmentRatio <- res[['Count']]/length(genes)
+    res$enrichmentRatio <- with(read.table(text = res[['GeneRatio']], sep = "/"), V1/V2)
     
     if (type == "circle") {
         pt <- ggplot(res, aes(x = .data[["Description"]], y = .data[["enrichmentRatio"]]), 
