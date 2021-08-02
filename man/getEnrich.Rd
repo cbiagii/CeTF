@@ -12,8 +12,7 @@ getEnrich(
   fdrMethod = "BH",
   fdrThr = 0.05,
   minGSSize = 5,
-  maxGSSize = 500,
-  readable = T
+  maxGSSize = 500
 )
 }
 \arguments{
@@ -63,7 +62,7 @@ genes <- unique(c(as.character(NetworkData(CeTFdemo, 'network1')[, 'gene1']),
 # performing getEnrich analysis
 cond1 <- getEnrich(genes = genes, organismDB = org.Hs.eg.db, keyType = 'ENSEMBL', 
                    ont = 'BP', fdrMethod = "BH", fdrThr = 0.05, minGSSize = 5, 
-                   maxGSSize = 500, readable = T)
+                   maxGSSize = 500)
 }
 
 }
