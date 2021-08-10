@@ -2,7 +2,7 @@ Package: CeTF
 Type: Package
 Title: Coexpression for Transcription Factors using Regulatory Impact Factors 
   and Partial Correlation and Information Theory analysis
-Version: 1.5.2
+Version: 1.5.3
 Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = 
   "cbiagijr@gmail.com", role = c("aut", "cre")), person("Ricardo", "Perecin 
   Nociti", email = "rnociti@gmail.com", role = c("aut")), person("Breno", 
@@ -29,6 +29,8 @@ Imports: circlize, ComplexHeatmap, clusterProfiler, DESeq2, dplyr,
   ggpubr, ggrepel, graphics, grid, igraph, Matrix, network, 
   Rcpp, RCy3, stats, SummarizedExperiment, S4Vectors, utils
 Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown, testthat
+SystemRequirements: libcurl4-openssl-dev, libxml2-dev, libssl-dev, gfortran, 
+  build-essential, libz-dev, zlib1g-dev
 Depends: R (>= 4.0), methods
 License: GPL-3
 Encoding: UTF-8
