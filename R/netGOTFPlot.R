@@ -31,10 +31,9 @@
 #'
 #' @importFrom ggnetwork ggnetwork geom_edges geom_nodes geom_nodetext theme_facet
 #' @importFrom ggplot2 fortify ggplot facet_wrap element_rect coord_equal guides scale_color_brewer
-#' @importFrom network network network.vertex.names '%v%' '%v%<-'
+#' @importFrom network network network.vertex.names '%v%' '%v%<-' set.edge.attribute
 #' @importFrom GGally ggnet2
 #' @importFrom utils head tail
-#' @importFrom network set.edge.attribute
 #'
 #' @examples
 #' \dontrun{ 

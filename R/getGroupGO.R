@@ -16,7 +16,6 @@
 #' genes (column 2).
 #'
 #' @importFrom clusterProfiler groupGO
-#' @importFrom pbapply pbapply
 #'
 #' @examples
 #' \dontrun{ 
@@ -55,7 +54,11 @@ getGroupGO <- function(genes, ont = "BP", keyType, annoPkg, level = 3) {
     results <- results[order(results$Count, decreasing = TRUE), ]
     results <- results[results$Count > 0, ]
     
-    tmp <- pbapply(results, 1, function(x) {
+    if (nrow(results) == 0) {
+        stop("No pathway enriched for this set of genes")
+    }
+    
+    tmp <- apply(results, 1, function(x) {
         temp <- NULL
         pathways1 <- NULL
         temp <- strsplit(x[["geneID"]], "/")

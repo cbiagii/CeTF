@@ -4,7 +4,7 @@
 \alias{heatPlot}
 \title{Heatmap-like functional classification}
 \usage{
-heatPlot(res, diff, showCategory = 10)
+heatPlot(res, diff, showCategory = 10, font_size = 6)
 }
 \arguments{
 \item{res}{A dataframe with \code{\link{getEnrich}} results.}
@@ -14,6 +14,8 @@ from \code{\link{runAnalysis}} function. For better understanding, simply
 use the \code{\link{getDE}} accessor with 'all' option.}
 
 \item{showCategory}{Number of enriched terms to display (default: 10).}
+
+\item{font_size}{Size of gene row names (default: 6).}
 }
 \value{
 Returns a Heatmap-like functional classification

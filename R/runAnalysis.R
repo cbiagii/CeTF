@@ -37,9 +37,7 @@
 #'
 #' @seealso \code{\link{CeTF-class}}
 #'
-#' @importFrom reshape2 melt
 #' @importFrom stats cor
-#' @importFrom crayon green
 #' @importFrom S4Vectors SimpleList
 #'
 #' @export
@@ -69,7 +67,7 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
         stop("the data type muste be counts or expression")
     }
     
-    message(green("##### STEP 1: Data adjustment #####" %+% "\n"))
+    # message(green('##### STEP 1: Data adjustment #####' %+% '\n'))
     mat <- as.matrix(mat)
     colnames(mat)[seq_len(nSamples1)] <- paste0(colnames(mat)[seq_len(nSamples1)], 
         "_", conditions[1])
@@ -120,7 +118,8 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     }
     
     
-    message(green("##### STEP 2: Differential Expression #####" %+% "\n"))
+    # message(green('##### STEP 2: Differential Expression #####' %+%
+    # '\n'))
     anno <- data.frame(cond = c(rep(conditions[1], nSamples1), rep(conditions[2], 
         nSamples2)), row.names = colnames(mat))
     if (diffMethod == "Reverter") {
@@ -138,8 +137,8 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     TF_unique <- sort(intersect(TFs, Background))
     
     
-    message(green("##### STEP 3: Regulatory Impact Factors analysis #####" %+% 
-        "\n"))
+    # message(green('##### STEP 3: Regulatory Impact Factors analysis
+    # #####' %+% '\n'))
     RIF_input <- Clean_Dat[c(rownames(Target$DE_unique), TF_unique), c(grep(paste0("_", 
         conditions[1]), colnames(Clean_Dat), fixed = TRUE), grep(paste0("_", 
         conditions[2]), colnames(Clean_Dat)))]
@@ -152,8 +151,8 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
         1.96)
     
     
-    message(green("##### STEP 4: Partial Correlation and Information Theory analysis #####" %+% 
-        "\n"))
+    # message(green('##### STEP 4: Partial Correlation and Information
+    # Theory analysis #####' %+% '\n'))
     net.j <- sort(unique(c(as.character(KeyTF$TF), rownames(Target$DE_unique))))
     
     PCIT_input_cond1 <- Clean_Dat[net.j, grep(paste0("_", conditions[1]), 
@@ -164,6 +163,17 @@ runAnalysis <- function(mat, conditions = NULL, lfc = 2.57, padj = 0.05,
     # RUN PCIT ...twice!
     PCIT_out_cond1 <- PCIT(PCIT_input_cond1, tolType = tolType)
     PCIT_out_cond2 <- PCIT(PCIT_input_cond2, tolType = tolType)
+    
+    if (nrow(PCIT_out_cond1$tab) != nrow(PCIT_out_cond2$tab)) {
+        rownames(PCIT_out_cond1$tab) <- paste(PCIT_out_cond1$tab$gene1, 
+            PCIT_out_cond1$tab$gene2, sep = "_")
+        rownames(PCIT_out_cond2$tab) <- paste(PCIT_out_cond2$tab$gene1, 
+            PCIT_out_cond2$tab$gene2, sep = "_")
+        int <- intersect(rownames(PCIT_out_cond1$tab), rownames(PCIT_out_cond2$tab))
+        PCIT_out_cond1$tab <- PCIT_out_cond1$tab[int, ]
+        PCIT_out_cond2$tab <- PCIT_out_cond2$tab[int, ]
+        rownames(PCIT_out_cond1$tab) <- rownames(PCIT_out_cond2$tab) <- NULL
+    }
     
     # Collect Lineage-specific connections
     PCIT_out <- cbind(PCIT_out_cond1[[1]], PCIT_out_cond2[[1]])

@@ -407,10 +407,9 @@ genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]),
                   as.character(NetworkData(out, "network1")[, "gene2"])))
 
 # Performing getEnrich analysis
-enrich <- getEnrich(organism='hsapiens', database='geneontology_Biological_Process', 
-                   genes=genes, GeneType='ensembl_gene_id', 
-                   refGene=refGenes$Homo_sapiens$ENSEMBL, 
-                   fdrMethod = "BH", fdrThr = 0.05, minNum = 5, maxNum = 500)
+enrich <- getEnrich(genes = genes, organismDB = org.Hs.eg.db, 
+                    keyType = 'ENSEMBL', ont = 'BP', fdrMethod = "BH", 
+                    fdrThr = 0.05, minGSSize = 5, maxGSSize = 500)
 ```
 
 In the next steps we will use the *getGroupGO* results, but it is worth 
@@ -428,6 +427,8 @@ pathways, TFs or genes of interest. The table used to plot the networks are
 stored in a list resulted from netGOTFPlot function. To get access is needed to 
 use the *object$tab*. The list will be splitted by groupBy argument choice:
 ```{r netGOTFPlot1, eval=TRUE, fig.align="center"}
+library(dplyr)
+
 # Subsetting only the first 12 Ontologies with more counts
 t1 <- head(cond1$results, 12)
 
@@ -435,7 +436,8 @@ t1 <- head(cond1$results, 12)
 t2 <- subset(cond1$netGO, cond1$netGO$gene1 %in% as.character(t1[, "ID"]))
 
 # generating the GO plot grouping by pathways
-pt <- netGOTFPlot(netCond = NetworkData(out, "network1"),
+pt <- netGOTFPlot(netCond = NetworkData(out, "network1") %>% 
+                    mutate(across(everything(), as.character)),
                   resultsGO = t1,
                   netGO = t2,
                   anno = NetworkData(out, "annotation"),
@@ -474,7 +476,8 @@ and TF-Gene interaction) with groupGO results (GO-Gene or GO-TF interaction).
 The final results has the objective to integrate all these data in order to 
 results in a complete view of the data:
 ```{r netGOTFPlot2, eval=TRUE, fig.align="center"}
-pt <- netGOTFPlot(netCond = NetworkData(out, "network1"),
+pt <- netGOTFPlot(netCond = NetworkData(out, "network1") %>% 
+                   mutate(across(everything(), as.character)),
                   netGO = t2,
                   keyTFs = NetworkData(out, "keytfs"), 
                   type = 'Integrated')
@@ -570,10 +573,9 @@ genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]),
                   as.character(NetworkData(out, "network1")[, "gene2"])))
 
 # Performing enrichment analysis
-cond1 <- getEnrich(organism='hsapiens', database='geneontology_Biological_Process', 
-                   genes=genes, GeneType='ensembl_gene_id',
-                   refGene=refGenes$Homo_sapiens$ENSEMBL,
-                   fdrMethod = "BH", fdrThr = 0.05, minNum = 5, maxNum = 500)
+cond1 <- getEnrich(genes = genes, organismDB = org.Hs.eg.db, 
+                  keyType = 'ENSEMBL', ont = 'BP', fdrMethod = "BH", 
+                  fdrThr = 0.05, minGSSize = 5, maxGSSize = 500)
 ```
 
 After performing the enrichment analysis we have 4 options for viewing this data:

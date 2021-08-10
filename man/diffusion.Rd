@@ -38,9 +38,9 @@ software version (\url{https://cytoscape.org/}).
 The \emph{cyPath} argument varies depending on the operating system used, for
 example:
 \enumerate{
-    \item \strong{For Windows users:} C:/Program Files/Cytoscape_v3.7.2/Cytoscape.exe
-    \item \strong{For Linux users:} /home/user/Cytoscape_v3.7.2/Cytoscape
-    \item \strong{For macOS users:} 
+    \item \strong{For Windows users:} C:/Program Files/Cytoscape_v3.8.0/Cytoscape.exe
+    \item \strong{For Linux users:} /home/user/Cytoscape_v3.8.0/Cytoscape
+    \item \strong{For macOS users:} /Applications/Cytoscape_v3.8.0/cytoscape.sh
 }
 }
 \examples{

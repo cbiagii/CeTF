@@ -12,6 +12,7 @@
 #' @importFrom utils head tail
 #' @importFrom ggplot2 coord_equal guides element_rect
 #' @importFrom methods is
+#' @importFrom dplyr mutate everything across '%>%'
 #'
 #' @examples
 #' # loading a simulated counts data
@@ -45,7 +46,8 @@ netConditionsPlot <- function(x) {
         decreasing = TRUE), ]
     
     # cond1
-    nt1 <- network(NetworkData(x, "network1"), directed = FALSE)
+    nt1 <- network(NetworkData(x, "network1") %>% mutate(across(everything(), as.character)), 
+                   directed = FALSE)
     genes1 <- unique(c(as.character(NetworkData(x, "network1")[["gene1"]]), 
         as.character(NetworkData(x, "network1")[["gene2"]])))
     gns1 <- setdiff(genes1, TFs)
@@ -76,7 +78,8 @@ netConditionsPlot <- function(x) {
         colour = "grey50"))
     
     # cond2
-    nt2 <- network(NetworkData(x, "network2"), directed = FALSE)
+    nt2 <- network(NetworkData(x, "network2") %>% 
+                       mutate(across(everything(), as.character)), directed = FALSE)
     genes2 <- unique(c(as.character(NetworkData(x, "network2")[["gene1"]]), 
         as.character(NetworkData(x, "network2")[["gene2"]])))
     gns2 <- setdiff(genes2, TFs)
