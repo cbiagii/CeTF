@@ -45,3 +45,11 @@ CHANGES IN VERSION 1.0.6
 CHANGES IN VERSION 1.0.7
 --------------------------
 	- Fix diffusion function bugs
+	
+CHANGES IN VERSION 1.2.2
+--------------------------
+	- Update to Bioconductor v3.12
+	
+CHANGES IN VERSION 1.2.4
+--------------------------
+	- Bug fixes in getGroupGO and SmearPlot functions
