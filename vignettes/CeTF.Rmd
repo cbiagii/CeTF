@@ -407,9 +407,10 @@ genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]),
                   as.character(NetworkData(out, "network1")[, "gene2"])))
 
 # Performing getEnrich analysis
-enrich <- getEnrich(genes = genes, organismDB = org.Hs.eg.db, 
-                    keyType = 'ENSEMBL', ont = 'BP', fdrMethod = "BH", 
-                    fdrThr = 0.05, minGSSize = 5, maxGSSize = 500)
+enrich <- getEnrich(organism='hsapiens', database='geneontology_Biological_Process', 
+                   genes=genes, GeneType='ensembl_gene_id', 
+                   refGene=refGenes$Homo_sapiens$ENSEMBL, 
+                   fdrMethod = "BH", fdrThr = 0.05, minNum = 5, maxNum = 500)
 ```
 
 In the next steps we will use the *getGroupGO* results, but it is worth 
@@ -573,9 +574,10 @@ genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]),
                   as.character(NetworkData(out, "network1")[, "gene2"])))
 
 # Performing enrichment analysis
-cond1 <- getEnrich(genes = genes, organismDB = org.Hs.eg.db, 
-                  keyType = 'ENSEMBL', ont = 'BP', fdrMethod = "BH", 
-                  fdrThr = 0.05, minGSSize = 5, maxGSSize = 500)
+cond1 <- getEnrich(organism='hsapiens', database='geneontology_Biological_Process', 
+                   genes=genes, GeneType='ensembl_gene_id',
+                   refGene=refGenes$Homo_sapiens$ENSEMBL,
+                   fdrMethod = "BH", fdrThr = 0.05, minNum = 5, maxNum = 500)
 ```
 
 After performing the enrichment analysis we have 4 options for viewing this data:

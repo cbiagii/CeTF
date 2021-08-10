@@ -5,39 +5,44 @@
 \title{Enrichment analysis for genes of network}
 \usage{
 getEnrich(
+  organism,
+  database,
   genes,
-  organismDB,
-  keyType,
-  ont,
+  refGene,
+  GeneType,
   fdrMethod = "BH",
   fdrThr = 0.05,
-  minGSSize = 5,
-  maxGSSize = 500
+  minNum = 5,
+  maxNum = 500
 )
 }
 \arguments{
+\item{organism}{WebGestaltR supports 12 organisms. Users can use the function 
+listOrganism() to check available organisms.}
+
+\item{database}{The functional categories for the enrichment analysis. Users 
+can use the function listGeneSet() to check the available functional databases 
+for the selected organism. Multiple databases in a vector are supported too.}
+
 \item{genes}{Should be an R vector object containing the interesting gene list.}
 
-\item{organismDB}{clusterProfiler supports a lot of different organisms. Users 
-can check the following link (https://www.bioconductor.org/packages/release/data/annotation/)
-and search for annotations starting with *org.*.}
+\item{refGene}{Should be an R vector object containing the reference gene list.
+There is a list with reference genes for 5 organisms in this package (see 
+\code{\link{refGenes}}).}
 
-\item{keyType}{The ID type of the input genes (i.e. SYMBOL, ENTREZID, ENSEMBL, etc.).}
+\item{GeneType}{The ID type of the genes and refGene (they must be the same type).
+Users can use the function listIdType() to check the available gene types.}
 
-\item{ont}{The functional categories for the enrichment analysis. The available
-ontologies are Biological Process (BP), Molecular Function (MF) and 
-Cellular Component (CC).}
+\item{fdrMethod}{Has five FDR methods: holm, hochberg, hommel, bonferroni, BH 
+and BY (default: BH).}
 
-\item{fdrMethod}{Has five FDR methods: holm, hochberg, hommel, bonferroni, BH,
-BY, fdr and none(default: BH).}
+\item{fdrThr}{The significant threshold for fdrMethod (default: 0.05).}
 
-\item{fdrThr}{The significant threshold for selected pathways (default: 0.05).}
+\item{minNum}{Will be exclude the categories with the number of annotated 
+genes less than minNum for enrichment analysis (default: 5).}
 
-\item{minGSSize}{Will be exclude the categories with the number of annotated 
-genes less than minGSSize for enrichment analysis (default: 5).}
-
-\item{maxGSSize}{Will be exclude the categories with the number of annotated 
-genes larger than maxGSSize for enrichment analysis (default: 500).}
+\item{maxNum}{Will be exclude the categories with the number of annotated 
+genes larger than maxNum for enrichment analysis (default: 500).}
 }
 \value{
 Returns an list with the results of the enrichment analysis of the genes and 
@@ -46,13 +51,12 @@ genes (column 2).
 }
 \description{
 Enrichment analysis of a set of genes derived from the network
-of any condition using clusterProfiler. Given a vector of genes, this function 
-will return the enrichment related to the selected database.
+of any condition using WebGestalt interface in R. Given a vector of genes, 
+this function will return the enrichment related to the selected database.
 }
 \examples{
 \dontrun{
 # load the CeTF class object resulted from runAnalysis function
-library(org.Hs.eg.db)
 data(CeTFdemo)
 
 # getting the genes in network of condition 1
@@ -60,9 +64,10 @@ genes <- unique(c(as.character(NetworkData(CeTFdemo, 'network1')[, 'gene1']),
                  as.character(NetworkData(CeTFdemo, 'network1')[, 'gene2'])))
 
 # performing getEnrich analysis
-cond1 <- getEnrich(genes = genes, organismDB = org.Hs.eg.db, keyType = 'ENSEMBL', 
-                   ont = 'BP', fdrMethod = "BH", fdrThr = 0.05, minGSSize = 5, 
-                   maxGSSize = 500)
+cond1 <- getEnrich(organism='hsapiens', database='geneontology_Biological_Process', 
+                   genes=genes, GeneType='ensembl_gene_id', 
+                   refGene=refGenes$Homo_sapiens$ENSEMBL, 
+                   fdrMethod = 'BH', fdrThr = 0.05, minNum = 5, maxNum = 500)
 }
 
 }
