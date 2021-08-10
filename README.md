@@ -27,6 +27,10 @@ BiocManager::install(packagesBioc[!packagesBioc %in% installed.packages()[,1]])
 
 Finally, to install ceTF package:
 ```R
+BiocManager::install("CeTF")
+
+or
+
 devtools::install_github("cbiagii/ceTF")
 ```
 
