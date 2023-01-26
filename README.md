@@ -1,4 +1,4 @@
-# ceTF <img src="vignettes/logo.png" align="right" width="300" />
+# CeTF <img src="vignettes/logo.png" align="right" width="300" />
 An implementation of PCIT and RIF analysis in R
 
 ## Overview
