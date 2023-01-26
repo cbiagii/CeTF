@@ -115,7 +115,7 @@ diffusion <- function(object, cond, genes, cyPath, name = "top_diffusion",
         label <- c()
     }
     
-    pt <- ggnet2(nt1, color = "color", color.legend = "", palette = "Set2", 
+    pt <- ggnet2(nt1, color = "color", color.legend = "", palette = 'Set2', 
         edge.size = 0.5, edge.color = "gray70", label.size = 1, alpha = 0.75, 
         size = "degree", edge.alpha = 0.5, label = label, legend.position = "bottom") + 
         coord_equal() + guides(size = FALSE) + ggtitle("Diffusion Network")

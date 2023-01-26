@@ -44,20 +44,20 @@ heatPlot <- function(res, diff, showCategory = 10, font_size = 6) {
     
     res <- head(res, showCategory)
     
-    pathways <- res[["ID"]]
-    genes <- sort(unique(unlist(strsplit(res[["geneID"]], "\\/"))))
+    pathways <- res[["description"]]
+    genes <- sort(unique(unlist(strsplit(res[["geneID"]], ";"))))
     
     mat <- matrix(0, nrow = length(pathways), ncol = length(genes))
     rownames(mat) <- pathways
     colnames(mat) <- genes
     
     for (i in seq_along(pathways)) {
-        gns <- sort(unique(unlist(strsplit(res[i, "geneID"], "\\/"))))
+        gns <- sort(unique(unlist(strsplit(res[i, "geneID"], ";"))))
         mat[i, which(colnames(mat) %in% gns)] <- diff[gns, 3]
     }
     
-    is_sig = res[["p.adjust"]] < 0.05
-    pch = rep("*", length(res[["p.adjust"]]))
+    is_sig = res[["FDR"]] < 0.05
+    pch = rep("*", length(res[["FDR"]]))
     pch[!is_sig] <- NA
     pvalue_col_fun <- colorRamp2(c(0, 1, 2), c("green", "white", "red"))
     
@@ -75,9 +75,9 @@ heatPlot <- function(res, diff, showCategory = 10, font_size = 6) {
             title = "Diff"), show_column_dend = FALSE, show_row_dend = FALSE, 
         row_names_gp = gpar(fontsize = 10))
     
-    ann1 <- rowAnnotation(enrichmentRatio = anno_barplot(res[['Count']]/length(genes), 
+    ann1 <- rowAnnotation(enrichmentRatio = anno_barplot(res[["enrichmentRatio"]], 
         width = unit(3, "cm"), axis_param = list(direction = "reverse")))
-    ann2 <- rowAnnotation(FDR = anno_simple(-log10(res[["p.adjust"]]), col = pvalue_col_fun, 
+    ann2 <- rowAnnotation(FDR = anno_simple(-log10(res[["FDR"]]), col = pvalue_col_fun, 
         pch = pch))
     
     total <- ann1 + ann2 + ht

@@ -166,7 +166,7 @@ SmearPlot <- function(object, diffMethod, lfc = 1.5, conditions, TF = NULL,
             "network2")[NetworkData(object, "network2")[, "gene2"] %in% 
             TF, "gene1"]))
         
-        if (sum(c(length(c1), length(c2))) == 0) {
+        if ((length(c1) & length(c2)) == 0) {
             stop("No targets were identified for this TF")
         }
         
@@ -185,29 +185,23 @@ SmearPlot <- function(object, diffMethod, lfc = 1.5, conditions, TF = NULL,
             conditions[1]), paste("Target", conditions[2]), "None"))
         
         pt <- ggplot(tab) + geom_point(aes(x = log2(.data[["baseMean"]]), 
-            y = .data[[var1]], color = .data[["Type"]]))
-        
-        if (nrow(subset(tab, tab[["Type"]] == paste("Target", conditions[1]))) > 0) {
-            pt <- pt + geom_point(data = subset(tab, tab[["Type"]] == paste("Target", conditions[1])), aes(x = log2(subset(tab, tab[["Type"]] == paste("Target", conditions[1]))[["baseMean"]]), y = subset(tab, tab[["Type"]] == paste("Target", conditions[1]))[[var1]], colour = paste("Target", conditions[1])), size = 2)
-        }
-        
-        if (nrow(subset(tab, tab[["Type"]] == paste("Target", conditions[2]))) > 0) {
-            pt <- pt + geom_point(data = subset(tab, tab[["Type"]] == paste("Target", conditions[2])), aes(x = log2(subset(tab, tab[["Type"]] == paste("Target", conditions[2]))[["baseMean"]]), y = subset(tab, tab[["Type"]] == paste("Target", conditions[2]))[[var1]], colour = paste("Target", conditions[2])), size = 2)
-        }
-        
-        pt <- pt + geom_point(data = subset(tab, tab[["Type"]] == "TF"), aes(x = log2(subset(tab, tab[["Type"]] == "TF")[["baseMean"]]), y = subset(tab, tab[["Type"]] == "TF")[[var1]], colour = "TF"), size = 2) + 
-            theme_bw() + ylab(var2) + xlab(var3) +
+            y = .data[[var1]], color = .data[["Type"]])) + geom_point(data = subset(tab, 
+            tab[["Type"]] == paste("Target", conditions[1])), aes(x = log2(subset(tab, 
+            tab[["Type"]] == paste("Target", conditions[1]))[["baseMean"]]), 
+            y = subset(tab, tab[["Type"]] == paste("Target", conditions[1]))[[var1]], 
+            colour = paste("Target", conditions[1])), size = 2) + geom_point(data = subset(tab, 
+            tab[["Type"]] == paste("Target", conditions[2])), aes(x = log2(subset(tab, 
+            tab[["Type"]] == paste("Target", conditions[2]))[["baseMean"]]), 
+            y = subset(tab, tab[["Type"]] == paste("Target", conditions[2]))[[var1]], 
+            colour = paste("Target", conditions[2])), size = 2) + geom_point(data = subset(tab, 
+            tab[["Type"]] == "TF"), aes(x = log2(subset(tab, tab[["Type"]] == 
+            "TF")[["baseMean"]]), y = subset(tab, tab[["Type"]] == "TF")[[var1]], 
+            colour = "TF"), size = 2) + theme_bw() + ylab(var2) + xlab(var3) + 
             ggtitle(paste0("Smear Plot for ", TF, " and its targets")) + 
-            theme(legend.position = "top") + 
-            labs(colour = "") + 
-            geom_hline(yintercept = lfc, linetype = "dashed", color = "black") + 
-            geom_hline(yintercept = -lfc, linetype = "dashed", color = "black")
-        
-        if (nrow(subset(tab, tab[["Type"]] == paste("Target", conditions[1]))) > 0 & nrow(subset(tab, tab[["Type"]] == paste("Target", conditions[2]))) > 0) {
-            pt <- pt + scale_colour_manual(values = c("red", "goldenrod3", "forestgreen", "gray80")) 
-        } else {
-            pt <- pt + scale_colour_manual(values = c("red", "goldenrod3", "gray80"))
-        }
+            theme(legend.position = "top") + labs(colour = "") + scale_colour_manual(values = c("red", 
+            "goldenrod3", "forestgreen", "gray80")) + geom_hline(yintercept = lfc, 
+            linetype = "dashed", color = "black") + geom_hline(yintercept = -lfc, 
+            linetype = "dashed", color = "black")
         
         if (label) {
             idx <- c(which(tab[["Type"]] == paste("Target", conditions[1])), 

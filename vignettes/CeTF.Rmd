@@ -6,9 +6,10 @@ output:
   rmarkdown::html_document:
     highlight: pygments
     toc: true
-    fig_width: 8
-    fig_height: 6
+    fig_width: 6
+    fig_height: 5
     fig_retina: NULL
+    fig_caption: yes
 bibliography: library.bib
 vignette: >
   %\VignetteIndexEntry{Analyzing Regulatory Impact Factors and Partial Correlation and Information Theory}
@@ -71,8 +72,11 @@ represented by triangles) included in the microarray are collected and (C) their
 co-expression correlation with the target genes computed for each of the two 
 conditions of interest; Finally, (D) the way in which TF and target genes are 
 differentially co-expressed between the two conditions is used to compute the 
-relevance of each TF according to RIF1 and RIF2 (Reverter et al. 2010).](fig1.jpg){width=50%}
-</center>
+relevance of each TF according to RIF1 and RIF2. 
+
+```{r fig1, fig.align = 'center', out.width = "50%", fig.cap = "Reverter et al. 2010", echo = F}
+knitr::include_graphics("fig1.jpg")
+```
 
 ## Partial Correlation with Information Theory (PCIT)
 The proposed PCIT algorithm contains two distinct steps as follows:
@@ -407,9 +411,10 @@ genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]),
                   as.character(NetworkData(out, "network1")[, "gene2"])))
 
 # Performing getEnrich analysis
-enrich <- getEnrich(genes = genes, organismDB = org.Hs.eg.db, 
-                    keyType = 'ENSEMBL', ont = 'BP', fdrMethod = "BH", 
-                    fdrThr = 0.05, minGSSize = 5, maxGSSize = 500)
+enrich <- getEnrich(organism='hsapiens', database='geneontology_Biological_Process', 
+                   genes=genes, GeneType='ensembl_gene_id', 
+                   refGene=refGenes$Homo_sapiens$ENSEMBL, 
+                   fdrMethod = "BH", fdrThr = 0.05, minNum = 5, maxNum = 500)
 ```
 
 In the next steps we will use the *getGroupGO* results, but it is worth 
@@ -427,8 +432,6 @@ pathways, TFs or genes of interest. The table used to plot the networks are
 stored in a list resulted from netGOTFPlot function. To get access is needed to 
 use the *object$tab*. The list will be splitted by groupBy argument choice:
 ```{r netGOTFPlot1, eval=TRUE, fig.align="center"}
-library(dplyr)
-
 # Subsetting only the first 12 Ontologies with more counts
 t1 <- head(cond1$results, 12)
 
@@ -436,8 +439,7 @@ t1 <- head(cond1$results, 12)
 t2 <- subset(cond1$netGO, cond1$netGO$gene1 %in% as.character(t1[, "ID"]))
 
 # generating the GO plot grouping by pathways
-pt <- netGOTFPlot(netCond = NetworkData(out, "network1") %>% 
-                    mutate(across(everything(), as.character)),
+pt <- netGOTFPlot(netCond = NetworkData(out, "network1"),
                   resultsGO = t1,
                   netGO = t2,
                   anno = NetworkData(out, "annotation"),
@@ -476,8 +478,7 @@ and TF-Gene interaction) with groupGO results (GO-Gene or GO-TF interaction).
 The final results has the objective to integrate all these data in order to 
 results in a complete view of the data:
 ```{r netGOTFPlot2, eval=TRUE, fig.align="center"}
-pt <- netGOTFPlot(netCond = NetworkData(out, "network1") %>% 
-                   mutate(across(everything(), as.character)),
+pt <- netGOTFPlot(netCond = NetworkData(out, "network1"),
                   netGO = t2,
                   keyTFs = NetworkData(out, "keytfs"), 
                   type = 'Integrated')
@@ -573,9 +574,10 @@ genes <- unique(c(as.character(NetworkData(out, "network1")[, "gene1"]),
                   as.character(NetworkData(out, "network1")[, "gene2"])))
 
 # Performing enrichment analysis
-cond1 <- getEnrich(genes = genes, organismDB = org.Hs.eg.db, 
-                  keyType = 'ENSEMBL', ont = 'BP', fdrMethod = "BH", 
-                  fdrThr = 0.05, minGSSize = 5, maxGSSize = 500)
+cond1 <- getEnrich(organism='hsapiens', database='geneontology_Biological_Process', 
+                   genes=genes, GeneType='ensembl_gene_id',
+                   refGene=refGenes$Homo_sapiens$ENSEMBL,
+                   fdrMethod = "BH", fdrThr = 0.05, minNum = 5, maxNum = 500)
 ```
 
 After performing the enrichment analysis we have 4 options for viewing this data:
@@ -583,7 +585,8 @@ After performing the enrichment analysis we have 4 options for viewing this data
 ### Heatmap-like functional classification
 ```{r heatplot, eval=TRUE, fig.align="center"}
 heatPlot(res = cond1$results,
-         diff = getDE(out, "all"))
+         diff = getDE(out, "all"), 
+         font_size = 4)
 ```
 
 ### Circle Barplot

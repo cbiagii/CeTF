@@ -29,19 +29,19 @@ CHANGES IN VERSION 0.99.19
 --------------------------
 	- Fix netGOTFPlot, RIFPlot and densityPlot functions
 	- Fix warning messages when ploting with ggplot2 package (densityPlot, enrichPlot, histPlot, RIFPlot, SmearPlot)
-	
+
 CHANGES IN VERSION 1.0.2
 --------------------------
 	- Fix netConditionsPlot function bugs
-
-CHANGES IN VERSION 1.4.3
---------------------------
-	- Fix netConditionsPlot function bug related to factors in data.frame
-
-CHANGES IN VERSION 1.5.4
---------------------------
-	- Update CITATION
 	
-CHANGES IN VERSION 1.11.1
+CHANGES IN VERSION 1.0.6
 --------------------------
-	- Update for Biocondutor 3.17 release
+	- Fix heatPlot function bugs
+	- Added font_size parameter to heatPlot function
+	- Reduced package dependencies
+	- Implementation of PCIT analysis in C/C ++ (much faster)
+	- Implementation of tolerance function in C/C++
+
+CHANGES IN VERSION 1.0.7
+--------------------------
+	- Fix diffusion function bugs
