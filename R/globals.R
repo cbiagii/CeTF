@@ -1,3 +1,3 @@
 utils::globalVariables(c("TF", "pathway", "vertex.names", "xend", "y", 
-    "yend", ".data"))
+    "yend", ".data", "as", "slotNames"))
 
