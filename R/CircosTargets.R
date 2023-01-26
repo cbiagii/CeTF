@@ -21,7 +21,6 @@
 #' @details The black links are between different chromosomes while the red 
 #' links are between the same chromosome.
 #'
-#' @importFrom GenomicTools gtfToBed
 #' @importFrom GenomicTools.fileHandler importGTF
 #' @importFrom circlize circos.par circos.initialize circos.track circos.rect 
 #' rand_color circos.text circos.link highlight.chromosome circos.clear CELL_META 

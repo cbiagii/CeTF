@@ -2,7 +2,7 @@ Package: CeTF
 Type: Package
 Title: Coexpression for Transcription Factors using Regulatory Impact Factors 
   and Partial Correlation and Information Theory analysis
-Version: 1.5.3
+Version: 1.11.1
 Authors@R: c(person("Carlos Alberto", "Oliveira de Biagi Junior", email = 
   "cbiagijr@gmail.com", role = c("aut", "cre")), person("Ricardo", "Perecin 
   Nociti", email = "rnociti@gmail.com", role = c("aut")), person("Breno", 
@@ -25,17 +25,17 @@ Description: This package provides the necessary functions for performing the
   layer of information for gene expression studies (Microarray, RNA-seq and 
   single-cell RNA-seq data).
 Imports: circlize, ComplexHeatmap, clusterProfiler, DESeq2, dplyr, 
-  GenomicTools, GenomicTools.fileHandler, GGally, ggnetwork, ggplot2, 
+  GenomicTools.fileHandler, GGally, ggnetwork, ggplot2, 
   ggpubr, ggrepel, graphics, grid, igraph, Matrix, network, 
-  Rcpp, RCy3, stats, SummarizedExperiment, S4Vectors, utils
+  Rcpp, RCy3, stats, SummarizedExperiment, S4Vectors, utils, methods
 Suggests: airway, kableExtra, knitr, org.Hs.eg.db, rmarkdown, testthat
 SystemRequirements: libcurl4-openssl-dev, libxml2-dev, libssl-dev, gfortran, 
   build-essential, libz-dev, zlib1g-dev
-Depends: R (>= 4.0), methods
+Depends: R (>= 4.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 biocViews: Sequencing, RNASeq, Microarray, GeneExpression, Transcription, 
   Normalization, DifferentialExpression, SingleCell, Network, 
   Regression, ChIPSeq, ImmunoOncology, Coverage
